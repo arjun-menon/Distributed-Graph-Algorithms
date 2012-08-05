@@ -14,7 +14,7 @@ both algorithms are to ensure that a segment of code know as the
 The module "fast.py" implements Lamport's fast mutex algorithm and the  
 module "bakery.py" implements Lamport's bakery algorithm.
 
-The module "other.py" defines two important functions: await and default_task 
+The module "auxiliary.py" defines two important functions: await and default_task 
 
 	await(func) takes a function as argument, busy waits until 
 	the return value of func() becomes True. 

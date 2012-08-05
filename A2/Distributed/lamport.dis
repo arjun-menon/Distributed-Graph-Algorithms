@@ -1,0 +1,59 @@
+
+class P(DistProcess):
+
+     def setup(ps):
+          c = 0
+          q = []
+          s = ps
+
+     def cs(task):
+          # to enter cs, enque and send request to all, then await replies from all
+          --start
+          reqc = logical_clock()
+          q.append((reqc, self))
+          send(Request(reqc), s)
+
+          --reply
+          await(all((p2 == self or (reqc, self) < (c2, p2)) for (c2, p2) in q) and
+                all(any(c3 > reqc for c3 in received(Reply(c3, p3))) for p3 in s))
+
+       # critical section
+          --cs
+          task()
+
+       # to exit cs, deque and send releases to all
+          --release
+          q.remove((reqc, self))
+          send(Release(reqc), s)
+          output("release cs")
+          --end
+          reqc = None
+
+     def main():
+          def anounce():
+               output("In cs!")
+          while True:
+               cs(anounce)
+
+     # when receiving requests from others, enque and reply
+     def OnRequest(reqts):
+         #output("OnRequest, ts: %d" % _timestamp)
+         q.append((reqts, _source))
+         send(Reply(logical_clock(), self), _source)
+
+     # when receiving release from others, deque
+     def OnRelease(time):
+         if ((time, _source) in q):
+           q.remove((time, _source))
+
+def main():
+     if len(sys.argv) > 1:
+          nprocs = int(sys.argv[1])
+     else:
+          nprocs = 5
+     use_channel("tcp")
+     ps = createprocs(P, nprocs)
+    # setup the processes
+     for p in ps: setupprocs({p}, [ps-{p}])
+    # start the processes
+     startprocs(ps)
