@@ -53,3 +53,5 @@ def main():
      for p in ps: setupprocs([p], [ps-{p}])
 
      startprocs(ps)
+
+     for p in (ps): p.join()

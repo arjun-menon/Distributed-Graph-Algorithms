@@ -1,0 +1,36 @@
+
+Ricart and Agrawala's, based on logical timestamps and token
+ 
+ Pi:
+   //simplified by omitting _i for all varibles below.
+   ts: locical timestamp starting at 0 and inc by 1, initialized to 0.
+   requests: array of ts values, where requests[k] is ts of Pk's last 
+             request for token, initialized to 0.
+   token: array of ts values, where token[k] is ts of the token's last
+          assignment to Pk, initialized to 0.
+   token_present: boolean for whether token is present to Pi
+   token_held: boolean for whether token is held by Pi, initialized to false.
+ 
+   request:
+     if not token_present:
+       send (requests,ts,i) to all other processes
+     await:
+       having received (token)
+     token_present := true
+     token_held := true
+ 
+   CS
+ 
+   release:
+     token[i] := ts
+     token_held := false
+     for j from i+1 to n, 1 to i-1:
+       if requests[j]>token[j] and token_present:
+         token_present := false
+         send (token) to Pj
+ 
+   receive (requests,ts_j,j):
+     requests[j] := max(requests[j],ts_j)
+     if token_present and not token_held:
+       do steps under release
+

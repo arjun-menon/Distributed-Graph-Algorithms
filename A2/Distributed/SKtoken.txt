@@ -1,0 +1,60 @@
+
+Suzuki and Kasami's generalized:
+
+ token holds:
+ 
+   severd: array of intergers, where served[j] is the number of requests
+           made by Pj that have been served, initialized to 0.
+   pending: list of requests, of form (pid, isssed), received by P0 that
+            have not been served yet, initialized to [].
+ 
+ Pi decentralized from two parts above:
+ 
+   issued: array of integers, where issued[j] is the number of requests
+      made by Pj, initialized to 0.
+   token_held: boolean, initialized to false.
+   token_present: boolean, initialized to false.
+   pending: list of requests, of form (pid, isssed), received by Pi that
+            have not been served yet, initialized to [].
+ 
+   request:                                                     Pi
+     issued[i] := issued[i]+1                                   Pi
+     send (request,issued,i) to all processes (including self). Pi
+ 
+     await:
+       having received (token)                                  Pi,P0
+     token_held := true                                         Pi
+     token_present := true                                      P0
+                                                                P0-checkreq()
+     for u in pending: if some j, u.issued[j]>token.served[j]:  new (u>tk.served)
+       add u to token.pending                                   new
+     pending := []                                              new
+ 
+   CS                                                           Pi
+ 
+   release:                                                     Pi
+                                                                Pi-sd token to P0
+     token_held := false                                        Pi
+     checkreq()                                                 P0-if
+ 
+   receive (any other prog msg):                                Pi
+     issued := max(issued, any.issued)                          Pi
+ 
+   receive (request,iss,j):                                     P0
+     issued := max(issued, iss)                                 Pi
+     if token_present:                                          P0
+       add (j,issued) to token.pending                          P0+token.
+       if not token_held: checkreq()                            P0+if:
+     else:                                                      new
+       add (j,issued) to pending                                P0 diff pending
+ 
+   checkreq(): //P0, except pending -> token.pending, served -> token.served
+     eligible := { (j,iss) in token.pending: all k!=j, iss[k]<=token.served[k] }
+                 //all others's issued requests before j have been served
+     if eligible != {}:
+       (j,iss) := first of eligible
+       remove (j,iss) from token.pending
+       token.served[j] := token.served[j]+1
+       send (token) to Pj
+       token_present := false
+
