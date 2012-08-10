@@ -1,57 +1,59 @@
 
+# Ricart-Agrawala's 2n message algorithm
+
 class P(DistProcess):
-     def setup(ps):
-       reqc = None
-       s = ps
-       waiting = set()
-       replied = set()
+    def setup(ps):
+        reqc = None
+        s = ps
+        waiting = set()
+        replied = set()
 
-     def cs(task):
-       # to enter cs, enque and send request to all, then await replies from all
-         --start
-         reqc = logical_clock()
-         send(Request(reqc), s)
+    def cs(task):
+        # to enter cs, enque and send request to all, then await replies from all
+        --start
+        reqc = logical_clock()
+        send(Request(reqc), s)
 
-         --reply
-         await(len(replied) == len(s))
+        --reply
+        await(len(replied) == len(s))
 
-       # critical section
-         --cs
-         task()
+        # critical section
+        --cs
+        task()
 
-       # to exit cs, deque and send releases to all
-         --release
-         reqc = None
-         output("Is releasing.")
-         send(Reply(logical_clock()), waiting)
-         --end
-         waiting = set()
-         replied = set()
+        # to exit cs, deque and send releases to all
+        --release
+        reqc = None
+        output("Is releasing.")
+        send(Reply(logical_clock()), waiting)
+        --end
+        waiting = set()
+        replied = set()
 
-     def main():
-          def anounce():
-               output("In cs!")
-          while True:
-               cs(anounce)
+    def main():
+        def anounce():
+            output("In cs!")
+        while True:
+            cs(anounce)
 
-     # when receiving requests from others, enque and reply
-     def OnRequest():
-         if (reqc == None or (_timestamp, _source) < (reqc, self)):
-           send(Reply(logical_clock()), _source)
-         else:
-           waiting.add(_source)
+    # when receiving requests from others, enque and reply
+    def OnRequest():
+        if (reqc == None or (_timestamp, _source) < (reqc, self)):
+            send(Reply(logical_clock()), _source)
+        else:
+            waiting.add(_source)
 
-     def OnReply(lc):
-         if reqc != None and lc > reqc: replied.add(_source)
+    def OnReply(lc):
+        if reqc != None and lc > reqc: replied.add(_source)
 
 def main():
-     # configuration: number of processes
-     # create n process
-     ps = createprocs(P, int(sys.argv[1]))
+    # configuration: number of processes
+    # create n process
+    ps = createprocs(P, int(sys.argv[1]))
 
-     # setup the processes
-     for p in ps: setupprocs([p], [ps-{p}])
+    # setup the processes
+    for p in ps: setupprocs([p], [ps-{p}])
 
-     startprocs(ps)
+    startprocs(ps)
 
-     for p in (ps): p.join()
+    for p in (ps): p.join()
