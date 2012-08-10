@@ -1,0 +1,91 @@
+These are sources for DistAlgo (written by Bo Lin.)
+
+FILES:
+
+This package includes the following files:
+
+     distalgo/            - This is the distalgo main package
+     distalgo/compiler    - This package contains the distalgo compiler
+     distalgo/runtime     - This package contains the distalgo runtime library
+     pympler/             - The pympler third-party library, used for
+                            collecting performance statistics
+     README               - This file
+
+REQUIREMENTS:
+
+DistAlgo requires Python3 to run. Testing has only been done using Python 3.2.
+
+
+PURPOSE:
+
+This package implements the DistAlgo language.
+
+
+USAGE:
+
+To use this package, you must first create a DistAlgo source file. Then you
+can invoke the DistAlgo compiler on the source to generate Python source code,
+or you can invoke the runtime library to run your DistAlgo program.
+
+Creating the source:
+
+A DistAlgo program must include at least one _DistProcess_ subclass
+definition, and one global _main_ method definition.
+
+Any _DistProcess_ sub-class definition must be in DistAlgo, and will be
+translated by the compiler into Python. Any other code in the source file is
+assumed to be normal Python and passes through the compiler unchanged.
+
+The primary purpose of the _main_ method is to setup any configuration
+parameters, and also the topology of the DistProcesses. The signature of the
+_main_ method should be "def main()".
+
+The _main_ method can access the command line parameters through the normal
+Python mechanism (_sys.argv_). The first element of _sys.argv_ will always be
+the path name of the DistAlgo source file.
+
+Compiling the source:
+
+You can invoke the compiler by running the compiler package, passing in the
+source file to be compiled:
+
+  $ python3 -m distalgo.compiler examples/ricart-agrawala-2n/mutex2n.dis
+  rootdir is /home/bo/src/distalgo
+  Written examples/ricart-agrawala-2n/mutex2n.py.
+  
+  Total compilation time: 0.004217 second(s).
+
+The generated python code will appear in the same directory as the input
+source. The compiled python code corresponds directly to the input source
+code, and will require the DistAlgo runtime library to run (see below). An
+optional argument '-F' will cause the compiler to include the runtime library
+in the generated code, resulting in a stand-alone executable Python file.
+
+Running the program:
+
+Normally, you do not need to directly invoke the compiler, since the runtime
+package looks for an up-to-date '.py' file in the same directory as the '.dis'
+file, and will automatically invoke the compiler if one is not found.
+
+You run the DistAlgo program by running the runtime package, passing in the
+file name of the source file containing the _main_ method definition:
+
+  $ python3 -m distalgo.runtime [--nolog] [--logfile STRING]
+  [--loglevel STRING] [--logfilelevel STRING] <source> [rest...]
+
+The mandatory <source> parameter identifies the DistAlgo source file to be
+run. Anything after <source> is assumed to be arguments intended for the
+DistAlgo program, and is passed without modification to the DistAlgo program
+through _sys.argv_. All parameters appearing before <source> are parsed by the
+runtime library. Currently, some valid arguments are:
+
+     --logfile STRING
+     --loglevel STRING
+     --logfilelevel STRING
+           - These control the logging behavior. Consult the Python logging
+             package.
+
+
+PROBLEMS
+
+Please send bug reports and feature requests to bolin@cs.stonybrook.edu
