@@ -1,7 +1,5 @@
-
 Concurrent and Distributed Algorithms
 Arjun Menon
-
 
 Assignment 2 Part I
 -------------------
@@ -11,8 +9,8 @@ algorithms for atomizing access to crucial resources. The purpose of
 both algorithms are to ensure that a segment of code know as the 
 "critical section" does _not_ get executed concurrently.
 
-The module "fast.py" implements Lamport's fast mutex algorithm and the  
-module "bakery.py" implements Lamport's bakery algorithm.
+The module "fast.py"   implements Lamport's fast mutex algorithm and 
+the module "bakery.py" implements Lamport's bakery algorithm.
 
 The module "auxiliary.py" defines two important functions: await and default_task 
 
