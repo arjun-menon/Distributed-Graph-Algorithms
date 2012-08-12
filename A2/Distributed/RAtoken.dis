@@ -1,4 +1,5 @@
 
+"""
 Ricart and Agrawala's, based on logical timestamps and token
  
  Pi:
@@ -33,4 +34,57 @@ Ricart and Agrawala's, based on logical timestamps and token
      requests[j] := max(requests[j],ts_j)
      if token_present and not token_held:
        do steps under release
+
+"""
+
+cs_entry_count = 5 # default
+
+class P(DistProcess):
+    
+    def setup(ps):
+        print("i am", self, 'of type', type(self))
+
+    def cs(task):
+        pass
+
+    def main():
+        global cs_entry_count
+
+        def anounce():
+            output("In cs!")
+
+        for i in range(0, cs_entry_count):
+            cs(anounce)
+
+    # when receiving requests from others, enque and reply
+    def OnRequest():
+        if (reqc == None or (_timestamp, _source) < (reqc, self)):
+            send(Reply(logical_clock()), _source)
+        else:
+            waiting.add(_source)
+
+    def OnReply(lc):
+        if reqc != None and lc > reqc: replied.add(_source)
+
+def main():
+    global cs_entry_count
+    if len(sys.argv) > 2:
+        cs_entry_count = int(sys.argv[2])
+
+    if len(sys.argv) > 1:
+        nprocs = int(sys.argv[1])
+    else:
+        nprocs = 5
+
+    use_channel("tcp")
+
+    # create n process
+    ps = createprocs(P, nprocs)
+
+    # setup the processes
+    for p in ps: setupprocs([p], [ps-{p}])
+
+    startprocs(ps)
+
+    for p in (ps): p.join()
 

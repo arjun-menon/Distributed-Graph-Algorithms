@@ -1,4 +1,5 @@
 
+"""
 Suzuki and Kasami's generalized:
 
  token holds:
@@ -58,3 +59,4 @@ Suzuki and Kasami's generalized:
        send (token) to Pj
        token_present := false
 
+"""
