@@ -1,6 +1,43 @@
 
 # Lamport's 3n message algorithm
 
+"""
+Lamport's algorithm, based on timestamps of a logical clock 
+ 
+ assume fifo channel 
+ 
+ Pi: 
+   ts_i: value of logical clock starting at 0 and inc by 1, initialized to 0. 
+   queue_i: queue for pending requests ordered by the logical timestamp, init[] 
+ 
+   request: 
+     add (request,ts_i,i) to queue_i 
+     send (request,ts_i,i) to all other processes 
+ 
+     await: 
+       (request,ts_i,i) where (ts_i,i) < others in queue_i, and 
+       having received (reply,ts_j,j) with (ts_j,j)> (ts_i,i) from all Pj 
+                --if put receive seperately, need counter. 
+   CS                            
+ 
+   release: 
+     remove request from queue_i 
+     send (release,ts_i,i) to all other processes 
+ 
+   receive (request,ts_j,j): 
+     add (request,ts_j,j) to queue_i 
+     send (reply,ts_i,i) to Pj 
+ 
+   receive (release,ts_j,j): 
+     remove (request,ts_j,j) from queue_i 
+ 
+   omitted receive reply and increment counter.
+
+"""
+
+default_proc_count = 2
+cs_count = 2 # default
+
 class P(DistProcess):
 
     def setup(ps):
@@ -34,7 +71,7 @@ class P(DistProcess):
     def main():
         def anounce():
             output("In cs!")
-        while True:
+        for _ in range(0, cs_count):
             cs(anounce)
 
     # when receiving requests from others, enque and reply
@@ -49,15 +86,25 @@ class P(DistProcess):
             q.remove((time, _source))
 
 def main():
+    # number of times to execute critical section
+    global cs_count
+    if len(sys.argv) > 2:
+        cs_count = int(sys.argv[2])
+
+    # configuration: number of processes
     if len(sys.argv) > 1:
         nprocs = int(sys.argv[1])
     else:
-        nprocs = 5
+        nprocs = default_proc_count
+
     use_channel("tcp")
+
+    # create n process
     ps = createprocs(P, nprocs)
-   # setup the processes
-    for p in ps: setupprocs({p}, [ps-{p}])
-   # start the processes
+
+    # setup the processes
+    for p in ps: setupprocs([p], [ps-{p}])
+
     startprocs(ps)
 
-    for p in ps: p.join()
+    for p in (ps): p.join()
