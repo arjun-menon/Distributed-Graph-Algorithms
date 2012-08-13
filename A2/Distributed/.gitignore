@@ -1,4 +1,8 @@
 
 old
-*.py
+lamport.py
+mutex2n.py
+RAtoken.py
+SKtoken.py
+test.py
 *.log
