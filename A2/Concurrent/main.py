@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 
 import sys
 from fast import Fast
@@ -9,14 +10,20 @@ if __name__ == "__main__":
     else:
         num_of_threads, num_of_reqs = 3, 5 # defaults
     
-    print("\n\nRunning Lamport's fast mutual exclusion algorithm")
+    print("\nRunning Lamport's fast mutual exclusion algorithm")
     threads = [Fast(i) for i in range(1, num_of_threads+1)]
     Fast.setup(threads, num_of_reqs)
     Fast.start_all()
     
-    # wait for old threads to die..
+    # wait for all threads to die..
     [thread.join() for thread in threads]
     
     print("\n\nRunning Lamport's bakery algorithm")
-    Bakery.setup( [Bakery(i) for i in range(1, num_of_threads+1)], num_of_reqs )
+    threads = [Bakery(i) for i in range(1, num_of_threads+1)]
+    Bakery.setup(threads, num_of_reqs )
     Bakery.start_all()
+    
+    # wait for all threads to die..
+    [thread.join() for thread in threads]
+    
+    print()
