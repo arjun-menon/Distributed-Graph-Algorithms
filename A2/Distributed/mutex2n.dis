@@ -92,7 +92,11 @@ def main():
     use_channel("tcp")
 
     # create n process
-    ps = createprocs(P, nprocs)
+    if nprocs > 26:
+        ps = createprocs(P, {'Process-%d'%i for i in range(1,nprocs+1)})
+    else:
+        ps = createprocs(P, {chr(ord('A') + i) for i in range(0,nprocs)})
+    ps = set(ps.values())
 
     # setup the processes
     for p in ps: setupprocs([p], [ps-{p}])

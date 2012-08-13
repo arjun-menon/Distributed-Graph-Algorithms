@@ -4,7 +4,7 @@ Ricart and Agrawala's, based on logical timestamps and token
  
  Pi:
    //simplified by omitting _i for all varibles below.
-   ts: locical timestamp starting at 0 and inc by 1, initialized to 0.
+   ts: logical timestamp starting at 0 and inc by 1, initialized to 0.
    requests: array of ts values, where requests[k] is ts of Pk's last 
              request for token, initialized to 0.
    token: array of ts values, where token[k] is ts of the token's last
@@ -37,49 +37,75 @@ Ricart and Agrawala's, based on logical timestamps and token
 
 """
 
-cs_entry_count = 5 # default
+nprocs = 3 # default number of processes
+cs_count = 3 # default number of calls to CS
 
 class P(DistProcess):
     
     def setup(ps):
-        print("i am", self, 'of type', type(self))
+        other_procs = ps
+
+        '''requests: array of ts values, where requests[k] is 
+        ts of Pk's last request for token, initialized to 0.'''
+        global requests = [0] * nprocs
+
+        '''token: array of ts values, where token[k] is ts of 
+        the token's last assignment to Pk, initialized to 0.'''
+        global token = [0] * nprocs
+
+        token_present = False # boolean for whether token is present to Pi
+        token_held = False # boolean for whether token is held by Pi, initialized to false.
 
     def cs(task):
-        pass
+        --start
+        if not token_present:
+          lc = logical_clock()
+          send(Request(lc), other_procs)
+
+        --reply
+
+        --cs
+        task()
+
+        --release
+
+        --end
 
     def main():
-        global cs_entry_count
+        global cs_count
 
         def anounce():
             output("In cs!")
 
-        for i in range(0, cs_entry_count):
+        for i in range(0, cs_count):
             cs(anounce)
 
     # when receiving requests from others, enque and reply
     def OnRequest():
-        if (reqc == None or (_timestamp, _source) < (reqc, self)):
-            send(Reply(logical_clock()), _source)
-        else:
-            waiting.add(_source)
+        print(self, "OnReq from", _source, "at", _timestamp)
 
     def OnReply(lc):
-        if reqc != None and lc > reqc: replied.add(_source)
+        print(self, "OnReply from", _source, "at", _timestamp)
 
 def main():
-    global cs_entry_count
+    # number of times to execute critical section
+    global cs_count
     if len(sys.argv) > 2:
-        cs_entry_count = int(sys.argv[2])
+        cs_count = int(sys.argv[2])
 
+    # configuration: number of processes
+    global nprocs
     if len(sys.argv) > 1:
         nprocs = int(sys.argv[1])
-    else:
-        nprocs = 5
 
     use_channel("tcp")
 
     # create n process
-    ps = createprocs(P, nprocs)
+    if nprocs > 26:
+        ps = createprocs(P, {'Process-%d'%i for i in range(1,nprocs+1)})
+    else:
+        ps = createprocs(P, {chr(ord('A') + i) for i in range(0,nprocs)})
+    ps = set(ps.values())
 
     # setup the processes
     for p in ps: setupprocs([p], [ps-{p}])
@@ -87,4 +113,3 @@ def main():
     startprocs(ps)
 
     for p in (ps): p.join()
-

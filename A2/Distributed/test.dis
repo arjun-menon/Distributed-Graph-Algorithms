@@ -80,7 +80,7 @@ class P(DistProcess):
 
     # when receiving requests from others, enque and reply
     def OnRequest():
-        print(self, "OnReq from", _source, "at", _timestamp)  
+        print(self, "OnReq from", _source, "at", _timestamp)
         if (reqc == None or (_timestamp, _source) < (reqc, self)):
             send(Reply(logical_clock()), _source)
         else:
@@ -98,14 +98,18 @@ def main():
     # configuration: number of processes
     if len(sys.argv) > 1:
         nprocs = int(sys.argv[1])
+        if nproces < 2:
+            nprovs = 2
     else:
         nprocs = default_proc_count
 
     use_channel("tcp")
 
     # create n process
-    #ps = createprocs(P, nprocs)
-    ps = createprocs(P, {'A', 'B', 'C'})
+    if nprocs > 26:
+        ps = createprocs(P, {'Process-%d'%i for i in range(1,nprocs+1)})
+    else:
+        ps = createprocs(P, {chr(ord('A') + i) for i in range(0,nprocs)})
     ps = set(ps.values())
 
     # setup the processes
