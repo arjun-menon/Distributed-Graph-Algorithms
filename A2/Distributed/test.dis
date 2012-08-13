@@ -1,0 +1,118 @@
+
+# Ricart-Agrawala's 2n message algorithm
+
+"""
+Ricart and Agrawala's, based on logical timestamps 
+  
+ Pi: 
+   ts_i: value of logical clock starting at 0 and inc by 1, initlized to 0. 
+   defer_i: array of booleans where defer_i[j]=1 iff Pj is deferred by i 
+                --or use list 
+   request: 
+     send (request,ts_i,i) to all other processes 
+ 
+     await: 
+       having received (reply,ts_j,j) with (ts_j,j)> (ts_i,i) from all Pj 
+   CS 
+ 
+   release: 
+     for all Pj such that defer_i[j]=1: 
+       send (reply,ts_i,i) to Pj 
+       defer_i[j]:=0    --if queue, just set to null at the end 
+ 
+   receive (request,ts_j,j): 
+     if Pi is not requesting or executing CS, or 
+        Pi is requesting but with a larger timestamp: 
+       send (reply,ts_i,i) to Pj 
+     else: 
+       defer_i[j]:=1
+
+"""
+
+default_proc_count = 3
+cs_count = 3 # default
+
+class P(DistProcess):
+    def setup(ps):
+        reqc = None
+        s = ps
+        waiting = set()
+        replied = set()
+
+    def cs(task):
+        # to enter cs, enque and send request to all, then await replies from all
+        print(":start", self)
+        --start
+        print("start:", self)
+        reqc = logical_clock()
+        send(Request(reqc), s)
+
+        print(":reply", self)
+        --reply
+        print("reply:", self)
+        await(len(replied) == len(s))
+        print(replied)
+
+        # critical section
+        print(":cs", self)
+        --cs
+        print("cs:", self)
+        task()
+
+        # to exit cs, deque and send releases to all
+        print(":release", self)
+        --release
+        print("release:", self)
+        reqc = None
+        output("Is releasing.")
+        send(Reply(logical_clock()), waiting)
+        print(":end", self)
+        --end
+        print("end:", self)
+        waiting = set()
+        replied = set()
+
+    def main():
+        def anounce():
+            output("In cs!")
+        for _ in range(0, cs_count):
+            cs(anounce)
+
+    # when receiving requests from others, enque and reply
+    def OnRequest():
+        print(self, "OnReq from", _source, "at", _timestamp)  
+        if (reqc == None or (_timestamp, _source) < (reqc, self)):
+            send(Reply(logical_clock()), _source)
+        else:
+            waiting.add(_source)
+
+    def OnReply(lc):
+        if reqc != None and lc > reqc: replied.add(_source)
+
+def main():
+    # number of times to execute critical section
+    global cs_count
+    if len(sys.argv) > 2:
+        cs_count = int(sys.argv[2])
+
+    # configuration: number of processes
+    if len(sys.argv) > 1:
+        nprocs = int(sys.argv[1])
+    else:
+        nprocs = default_proc_count
+
+    use_channel("tcp")
+
+    # create n process
+    ps = createprocs(P, nprocs)
+
+    # setup the processes
+    for p in ps: setupprocs([p], [ps-{p}])
+
+    print("------ setupprocs done ------")
+
+    startprocs(ps)
+
+    print("------ startprocs done ------")
+
+    for p in (ps): p.join()
