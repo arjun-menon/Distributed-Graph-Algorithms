@@ -51,7 +51,7 @@ class P(DistProcess):
         --reply
         print("reply:", self)
         await(len(replied) == len(s))
-        print(replied)
+        print("#####", self, "reply done - ", replied)
 
         # critical section
         print(":cs", self)
@@ -104,15 +104,13 @@ def main():
     use_channel("tcp")
 
     # create n process
-    ps = createprocs(P, nprocs)
+    #ps = createprocs(P, nprocs)
+    ps = createprocs(P, {'A', 'B', 'C'})
+    ps = set(ps.values())
 
     # setup the processes
     for p in ps: setupprocs([p], [ps-{p}])
 
-    print("------ setupprocs done ------")
-
     startprocs(ps)
-
-    print("------ startprocs done ------")
 
     for p in (ps): p.join()
