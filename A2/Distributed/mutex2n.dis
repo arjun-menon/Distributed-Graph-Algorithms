@@ -29,13 +29,13 @@ Ricart and Agrawala's, based on logical timestamps
 
 """
 
-default_proc_count = 2
-cs_count = 2 # default
+default_proc_count = 3
+cs_count = 3 # default
 
 class P(DistProcess):
     def setup(ps):
         reqc = None
-        s = ps
+        other_procs = ps
         waiting = set()
         replied = set()
 
@@ -43,10 +43,10 @@ class P(DistProcess):
         # to enter cs, enque and send request to all, then await replies from all
         --start
         reqc = logical_clock()
-        send(Request(reqc), s)
+        send(Request(reqc), other_procs)
 
         --reply
-        await(len(replied) == len(s))
+        await(len(replied) == len(other_procs))
 
         # critical section
         --cs

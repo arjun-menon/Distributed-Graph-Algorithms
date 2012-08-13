@@ -35,8 +35,8 @@ Lamport's algorithm, based on timestamps of a logical clock
 
 """
 
-default_proc_count = 2
-cs_count = 2 # default
+default_proc_count = 3
+cs_count = 3 # default
 
 class P(DistProcess):
 
