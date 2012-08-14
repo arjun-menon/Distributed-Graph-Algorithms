@@ -40,36 +40,113 @@ Ricart and Agrawala's, based on logical timestamps and token
 nprocs = 3 # default number of processes
 cs_count = 3 # default number of calls to CS
 
+first_token_holder = None
+
+def Pi(proc):
+    return ord(repr(proc)) - ord('A')
+
 class P(DistProcess):
     
-    def setup(ps):
+    def setup(ps):        
         other_procs = ps
 
         '''requests: array of ts values, where requests[k] is 
         ts of Pk's last request for token, initialized to 0.'''
-        global requests = [0] * nprocs
+        global requests
+        requests = [0] * nprocs
 
         '''token: array of ts values, where token[k] is ts of 
         the token's last assignment to Pk, initialized to 0.'''
-        global token = [0] * nprocs
+        global token
+        token = [0] * nprocs
 
         token_present = False # boolean for whether token is present to Pi
         token_held = False # boolean for whether token is held by Pi, initialized to false.
 
+        token_received = False # This boolean is flipped, when Reply("token") is received
+
+        if Pi(self) == 0:
+            token_present = True
+            token_held = True
+            token_received = True
+
     def cs(task):
+        global requests
+        global token
+
+        '''request:
+             if not token_present:
+               send (requests,ts,i) to all other processes
+             await:
+               having received (token)
+             token_present := true
+             token_held := true '''
+
         --start
         if not token_present:
-          lc = logical_clock()
-          send(Request(lc), other_procs)
+            incr_logical_clock()
+            output("Sending Requests...")
+            send(Request( logical_clock() ), other_procs)
 
         --reply
+        # await: having received (token)
+        await(token_received == True)
+        # We know we received it, so:
+        token_received = False
+
+        token_present = True
+        token_held = True
 
         --cs
         task()
 
         --release
+        if token_present:
+            do_release()
 
         --end
+
+    def do_release():
+        '''
+        release:
+         token[i] := ts
+         token_held := false
+         for j from i+1 to n, 1 to i-1:
+           if requests[j]>token[j] and token_present:
+             token_present := false
+             send (token) to Pj'''
+
+        global requests
+        global token
+
+        token[Pi(self)] = logical_clock()
+        token_held = False
+
+        for proc in other_procs:
+            i = Pi(proc)
+
+            if requests[i] > token[i] and token_present:
+                output("Is releasing.")
+                token_present = False
+                send( Reply("token"), proc )
+
+    def OnRequest(ts):
+        '''receive (requests,ts_j,j):
+             requests[j] := max(requests[j],ts_j)
+             if token_present and not token_held:
+               do steps under release '''
+
+        global requests
+        j = Pi(_source)
+        requests[j] = max(requests[j], ts)
+        if token_present and not token_held:
+            do_release()
+
+    def OnReply(tok):
+        if tok == "token":
+            token_received = True
+        else:
+            raise Exception("Invalid Reply received.")
 
     def main():
         global cs_count
@@ -77,15 +154,9 @@ class P(DistProcess):
         def anounce():
             output("In cs!")
 
-        for i in range(0, cs_count):
+        #for i in range(0, cs_count):
+        while True:
             cs(anounce)
-
-    # when receiving requests from others, enque and reply
-    def OnRequest():
-        print(self, "OnReq from", _source, "at", _timestamp)
-
-    def OnReply(lc):
-        print(self, "OnReply from", _source, "at", _timestamp)
 
 def main():
     # number of times to execute critical section
@@ -97,18 +168,31 @@ def main():
     global nprocs
     if len(sys.argv) > 1:
         nprocs = int(sys.argv[1])
+    if nprocs > 26:
+        nprocs = 26
+    elif nprocs < 2:
+        nprocs = 2
 
     use_channel("tcp")
 
     # create n process
-    if nprocs > 26:
-        ps = createprocs(P, {'Process-%d'%i for i in range(1,nprocs+1)})
-    else:
-        ps = createprocs(P, {chr(ord('A') + i) for i in range(0,nprocs)})
+    ps = createprocs(P, { chr(ord('A') + i) for i in range(0,nprocs) })
     ps = set(ps.values())
 
     # setup the processes
     for p in ps: setupprocs([p], [ps-{p}])
+
+    # pick an arbitary process:
+    # arbitary_process = ps.pop()
+    # ps.add(arbitary_process)
+
+    # print(ps)
+    # print(arbitary_process)
+
+    # # Give token to arbitary process
+    # arbitary_process.token_present = True
+    # arbitary_process.token_held = True
+    # arbitary_process.token_received = True
 
     startprocs(ps)
 
