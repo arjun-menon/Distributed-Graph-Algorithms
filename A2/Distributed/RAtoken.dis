@@ -37,7 +37,7 @@ Ricart and Agrawala's, based on logical timestamps and token
 
 """
 
-nprocs = 3 # default number of processes
+nprocs = 5 # default number of processes
 cs_count = 3 # default number of calls to CS
 
 first_token_holder = None
@@ -49,6 +49,7 @@ class P(DistProcess):
     
     def setup(ps):        
         other_procs = ps
+        print(self, other_procs)
 
         '''requests: array of ts values, where requests[k] is 
         ts of Pk's last request for token, initialized to 0.'''
@@ -66,13 +67,14 @@ class P(DistProcess):
         token_received = False # This boolean is flipped, when Reply("token") is received
 
         if Pi(self) == 0:
-            token_present = True
-            token_held = True
             token_received = True
 
     def cs(task):
         global requests
         global token
+
+        if Pi(self) == 0:
+            output("BLAAAAA" + repr(token_present))
 
         '''request:
              if not token_present:
@@ -85,7 +87,7 @@ class P(DistProcess):
         --start
         if not token_present:
             incr_logical_clock()
-            output("Sending Requests...")
+            #output("Sending Requests...")
             send(Request( logical_clock() ), other_procs)
 
         --reply
@@ -101,8 +103,7 @@ class P(DistProcess):
         task()
 
         --release
-        if token_present:
-            do_release()
+        do_release()
 
         --end
 
@@ -122,13 +123,33 @@ class P(DistProcess):
         token[Pi(self)] = logical_clock()
         token_held = False
 
-        for proc in other_procs:
-            i = Pi(proc)
+        waiting = list(filter(lambda p: requests[Pi(p)] > token[Pi(p)], other_procs))
 
-            if requests[i] > token[i] and token_present:
-                output("Is releasing.")
-                token_present = False
-                send( Reply("token"), proc )
+        if waiting:
+            req_time = lambda p: requests[Pi(p)]
+            waited_longest = waiting[0]
+            for proc in waiting:
+                if req_time(proc) < req_time(waited_longest):
+                    waited_longest = proc
+
+            # str = ""
+            # for p in waiting:
+            #     str += repr(p)
+            #     str += " : "
+            #     str += repr(requests[Pi(p)])
+            #     str += ", "
+            # output("Waiting: " + str + repr(waited_longest))
+
+            output("Is releasing.")
+
+            token_present = False
+            if Pi(self) == 0:
+                output("CLAAAAA" + repr(token_present))
+
+            output("Handing token to "+repr(waited_longest))
+
+            incr_logical_clock()
+            send( Reply("token"), waited_longest )
 
     def OnRequest(ts):
         '''receive (requests,ts_j,j):
