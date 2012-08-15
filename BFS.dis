@@ -2,10 +2,9 @@
 import networkx as nx
 from collections import deque
 
+nprocs = 4 # default
 tree = nx.balanced_tree(4, 4)
 element_to_search_for = 300
-nx.freeze(tree)
-print("BFS on a Tree containing %d nodes." % len(tree.nodes()))
 
 procs = dict() # dict mapping process numbers to processes
 Pi = lambda p: int(str(p))
@@ -92,8 +91,8 @@ class P(DistProcess):
     def OnReply(m):
         if m == "completed":
             completed = True
-            output("Received notice that %d was found by %r. Terminating!" % 
-                   (element_to_search_for, _source))
+            output("Received notice that %r found elem %d. Terminating!" % 
+                   (_source, element_to_search_for))
         elif isinstance(m, tuple):
             item, _inspected = m
             output('Got work [' + repr(item) + "] from " + str(_source))
@@ -109,7 +108,7 @@ def main():
     global tree, element_to_search_for
     
     # configuration: number of processes
-    nprocs = 3
+    global nprocs
     if len(sys.argv) > 1:
         nprocs = int(sys.argv[1])
     
@@ -117,9 +116,15 @@ def main():
     if len(sys.argv) > 2:
         element_to_search_for = int(sys.argv[2])
     
-#    # configuration: tree
-#    if len(sys.argv) > 4:
-#        tree = nx.balanced_tree(int(sys.argv[3]), int(sys.argv[4]))
+    # configuration: tree
+    if len(sys.argv) > 4:
+        r, d = int(sys.argv[3]), int(sys.argv[4])
+        print("Replacing default (r=4,depth=4) tree with new tree of (r = %d, depth = %d)..." % (r, d))
+        tree = nx.balanced_tree(r, d)
+
+    nx.freeze(tree)
+    print("Searching for the element %d using BFS in a tree containing %d nodes." % 
+        ( element_to_search_for, len(tree.nodes())) )
         
     # create n process
     use_channel("tcp")
