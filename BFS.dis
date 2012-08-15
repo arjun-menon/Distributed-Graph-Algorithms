@@ -1,0 +1,80 @@
+
+import networkx as nx
+from collections import deque
+
+tree = nx.balanced_tree(4, 5)
+nx.freeze(tree)
+
+procs = dict() # dict mapping process numbers to processes
+Pi = lambda p: int(str(p))
+
+class P(DistProcess):
+    
+    def setup(ps):
+        other = ps
+        q = deque()
+        visited = set()
+        
+        if Pi(self) == 0:
+            q.appendleft(0)
+        
+        completed = False
+
+    def cs(search_for):
+        if len(q) > 0:
+            '''Pop one node, check if it's what we're searching for'''
+            retrieved = q.pop()
+            visited.update({retrieved})
+            #output("Retrieved "+str(retrieved))
+            
+            if search_for == retrieved:
+                completed = True
+                
+                # Send messages to all processes notifying them of the completion.
+                
+                output("Element found! BFS Completed.")
+                return
+            
+            else:
+                '''Fill work queue with un-visited neighboring nodes'''
+                _neighbors = set( tree[retrieved] ) 
+                _neighbors = _neighbors - visited
+                
+                for n in _neighbors:
+                    q.appendleft(n)
+        
+        else:
+            output("Empty q.")
+
+    def OnRequest(ts):
+        pass
+
+    def OnReply(tok):
+        pass
+
+    def main():
+        while not completed:
+            cs(50)
+
+def main():
+    # configuration: number of processes
+    nprocs = 1
+    if len(sys.argv) > 1:
+        nprocs = int(sys.argv[1])
+    
+    # create n process
+    use_channel("tcp")
+    ps = createprocs(P, {str(i) for i in range(0, nprocs)})
+    global procs
+    for (pn, p) in ps.items():
+        procs[int(pn)] = p
+    ps = set(ps.values())
+
+    # setup the processes
+    for p in ps: setupprocs([p], [ps-{p}])
+    
+    #procs[0].q.appendleft(0)
+
+    startprocs(ps)
+
+    for p in (ps): p.join()

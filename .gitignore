@@ -28,3 +28,8 @@ pip-log.txt
 
 #Text editor backup files
 *~
+
+# DistAlgo compiled .py files & runtime log files
+BFS.py
+BFS.log
+
