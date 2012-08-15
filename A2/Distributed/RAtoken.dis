@@ -124,18 +124,10 @@ class P(DistProcess):
         if waiting:
             req_time = lambda p: requests[Pi(p)]
             waited_longest = waiting[0]
-            # I would have used the min function here, but it results in mysterious errors
+            # I would have used the min function here, but it causes mysterious errors
             for proc in waiting:
                 if req_time(proc) < req_time(waited_longest):
                     waited_longest = proc
-
-            # str = ""
-            # for p in waiting:
-            #     str += repr(p)
-            #     str += " : "
-            #     str += repr(requests[Pi(p)])
-            #     str += ", "
-            # output("Waiting: " + str + repr(waited_longest))
 
             output("Is releasing.")
 
