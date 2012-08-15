@@ -13,7 +13,7 @@ class P(DistProcess):
     def setup(ps):
         other_procs = ps
         q = deque()
-        visited = set()
+        inspected = set()
         
         if Pi(self) == 0:
             q.appendleft(0)
@@ -21,25 +21,27 @@ class P(DistProcess):
         completed = False
 
     def cs(search_for):
+        # todo: what if search_for can't be found?
+        --start
         if len(q) > 0:
             '''Pop one node, check if it's what we're searching for'''
-            retrieved = q.pop()
-            visited.update({retrieved})
-            output("Inspected "+str(retrieved))
+            inspect = q.pop()
+            inspected.update({inspect})
+            output("Inspected "+str(inspect))
             
-            if search_for == retrieved:
+            if search_for == inspect:
                 completed = True
+                output("Element %r found. BFS Completed!" % search_for)
                 
                 '''Send messages to all processes notifying them of the completion'''
                 send(Reply("completed"), other_procs)
                 
-                output("Element %r found. BFS Completed!" % search_for)
                 return
             
             else:
-                '''Fill work queue with un-visited neighboring nodes'''
-                _neighbors = set( tree[retrieved] ) 
-                _neighbors = _neighbors - visited
+                '''Fill work queue with un-inspected neighboring nodes'''
+                _neighbors = set( tree[inspect] ) 
+                _neighbors = _neighbors - inspected
                 
                 for n in _neighbors:
                     q.appendleft(n)
@@ -50,7 +52,7 @@ class P(DistProcess):
             send(Request( None ), other_procs)
             
             '''Await until work is received or BFS is completed'''
-            await( completed == True )
+            await( len(q) > 0 or completed == True )
             
             if completed == True:
                 output("Received completion notice. Terminating!")
@@ -58,14 +60,32 @@ class P(DistProcess):
         
         if len(q) > 1:
             '''Service requests for work if I have 2 or more nodes in my queue'''
-            pass
+            --reply
+        
+        --release
+        --end
 
     def OnRequest(ts):
-        pass
+        output("Received request for work from " + str(_source))
+        
+        if len(q) > 1:
+            '''Service request for work if I have 2 or more nodes in my queue'''
+            
+            work = (q.pop(), inspected)
+            output('Giving ' + repr(work) + " to " + str(_source))
+            send(Reply(work), _source)
+            
+            #q.append(work[0])
 
     def OnReply(m):
         if m == "completed":
             completed = True
+            output("Received completion notice. Terminating!")
+        elif isinstance(m, tuple):
+            item, _inspected = m
+            output('Got ' + repr(item) + ' and ' + repr(_inspected) + " from " + str(_source))
+            inspected.update(_inspected)
+            q.appendleft(item)
 
     def main():
         while not completed:
