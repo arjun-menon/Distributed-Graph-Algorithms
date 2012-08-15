@@ -18,5 +18,10 @@ print(G.nodes())
 print(G.edges())
 
 print(set( G.neighbors(1) ))
+nx.freeze(G)
+G.node[1]['parent'] = 0
 
 print(G[0])
+
+print(G.nodes(data=True))
+print(G.node[1])
