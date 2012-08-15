@@ -1,12 +1,10 @@
 #!/usr/bin/python3
 
-'''
-Runs a DistAlgo (.dis) program
-'''
-
+import sys
 from distalgo.runtime import *
 
-import sys
 sys.argv = [ sys.argv[0], "RAtoken.dis" ]
+#libmain()
 
+sys.argv = [ sys.argv[0], "SKtoken.dis" ]
 libmain()

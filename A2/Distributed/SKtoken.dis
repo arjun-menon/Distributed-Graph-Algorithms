@@ -4,9 +4,9 @@ Suzuki and Kasami's generalized:
 
  token holds:
  
-   severd: array of intergers, where served[j] is the number of requests
+   served: array of intergers, where served[j] is the number of requests
            made by Pj that have been served, initialized to 0.
-   pending: list of requests, of form (pid, isssed), received by P0 that
+   pending: list of requests, of form (pid, issued), received by P0 that
             have not been served yet, initialized to [].
  
  Pi decentralized from two parts above:
@@ -15,7 +15,7 @@ Suzuki and Kasami's generalized:
       made by Pj, initialized to 0.
    token_held: boolean, initialized to false.
    token_present: boolean, initialized to false.
-   pending: list of requests, of form (pid, isssed), received by Pi that
+   pending: list of requests, of form (pid, issued), received by Pi that
             have not been served yet, initialized to [].
  
    request:                                                     Pi
@@ -60,3 +60,60 @@ Suzuki and Kasami's generalized:
        token_present := false
 
 """
+
+
+nprocs = 5 # default number of processes
+cs_count = 5 # default number of calls to CS
+
+first_token_holder = None
+
+def Pi(proc):
+    return int(str(proc))-1
+
+class P(DistProcess):
+    
+    def setup(ps):        
+        other_procs = ps        
+
+    def cs(task):
+        pass
+
+    def OnRequest(ts):
+        pass
+
+    def OnReply(tok):
+        pass
+
+    def main():
+        global cs_count
+
+        def anounce():
+            output("In cs!")
+
+        #for i in range(0, cs_count):
+        while True:
+            cs(anounce)
+
+def main():
+    # number of times to execute critical section
+    global cs_count
+    if len(sys.argv) > 2:
+        cs_count = int(sys.argv[2])
+
+    # configuration: number of processes
+    global nprocs
+    if len(sys.argv) > 1:
+        nprocs = int(sys.argv[1])
+
+    use_channel("tcp")
+
+    # create n process
+    ps = createprocs(P, {str(i) for i in range(1, nprocs+1)})
+    ps = set(ps.values())
+
+    # setup the processes
+    for p in ps: setupprocs([p], [ps-{p}])
+
+    startprocs(ps)
+
+    for p in (ps): p.join()

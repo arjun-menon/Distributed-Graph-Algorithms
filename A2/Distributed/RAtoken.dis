@@ -38,7 +38,7 @@ Ricart and Agrawala's, based on logical timestamps and token
 """
 
 nprocs = 5 # default number of processes
-cs_count = 3 # default number of calls to CS
+cs_count = 5 # default number of calls to CS
 
 first_token_holder = None
 
@@ -49,7 +49,6 @@ class P(DistProcess):
     
     def setup(ps):        
         other_procs = ps
-        print(self, other_procs)
 
         '''requests: array of ts values, where requests[k] is 
         ts of Pk's last request for token, initialized to 0.'''
@@ -72,9 +71,6 @@ class P(DistProcess):
     def cs(task):
         global requests
         global token
-
-        if Pi(self) == 0:
-            output("BLAAAAA" + repr(token_present))
 
         '''request:
              if not token_present:
@@ -128,6 +124,7 @@ class P(DistProcess):
         if waiting:
             req_time = lambda p: requests[Pi(p)]
             waited_longest = waiting[0]
+            # I would have used the min function here, but it results in mysterious errors
             for proc in waiting:
                 if req_time(proc) < req_time(waited_longest):
                     waited_longest = proc
@@ -143,8 +140,6 @@ class P(DistProcess):
             output("Is releasing.")
 
             token_present = False
-            if Pi(self) == 0:
-                output("CLAAAAA" + repr(token_present))
 
             output("Handing token to "+repr(waited_longest))
 
@@ -202,18 +197,6 @@ def main():
 
     # setup the processes
     for p in ps: setupprocs([p], [ps-{p}])
-
-    # pick an arbitary process:
-    # arbitary_process = ps.pop()
-    # ps.add(arbitary_process)
-
-    # print(ps)
-    # print(arbitary_process)
-
-    # # Give token to arbitary process
-    # arbitary_process.token_present = True
-    # arbitary_process.token_held = True
-    # arbitary_process.token_received = True
 
     startprocs(ps)
 
