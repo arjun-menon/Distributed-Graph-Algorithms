@@ -11,7 +11,7 @@ Pi = lambda p: int(str(p))
 class P(DistProcess):
     
     def setup(ps):
-        other = ps
+        other_procs = ps
         q = deque()
         visited = set()
         
@@ -25,14 +25,15 @@ class P(DistProcess):
             '''Pop one node, check if it's what we're searching for'''
             retrieved = q.pop()
             visited.update({retrieved})
-            #output("Retrieved "+str(retrieved))
+            output("Inspected "+str(retrieved))
             
             if search_for == retrieved:
                 completed = True
                 
-                # Send messages to all processes notifying them of the completion.
+                '''Send messages to all processes notifying them of the completion'''
+                send(Reply("completed"), other_procs)
                 
-                output("Element found! BFS Completed.")
+                output("Element %r found. BFS Completed!" % search_for)
                 return
             
             else:
@@ -44,13 +45,27 @@ class P(DistProcess):
                     q.appendleft(n)
         
         else:
-            output("Empty q.")
+            '''Send requests to other processes for work'''
+            output("Empty queue; sending requests for work")
+            send(Request( None ), other_procs)
+            
+            '''Await until work is received or BFS is completed'''
+            await( completed == True )
+            
+            if completed == True:
+                output("Received completion notice. Terminating!")
+                return
+        
+        if len(q) > 1:
+            '''Service requests for work if I have 2 or more nodes in my queue'''
+            pass
 
     def OnRequest(ts):
         pass
 
-    def OnReply(tok):
-        pass
+    def OnReply(m):
+        if m == "completed":
+            completed = True
 
     def main():
         while not completed:
@@ -58,7 +73,7 @@ class P(DistProcess):
 
 def main():
     # configuration: number of processes
-    nprocs = 1
+    nprocs = 3
     if len(sys.argv) > 1:
         nprocs = int(sys.argv[1])
     
