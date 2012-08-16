@@ -2,5 +2,5 @@
 import sys
 from distalgo.runtime import *
 
-sys.argv = [ sys.argv[0], "BFS.dis", 3, 2000]
+sys.argv = [ sys.argv[0], "MST.dis"]
 libmain()
