@@ -40,8 +40,6 @@ Ricart and Agrawala's, based on logical timestamps and token
 nprocs = 5 # default number of processes
 cs_count = 5 # default number of calls to CS
 
-first_token_holder = None
-
 def Pi(proc):
     return ord(repr(proc)) - ord('A')
 

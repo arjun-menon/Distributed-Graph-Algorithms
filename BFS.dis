@@ -121,11 +121,11 @@ def main():
         r, d = int(sys.argv[3]), int(sys.argv[4])
         print("Replacing default (r=4,depth=4) tree with new tree of (r = %d, depth = %d)..." % (r, d))
         tree = nx.balanced_tree(r, d)
-
+    
     nx.freeze(tree)
     print("Searching for the element %d using BFS in a tree containing %d nodes." % 
         ( element_to_search_for, len(tree.nodes())) )
-        
+    
     # create n process
     use_channel("tcp")
     ps = createprocs(P, {str(i) for i in range(0, nprocs)})
