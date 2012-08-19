@@ -1,9 +1,5 @@
-Concurrent and Distributed Algorithms
-Arjun Menon
-
 Assignment 2 Part I
 -------------------
-
 This is an implementation of Lamport's fast mutual exclusion and bakery 
 algorithms for atomizing access to crucial resources. The purpose of 
 both algorithms are to ensure that a segment of code know as the 
@@ -13,7 +9,7 @@ The module `fast.py`   implements Lamport's fast mutex algorithm and
 the module `bakery.py` implements Lamport's bakery algorithm.
 
 The module `auxiliary.py` defines three important functions: 
->random_distribution, await and default_task 
+>`random_distribution`, `await` and `default_task`
 >
 >`random_distribution` is a function that takes a number of threads, 
 >and a total number of requests amd returns a list L where L[i] 
@@ -29,4 +25,3 @@ represents a number of requests (randomly assigned) to thread i.
 
 `main.py` starts up n threads and m requests per thread, n and m being 
 passed as command line arguments. It runs both tests & terminates. 
-
