@@ -1,6 +1,6 @@
 
 import threading
-from auxiliary import await, default_task
+from auxiliary import *
 
 class Bakery(threading.Thread):
     """ Lamport's bakery algorithm """
@@ -54,13 +54,14 @@ class Bakery(threading.Thread):
             pass
         
         # call cs() req_count times:
-        [self.cs() for _ in range(Bakery.req_count)]
+        for _ in range(Bakery.req_count[self.i]):
+            self.cs()
     
 
 def setup(threads, req_count):
     Bakery.threads = threads
     Bakery.thread_count = len(threads)
-    Bakery.req_count = req_count
+    Bakery.req_count = random_distribution(req_count, Bakery.thread_count)
     
     Bakery.choosing = [0] * (Bakery.thread_count + 1)
     Bakery.num      = [0] * (Bakery.thread_count + 1)

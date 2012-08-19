@@ -1,6 +1,6 @@
 
 import threading
-from auxiliary import await, default_task
+from auxiliary import *
 
 class Fast(threading.Thread):
     """ Lamport's fast mutual exclusion algorithm """
@@ -70,13 +70,14 @@ class Fast(threading.Thread):
             pass
         
         # call cs() req_count times:
-        [self.cs() for _ in range(Fast.req_count)]
+        for _ in range(Fast.req_count[self.i]):
+            self.cs()
     
 
 def setup(threads, req_count):
     Fast.threads = threads
     Fast.thread_count = len(threads)
-    Fast.req_count = req_count
+    Fast.req_count = random_distribution(req_count, Fast.thread_count)
     
     Fast.choosing = [0] * (Fast.thread_count + 1)
 
