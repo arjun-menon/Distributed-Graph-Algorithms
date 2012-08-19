@@ -16,9 +16,21 @@ Eclipse during  development, and it worked fine in it. Might have something to d
 import sys
 from distalgo.runtime import *
 
-sys.argv = [ sys.argv[0], "RAtoken.dis" ]
-#libmain()
+RA, SK = 'RA', 'SK'
 
-sys.argv = [ sys.argv[0], "SKtoken.dis" ]
-libmain()
+prog = SK
 
+if len(sys.argv) > 1:
+	prog = sys.argv[1]
+
+if prog == RA:
+	sys.argv = [ sys.argv[0], "RAtoken.dis" ]
+	libmain()
+
+elif prog == SK:
+	sys.argv = [ sys.argv[0], "SKtoken.dis" ]
+	libmain()
+
+else:
+	print("Command-line argument must be 'RA' or 'SK'. (Not %s)" % sys.argv[1])
+	sys.exit(1)

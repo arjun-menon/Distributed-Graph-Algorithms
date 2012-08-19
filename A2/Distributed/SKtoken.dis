@@ -69,6 +69,7 @@ However, below is a description of the algorithm from Annie Liu's course website
 
 """
 
+#from queue import Queue
 from collections import deque
 
 nprocs = 5 # default number of processes
@@ -79,80 +80,91 @@ first_token_holder = None
 def Pi(proc):
     return int(str(proc))
 
-procs = dict() # dict mapping process numbers to processes
-
 class P(DistProcess):
     
-    def setup(ps):  
-        other_procs = ps
-        have_token = False
+    def setup(ps):
+        procs = dict() # dict mapping process numbers to processes
+        for (pn, p) in ps.items():
+            procs[int(pn)] = p
+        
+        other_procs = set(ps.values())
         
         """RNi[k] contains the largest sequence number 
         received from process k in a request message."""
         RN = [0] * nprocs
         
-        global LN
+        """Token consists of vector and a queue:
+            - LN[k] contains the sequence number of the latest executed 
+              request from process k
+            - Q is the queue of requesting process """
         LN = [0] * nprocs
-        
-        global Q
         Q = deque()
+        
+        have_token = False
         
         if Pi(self) == 0:
             have_token = True
 
     def cs(task):
-        # Do I have the token?
+        --start
+        
+        # Acquire token if necessary
         if not have_token:
             incr_logical_clock()
-            output("Sending requests for token...")
+            #output("Sending requests for token...")
             send( Request( logical_clock() ), other_procs )
             await( have_token == True )        
         # Now I have the token!
 
         "Perform critical section task"
         task()
-        output("Leaving CS...")
-        
-        i = Pi(self)
         
         """When a process i leaves the CS, it:
-            F Sets LN[i] of the token equal to RNi[i]
-            Indicates that its request RNi[i] has been executed"""
-        global LN
+            Sets LN[i] of the token equal to RNi[i]
+            Indicates that its request RNi[i] has been executed"""        
+        #output("Leaving CS...")
+        
+        i = Pi(self)
         LN[i] = RN[i]
+        
+        output("Is releasing.")
         
         --release
         
-        if len(Q) == 0:
-            """For every process k whose ID is not in the token queue Q, 
-            it appends its ID to Q if RNi[k] == LN[k]+1 """
-            for k in procs.keys():
+        """For every process k whose ID is not in the token queue Q, 
+        it appends its ID to Q if RNi[k] == LN[k]+1 """
+        for k in procs.keys():
+            if k not in set(Q):
                 if RN[k] > LN[k]:
-                    if i not in set(Q):
-                        Q.append(k)
+                    Q.append(k)
+        #output("Q = "+repr(Q))
         
-        output("Releasing... Q = "+repr(Q))
-        
-        if len(Q) > 0:
-            j = Q.popleft()
-            have_token = False
-            send( Reply('token'), procs[j] )
+        if have_token:
+            if len(Q) > 0:
+                j = Q.popleft()
+                have_token = False
+                token = (LN, Q)
+                send(Reply(token), procs[j])
+                
+        --end
 
     def OnRequest(ts):
-        output("Received request from "+repr(_source))
+        #output(repr(self) + " Received request from "+repr(_source))
+        
+        i = Pi(_source)     
+        RN[i] = max(RN[i], ts)            
+        
         if have_token:
-            i = Pi(_source)            
-            RN[i] = max(RN[i], ts)
-            
-            global LN
             if RN[i] > LN[i]:
                 "Send token to process i"
-                if i not in set(Q):
-                    Q.append(i)
+                have_token = False
+                token = (LN, Q)
+                send(Reply(token), procs[i])
 
     def OnReply(tok):
-        if tok == 'token':
-            have_token = True
+        _LN, _Q = tok
+        output("Got token from "+repr(_source)+" !!!")
+        have_token = True
 
     def main():
         global cs_count
@@ -160,7 +172,8 @@ class P(DistProcess):
         def anounce():
             output("In cs!")
 
-        for i in range(0, cs_count):
+        #for i in range(0, cs_count):
+        while True:
             cs(anounce)
 
 def main():
@@ -178,14 +191,14 @@ def main():
 
     # create n process
     ps = createprocs(P, {str(i) for i in range(0, nprocs)})
-    global procs
-    for (pn, p) in ps.items():
-        procs[int(pn)] = p
-    ps = set(ps.values())
+    ps_v = set(ps.values())
 
     # setup the processes
-    for p in ps: setupprocs([p], [ps-{p}])
+    for name, p in ps.items():
+        other_ps = dict(ps)
+        other_ps.pop(name)
+        setupprocs([p], [other_ps])
 
-    startprocs(ps)
-
-    for p in (ps): p.join()
+    startprocs(ps_v)
+    
+    for p in ps_v: p.join()
