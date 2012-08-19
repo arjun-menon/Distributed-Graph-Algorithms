@@ -1,0 +1,39 @@
+
+procs = dict() # dict mapping process numbers to processes
+Pi = lambda p: int(str(p))
+
+class P(DistProcess):
+    
+    def setup(ps):
+        other_procs = ps
+
+    def cs(search_for):
+        pass
+
+    def OnRequest(ts):
+        pass
+
+    def OnReply(m):
+        pass
+
+    def main():
+        pass
+
+def main():
+    nprocs = 1
+        
+    # create n process
+    use_channel("tcp")
+    ps = createprocs(P, {str(i) for i in range(0, nprocs)})
+    global procs
+    for (pn, p) in ps.items():
+        procs[int(pn)] = p
+    ps = set(ps.values())
+
+    # setup the processes
+    for p in ps: setupprocs([p], [ps-{p}])
+
+    startprocs(ps)
+
+    for p in (ps): p.join()
+    
