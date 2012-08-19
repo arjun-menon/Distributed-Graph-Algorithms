@@ -1,4 +1,7 @@
 
+import sys
+sys.path.append("..") # in order to import NetworkX
+
 import networkx as nx
 from collections import deque
 
