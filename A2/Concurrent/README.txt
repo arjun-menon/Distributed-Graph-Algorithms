@@ -12,7 +12,12 @@ both algorithms are to ensure that a segment of code know as the
 The module "fast.py"   implements Lamport's fast mutex algorithm and 
 the module "bakery.py" implements Lamport's bakery algorithm.
 
-The module "auxiliary.py" defines two important functions: await and default_task 
+The module "auxiliary.py" defines three important functions: 
+	random_distribution, await and default_task 
+	
+	random_distribution is a function that takes a number of threads, 
+	and a total number of requests amd returns a list L where L[i] 
+	represents a number of requests (randomly assigned) to thread i.
 
 	await(func) takes a function as argument, busy waits until 
 	the return value of func() becomes True. 
