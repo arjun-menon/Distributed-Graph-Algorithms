@@ -1,6 +1,14 @@
 
 """
-Suzuki and Kasami's generalized:
+
+Suzuki and Kasami's generalized
+-------------------------------
+
+I followed a description of the algorithm found on: http://vega.cs.kent.edu/~mikhail/classes/aos.f01/l17tokenDMX.pdf
+NOTE: Some of the comments seen in the code are copied from the above PDF. 
+
+However, below is a description of the algorithm from Annie Liu's course website (on Google Sites)
+(This is not the one I followed, see above link for the version of the algorithm I used.)
 
  token holds:
  
@@ -26,7 +34,7 @@ Suzuki and Kasami's generalized:
        having received (token)                                  Pi,P0
      token_held := true                                         Pi
      token_present := true                                      P0
-                                                                P0-checkreq()
+                                        `                        P0-checkreq()
      for u in pending: if some j, u.issued[j]>token.served[j]:  new (u>tk.served)
        add u to token.pending                                   new
      pending := []                                              new
@@ -61,28 +69,90 @@ Suzuki and Kasami's generalized:
 
 """
 
+from collections import deque
 
 nprocs = 5 # default number of processes
-cs_count = 5 # default number of calls to CS
+cs_count = 25 # default number of calls to CS
 
 first_token_holder = None
 
 def Pi(proc):
-    return int(str(proc))-1
+    return int(str(proc))
+
+procs = dict() # dict mapping process numbers to processes
 
 class P(DistProcess):
     
-    def setup(ps):        
-        other_procs = ps        
+    def setup(ps):  
+        other_procs = ps
+        have_token = False
+        
+        """RNi[k] contains the largest sequence number 
+        received from process k in a request message."""
+        RN = [0] * nprocs
+        
+        global LN
+        LN = [0] * nprocs
+        
+        global Q
+        Q = deque()
+        
+        if Pi(self) == 0:
+            have_token = True
 
     def cs(task):
-        pass
+        # Do I have the token?
+        if not have_token:
+            incr_logical_clock()
+            output("Sending requests for token...")
+            send( Request( logical_clock() ), other_procs )
+            await( have_token == True )        
+        # Now I have the token!
+
+        "Perform critical section task"
+        task()
+        output("Leaving CS...")
+        
+        i = Pi(self)
+        
+        """When a process i leaves the CS, it:
+            F Sets LN[i] of the token equal to RNi[i]
+            Indicates that its request RNi[i] has been executed"""
+        global LN
+        LN[i] = RN[i]
+        
+        --release
+        
+        if len(Q) == 0:
+            """For every process k whose ID is not in the token queue Q, 
+            it appends its ID to Q if RNi[k] == LN[k]+1 """
+            for k in procs.keys():
+                if RN[k] > LN[k]:
+                    if i not in set(Q):
+                        Q.append(k)
+        
+        output("Releasing... Q = "+repr(Q))
+        
+        if len(Q) > 0:
+            j = Q.popleft()
+            have_token = False
+            send( Reply('token'), procs[j] )
 
     def OnRequest(ts):
-        pass
+        output("Received request from "+repr(_source))
+        if have_token:
+            i = Pi(_source)            
+            RN[i] = max(RN[i], ts)
+            
+            global LN
+            if RN[i] > LN[i]:
+                "Send token to process i"
+                if i not in set(Q):
+                    Q.append(i)
 
     def OnReply(tok):
-        pass
+        if tok == 'token':
+            have_token = True
 
     def main():
         global cs_count
@@ -90,8 +160,7 @@ class P(DistProcess):
         def anounce():
             output("In cs!")
 
-        #for i in range(0, cs_count):
-        while True:
+        for i in range(0, cs_count):
             cs(anounce)
 
 def main():
@@ -108,7 +177,10 @@ def main():
     use_channel("tcp")
 
     # create n process
-    ps = createprocs(P, {str(i) for i in range(1, nprocs+1)})
+    ps = createprocs(P, {str(i) for i in range(0, nprocs)})
+    global procs
+    for (pn, p) in ps.items():
+        procs[int(pn)] = p
     ps = set(ps.values())
 
     # setup the processes
