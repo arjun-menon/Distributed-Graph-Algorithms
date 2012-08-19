@@ -1,0 +1,776 @@
+arjun@arjun-desktop:~/Development/workspace/DistAlgo$ python3 -m distalgo.runtime BFS.dis 10
+Searching for the element 300 using BFS in a tree containing 341 nodes.
+[2012-08-20 02:02:30,750]runtime:INFO: Creating instances of P..
+[2012-08-20 02:02:30,764]runtime:INFO: 10 instances of P created.
+[2012-08-20 02:02:30,773]runtime:INFO: Starting procs...
+[2012-08-20 02:02:30,774]P(0):INFO: Inspected 0
+[2012-08-20 02:02:30,774]P(7):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,774]P(0):INFO: Inspected 1
+[2012-08-20 02:02:30,774]P(0):INFO: Inspected 2
+[2012-08-20 02:02:30,774]P(0):INFO: Inspected 3
+[2012-08-20 02:02:30,774]P(5):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,775]P(6):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,774]P(0):INFO: Inspected 4
+[2012-08-20 02:02:30,774]P(3):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,775]P(0):INFO: Inspected 8
+[2012-08-20 02:02:30,775]P(0):INFO: Inspected 5
+[2012-08-20 02:02:30,775]P(0):INFO: Inspected 6
+[2012-08-20 02:02:30,775]P(0):INFO: Inspected 7
+[2012-08-20 02:02:30,775]P(0):INFO: Inspected 9
+[2012-08-20 02:02:30,776]P(0):INFO: Inspected 10
+[2012-08-20 02:02:30,776]P(0):INFO: Inspected 11
+[2012-08-20 02:02:30,774]P(2):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,776]P(0):INFO: Inspected 12
+[2012-08-20 02:02:30,776]P(0):INFO: Inspected 16
+[2012-08-20 02:02:30,776]P(0):INFO: Inspected 13
+[2012-08-20 02:02:30,776]P(0):INFO: Inspected 14
+[2012-08-20 02:02:30,776]P(0):INFO: Inspected 15
+[2012-08-20 02:02:30,775]P(4):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,774]P(9):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,775]P(1):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,776]P(0):INFO: Inspected 17
+[2012-08-20 02:02:30,778]P(0):INFO: Received request for work from 9
+[2012-08-20 02:02:30,779]P(0):INFO: Giving work [18] to 9
+[2012-08-20 02:02:30,779]P(8):INFO: Received request for work from 7
+[2012-08-20 02:02:30,779]P(0):INFO: Received request for work from 3
+[2012-08-20 02:02:30,780]P(8):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,780]P(0):INFO: Giving work [19] to 3
+[2012-08-20 02:02:30,780]P(0):INFO: Received request for work from 7
+[2012-08-20 02:02:30,780]P(7):INFO: Received request for work from 6
+[2012-08-20 02:02:30,780]P(0):INFO: Giving work [20] to 7
+[2012-08-20 02:02:30,780]P(7):INFO: Received request for work from 9
+[2012-08-20 02:02:30,781]P(7):INFO: Received request for work from 3
+[2012-08-20 02:02:30,781]P(0):INFO: Received request for work from 6
+[2012-08-20 02:02:30,781]P(7):INFO: Got work [20] from 0
+[2012-08-20 02:02:30,781]P(0):INFO: Giving work [33] to 6
+[2012-08-20 02:02:30,781]P(7):INFO: Received request for work from 4
+[2012-08-20 02:02:30,781]P(7):INFO: Inspected 20
+[2012-08-20 02:02:30,781]P(3):INFO: Received request for work from 7
+[2012-08-20 02:02:30,781]P(0):INFO: Inspected 34
+[2012-08-20 02:02:30,781]P(7):INFO: Inspected 81
+[2012-08-20 02:02:30,782]P(0):INFO: Received request for work from 4
+[2012-08-20 02:02:30,782]P(7):INFO: Received request for work from 8
+[2012-08-20 02:02:30,782]P(3):INFO: Received request for work from 9
+[2012-08-20 02:02:30,782]P(0):INFO: Giving work [35] to 4
+[2012-08-20 02:02:30,782]P(7):INFO: Giving work [82] to 8
+[2012-08-20 02:02:30,782]P(3):INFO: Received request for work from 6
+[2012-08-20 02:02:30,782]P(7):INFO: Inspected 83
+[2012-08-20 02:02:30,782]P(0):INFO: Received request for work from 2
+[2012-08-20 02:02:30,782]P(3):INFO: Received request for work from 4
+[2012-08-20 02:02:30,782]P(3):INFO: Received request for work from 2
+[2012-08-20 02:02:30,782]P(7):INFO: Inspected 84
+[2012-08-20 02:02:30,782]P(0):INFO: Giving work [36] to 2
+[2012-08-20 02:02:30,782]P(3):INFO: Received request for work from 1
+[2012-08-20 02:02:30,783]P(7):INFO: Inspected 328
+[2012-08-20 02:02:30,783]P(7):INFO: Inspected 325
+[2012-08-20 02:02:30,783]P(3):INFO: Got work [19] from 0
+[2012-08-20 02:02:30,783]P(0):INFO: Inspected 24
+[2012-08-20 02:02:30,783]P(7):INFO: Inspected 326
+[2012-08-20 02:02:30,783]P(7):INFO: Received request for work from 1
+[2012-08-20 02:02:30,783]P(0):INFO: Received request for work from 1
+[2012-08-20 02:02:30,783]P(7):INFO: Giving work [327] to 1
+[2012-08-20 02:02:30,783]P(0):INFO: Giving work [21] to 1
+[2012-08-20 02:02:30,783]P(3):INFO: Received request for work from 5
+[2012-08-20 02:02:30,783]P(7):INFO: Inspected 336
+[2012-08-20 02:02:30,783]P(7):INFO: Inspected 333
+[2012-08-20 02:02:30,783]P(3):INFO: Received request for work from 8
+[2012-08-20 02:02:30,784]P(7):INFO: Inspected 334
+[2012-08-20 02:02:30,784]P(1):INFO: Received request for work from 7
+[2012-08-20 02:02:30,784]P(0):INFO: Received request for work from 8
+[2012-08-20 02:02:30,784]P(7):INFO: Inspected 335
+[2012-08-20 02:02:30,784]P(0):INFO: Giving work [22] to 8
+[2012-08-20 02:02:30,784]P(1):INFO: Received request for work from 9
+[2012-08-20 02:02:30,784]P(7):INFO: Inspected 337
+[2012-08-20 02:02:30,784]P(3):INFO: Inspected 19
+[2012-08-20 02:02:30,784]P(7):INFO: Inspected 338
+[2012-08-20 02:02:30,784]P(1):INFO: Received request for work from 3
+[2012-08-20 02:02:30,784]P(7):INFO: Inspected 339
+[2012-08-20 02:02:30,784]P(7):INFO: Inspected 340
+[2012-08-20 02:02:30,784]P(1):INFO: Received request for work from 4
+[2012-08-20 02:02:30,784]P(6):INFO: Received request for work from 7
+[2012-08-20 02:02:30,784]P(7):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,784]P(1):INFO: Received request for work from 6
+[2012-08-20 02:02:30,784]P(0):INFO: Inspected 23
+[2012-08-20 02:02:30,784]P(0):INFO: Received request for work from 5
+[2012-08-20 02:02:30,785]P(1):INFO: Got work [327] from 7
+[2012-08-20 02:02:30,785]P(1):INFO: Got work [21] from 0
+[2012-08-20 02:02:30,784]P(3):INFO: Inspected 80
+[2012-08-20 02:02:30,785]P(6):INFO: Received request for work from 3
+[2012-08-20 02:02:30,785]P(6):INFO: Received request for work from 9
+[2012-08-20 02:02:30,785]P(3):INFO: Received request for work from 7
+[2012-08-20 02:02:30,785]P(3):INFO: Giving work [77] to 7
+[2012-08-20 02:02:30,785]P(6):INFO: Got work [33] from 0
+[2012-08-20 02:02:30,785]P(6):INFO: Received request for work from 1
+[2012-08-20 02:02:30,785]P(3):INFO: Inspected 78
+[2012-08-20 02:02:30,785]P(6):INFO: Received request for work from 4
+[2012-08-20 02:02:30,785]P(1):INFO: Received request for work from 8
+[2012-08-20 02:02:30,785]P(6):INFO: Received request for work from 8
+[2012-08-20 02:02:30,785]P(6):INFO: Inspected 33
+[2012-08-20 02:02:30,785]P(0):INFO: Giving work [25] to 5
+[2012-08-20 02:02:30,785]P(3):INFO: Inspected 79
+[2012-08-20 02:02:30,786]P(1):INFO: Giving work [327] to 8
+[2012-08-20 02:02:30,786]P(7):INFO: Received request for work from 5
+[2012-08-20 02:02:30,785]P(9):INFO: Received request for work from 7
+[2012-08-20 02:02:30,786]P(3):INFO: Inspected 321
+[2012-08-20 02:02:30,786]P(6):INFO: Received request for work from 5
+[2012-08-20 02:02:30,786]P(9):INFO: Got work [18] from 0
+[2012-08-20 02:02:30,786]P(6):INFO: Giving work [136] to 5
+[2012-08-20 02:02:30,786]P(3):INFO: Inspected 322
+[2012-08-20 02:02:30,786]P(9):INFO: Received request for work from 3
+[2012-08-20 02:02:30,786]P(4):INFO: Received request for work from 9
+[2012-08-20 02:02:30,786]P(0):INFO: Inspected 26
+[2012-08-20 02:02:30,786]P(3):INFO: Inspected 323
+[2012-08-20 02:02:30,786]P(6):INFO: Received request for work from 2
+[2012-08-20 02:02:30,786]P(4):INFO: Received request for work from 6
+[2012-08-20 02:02:30,786]P(6):INFO: Giving work [133] to 2
+[2012-08-20 02:02:30,786]P(3):INFO: Inspected 324
+[2012-08-20 02:02:30,787]P(4):INFO: Received request for work from 7
+[2012-08-20 02:02:30,786]P(1):INFO: Received request for work from 7
+[2012-08-20 02:02:30,786]P(9):INFO: Inspected 18
+[2012-08-20 02:02:30,786]P(8):INFO: Received request for work from 3
+[2012-08-20 02:02:30,787]P(0):INFO: Received request for work from 7
+[2012-08-20 02:02:30,787]P(3):INFO: Inspected 313
+[2012-08-20 02:02:30,787]P(7):INFO: Received request for work from 2
+[2012-08-20 02:02:30,787]P(8):INFO: Received request for work from 9
+[2012-08-20 02:02:30,787]P(3):INFO: Inspected 314
+[2012-08-20 02:02:30,787]P(8):INFO: Received request for work from 6
+[2012-08-20 02:02:30,787]P(4):INFO: Received request for work from 7
+[2012-08-20 02:02:30,787]P(7):INFO: Got work [77] from 3
+[2012-08-20 02:02:30,787]P(8):INFO: Received request for work from 4
+[2012-08-20 02:02:30,787]P(4):INFO: Received request for work from 8
+[2012-08-20 02:02:30,787]P(6):INFO: Received request for work from 7
+[2012-08-20 02:02:30,787]P(7):INFO: Inspected 77
+[2012-08-20 02:02:30,787]P(6):INFO: Giving work [134] to 7
+[2012-08-20 02:02:30,787]P(7):INFO: Inspected 312
+[2012-08-20 02:02:30,787]P(3):INFO: Inspected 315
+[2012-08-20 02:02:30,788]P(7):INFO: Inspected 309
+[2012-08-20 02:02:30,788]P(3):INFO: Inspected 316
+[2012-08-20 02:02:30,788]P(4):INFO: Got work [35] from 0
+[2012-08-20 02:02:30,788]P(7):INFO: Got work [134] from 6
+[2012-08-20 02:02:30,787]P(1):INFO: Inspected 21
+[2012-08-20 02:02:30,787]P(0):INFO: Giving work [27] to 7
+[2012-08-20 02:02:30,788]P(4):INFO: Received request for work from 3
+[2012-08-20 02:02:30,788]P(7):INFO: Inspected 310
+[2012-08-20 02:02:30,788]P(4):INFO: Received request for work from 1
+[2012-08-20 02:02:30,788]P(7):INFO: Inspected 311
+[2012-08-20 02:02:30,787]P(9):INFO: Inspected 73
+[2012-08-20 02:02:30,788]P(4):INFO: Received request for work from 2
+[2012-08-20 02:02:30,788]P(7):INFO: Inspected 134
+[2012-08-20 02:02:30,788]P(4):INFO: Inspected 35
+[2012-08-20 02:02:30,788]P(9):INFO: Received request for work from 6
+[2012-08-20 02:02:30,787]P(8):INFO: Received request for work from 1
+[2012-08-20 02:02:30,788]P(7):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,788]P(0):INFO: Inspected 28
+[2012-08-20 02:02:30,788]P(6):INFO: Inspected 135
+[2012-08-20 02:02:30,788]P(8):INFO: Received request for work from 2
+[2012-08-20 02:02:30,789]P(6):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,788]P(3):INFO: Inspected 320
+[2012-08-20 02:02:30,788]P(1):INFO: Received request for work from 2
+[2012-08-20 02:02:30,789]P(1):INFO: Giving work [88] to 2
+[2012-08-20 02:02:30,789]P(3):INFO: Inspected 317
+[2012-08-20 02:02:30,789]P(3):INFO: Received request for work from 6
+[2012-08-20 02:02:30,788]P(4):INFO: Received request for work from 5
+[2012-08-20 02:02:30,789]P(3):INFO: Giving work [318] to 6
+[2012-08-20 02:02:30,789]P(0):INFO: Inspected 32
+[2012-08-20 02:02:30,789]P(4):INFO: Giving work [144] to 5
+[2012-08-20 02:02:30,790]P(3):INFO: Received request for work from 7
+[2012-08-20 02:02:30,790]P(7):INFO: Got work [27] from 0
+[2012-08-20 02:02:30,790]P(1):INFO: Received request for work from 5
+[2012-08-20 02:02:30,790]P(3):INFO: Inspected 319
+[2012-08-20 02:02:30,790]P(7):INFO: Received request for work from 6
+[2012-08-20 02:02:30,789]P(9):INFO: Giving work [74] to 6
+[2012-08-20 02:02:30,790]P(3):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,790]P(7):INFO: Inspected 27
+[2012-08-20 02:02:30,790]P(4):INFO: Received request for work from 6
+[2012-08-20 02:02:30,790]P(9):INFO: Received request for work from 8
+[2012-08-20 02:02:30,789]P(8):INFO: Got work [82] from 7
+[2012-08-20 02:02:30,789]P(0):INFO: Received request for work from 6
+[2012-08-20 02:02:30,790]P(4):INFO: Giving work [141] to 6
+[2012-08-20 02:02:30,789]P(6):INFO: Received request for work from 7
+[2012-08-20 02:02:30,790]P(8):INFO: Received request for work from 5
+[2012-08-20 02:02:30,790]P(1):INFO: Giving work [85] to 5
+[2012-08-20 02:02:30,790]P(7):INFO: Inspected 112
+[2012-08-20 02:02:30,791]P(6):INFO: Got work [318] from 3
+[2012-08-20 02:02:30,791]P(0):INFO: Giving work [29] to 6
+[2012-08-20 02:02:30,791]P(1):INFO: Received request for work from 6
+[2012-08-20 02:02:30,791]P(2):INFO: Received request for work from 7
+[2012-08-20 02:02:30,791]P(6):INFO: Got work [74] from 9
+[2012-08-20 02:02:30,791]P(7):INFO: Received request for work from 3
+[2012-08-20 02:02:30,791]P(1):INFO: Giving work [86] to 6
+[2012-08-20 02:02:30,791]P(4):INFO: Received request for work from 7
+[2012-08-20 02:02:30,791]P(0):INFO: Received request for work from 7
+[2012-08-20 02:02:30,792]P(7):INFO: Giving work [109] to 3
+[2012-08-20 02:02:30,792]P(0):INFO: Giving work [30] to 7
+[2012-08-20 02:02:30,792]P(2):INFO: Received request for work from 3
+[2012-08-20 02:02:30,792]P(6):INFO: Received request for work from 3
+[2012-08-20 02:02:30,792]P(6):INFO: Giving work [318] to 3
+[2012-08-20 02:02:30,792]P(1):INFO: Inspected 87
+[2012-08-20 02:02:30,792]P(1):INFO: Received request for work from 7
+[2012-08-20 02:02:30,792]P(3):INFO: Got work [109] from 7
+[2012-08-20 02:02:30,791]P(8):INFO: Got work [22] from 0
+[2012-08-20 02:02:30,791]P(9):INFO: Giving work [75] to 8
+[2012-08-20 02:02:30,790]P(5):INFO: Received request for work from 7
+[2012-08-20 02:02:30,793]P(6):INFO: Got work [141] from 4
+[2012-08-20 02:02:30,793]P(3):INFO: Got work [318] from 6
+[2012-08-20 02:02:30,793]P(6):INFO: Inspected 74
+[2012-08-20 02:02:30,793]P(3):INFO: Inspected 109
+[2012-08-20 02:02:30,793]P(8):INFO: Received request for work from 7
+[2012-08-20 02:02:30,793]P(5):INFO: Received request for work from 9
+[2012-08-20 02:02:30,793]P(9):INFO: Received request for work from 2
+[2012-08-20 02:02:30,792]P(0):INFO: Received request for work from 3
+[2012-08-20 02:02:30,793]P(8):INFO: Giving work [82] to 7
+[2012-08-20 02:02:30,793]P(9):INFO: Giving work [76] to 2
+[2012-08-20 02:02:30,793]P(5):INFO: Received request for work from 3
+[2012-08-20 02:02:30,793]P(0):INFO: Giving work [31] to 3
+[2012-08-20 02:02:30,793]P(5):INFO: Received request for work from 4
+[2012-08-20 02:02:30,793]P(5):INFO: Received request for work from 1
+[2012-08-20 02:02:30,793]P(0):INFO: Inspected 40
+[2012-08-20 02:02:30,793]P(5):INFO: Received request for work from 6
+[2012-08-20 02:02:30,793]P(8):INFO: Inspected 22
+[2012-08-20 02:02:30,793]P(9):INFO: Received request for work from 4
+[2012-08-20 02:02:30,793]P(0):INFO: Inspected 37
+[2012-08-20 02:02:30,793]P(5):INFO: Received request for work from 7
+[2012-08-20 02:02:30,794]P(9):INFO: Giving work [296] to 4
+[2012-08-20 02:02:30,794]P(5):INFO: Received request for work from 8
+[2012-08-20 02:02:30,794]P(0):INFO: Inspected 38
+[2012-08-20 02:02:30,794]P(8):INFO: Got work [327] from 1
+[2012-08-20 02:02:30,794]P(5):INFO: Got work [136] from 6
+[2012-08-20 02:02:30,792]P(2):INFO: Received request for work from 5
+[2012-08-20 02:02:30,793]P(1):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,793]P(4):INFO: Giving work [142] to 7
+[2012-08-20 02:02:30,794]P(9):INFO: Inspected 293
+[2012-08-20 02:02:30,793]P(7):INFO: Got work [30] from 0
+[2012-08-20 02:02:30,794]P(2):INFO: Received request for work from 9
+[2012-08-20 02:02:30,794]P(9):INFO: Received request for work from 5
+[2012-08-20 02:02:30,794]P(9):INFO: Giving work [294] to 5
+[2012-08-20 02:02:30,794]P(2):INFO: Received request for work from 4
+[2012-08-20 02:02:30,794]P(2):INFO: Received request for work from 6
+[2012-08-20 02:02:30,794]P(4):INFO: Inspected 143
+[2012-08-20 02:02:30,793]P(6):INFO: Got work [29] from 0
+[2012-08-20 02:02:30,793]P(3):INFO: Inspected 318
+[2012-08-20 02:02:30,794]P(1):INFO: Received request for work from 3
+[2012-08-20 02:02:30,794]P(4):INFO: Received request for work from 3
+[2012-08-20 02:02:30,794]P(0):INFO: Inspected 39
+[2012-08-20 02:02:30,794]P(9):INFO: Received request for work from 7
+[2012-08-20 02:02:30,795]P(6):INFO: Got work [86] from 1
+[2012-08-20 02:02:30,795]P(3):INFO: Got work [31] from 0
+[2012-08-20 02:02:30,795]P(4):INFO: Got work [296] from 9
+[2012-08-20 02:02:30,795]P(0):INFO: Received request for work from 1
+[2012-08-20 02:02:30,795]P(6):INFO: Received request for work from 1
+[2012-08-20 02:02:30,794]P(8):INFO: Received request for work from 6
+[2012-08-20 02:02:30,795]P(3):INFO: Received request for work from 1
+[2012-08-20 02:02:30,794]P(7):INFO: Got work [82] from 8
+[2012-08-20 02:02:30,795]P(0):INFO: Giving work [41] to 1
+[2012-08-20 02:02:30,795]P(6):INFO: Giving work [141] to 1
+[2012-08-20 02:02:30,794]P(5):INFO: Got work [25] from 0
+[2012-08-20 02:02:30,795]P(8):INFO: Giving work [89] to 6
+[2012-08-20 02:02:30,794]P(2):INFO: Received request for work from 1
+[2012-08-20 02:02:30,795]P(0):INFO: Inspected 42
+[2012-08-20 02:02:30,795]P(9):INFO: Received request for work from 1
+[2012-08-20 02:02:30,795]P(4):INFO: Inspected 296
+[2012-08-20 02:02:30,795]P(3):INFO: Inspected 31
+[2012-08-20 02:02:30,795]P(8):INFO: Received request for work from 7
+[2012-08-20 02:02:30,795]P(9):INFO: Received request for work from 6
+[2012-08-20 02:02:30,795]P(8):INFO: Giving work [90] to 7
+[2012-08-20 02:02:30,795]P(4):INFO: Received request for work from 1
+[2012-08-20 02:02:30,795]P(9):INFO: Inspected 295
+[2012-08-20 02:02:30,795]P(3):INFO: Inspected 128
+[2012-08-20 02:02:30,795]P(7):INFO: Inspected 110
+[2012-08-20 02:02:30,795]P(9):INFO: Received request for work from 7
+[2012-08-20 02:02:30,795]P(5):INFO: Received request for work from 2
+[2012-08-20 02:02:30,795]P(3):INFO: Inspected 125
+[2012-08-20 02:02:30,795]P(6):INFO: Inspected 297
+[2012-08-20 02:02:30,796]P(9):INFO: Received request for work from 3
+[2012-08-20 02:02:30,796]P(5):INFO: Giving work [136] to 2
+[2012-08-20 02:02:30,796]P(3):INFO: Inspected 126
+[2012-08-20 02:02:30,796]P(9):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,796]P(6):INFO: Got work [89] from 8
+[2012-08-20 02:02:30,796]P(3):INFO: Inspected 127
+[2012-08-20 02:02:30,796]P(8):INFO: Inspected 91
+[2012-08-20 02:02:30,796]P(5):INFO: Inspected 25
+[2012-08-20 02:02:30,796]P(7):INFO: Got work [142] from 4
+[2012-08-20 02:02:30,796]P(8):INFO: Received request for work from 3
+[2012-08-20 02:02:30,796]P(5):INFO: Received request for work from 6
+[2012-08-20 02:02:30,795]P(1):INFO: Got work [41] from 0
+[2012-08-20 02:02:30,796]P(7):INFO: Received request for work from 1
+[2012-08-20 02:02:30,796]P(5):INFO: Giving work [104] to 6
+[2012-08-20 02:02:30,796]P(7):INFO: Giving work [111] to 1
+[2012-08-20 02:02:30,796]P(1):INFO: Got work [141] from 6
+[2012-08-20 02:02:30,795]P(0):INFO: Inspected 43
+[2012-08-20 02:02:30,795]P(2):INFO: Received request for work from 8
+[2012-08-20 02:02:30,795]P(4):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,796]P(0):INFO: Received request for work from 9
+[2012-08-20 02:02:30,796]P(1):INFO: Inspected 41
+[2012-08-20 02:02:30,796]P(0):INFO: Giving work [44] to 9
+[2012-08-20 02:02:30,796]P(5):INFO: Received request for work from 7
+[2012-08-20 02:02:30,797]P(1):INFO: Got work [111] from 7
+[2012-08-20 02:02:30,797]P(7):INFO: Got work [90] from 8
+[2012-08-20 02:02:30,796]P(6):INFO: Inspected 298
+[2012-08-20 02:02:30,797]P(9):INFO: Received request for work from 1
+[2012-08-20 02:02:30,796]P(3):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,796]P(8):INFO: Giving work [92] to 3
+[2012-08-20 02:02:30,796]P(2):INFO: Got work [36] from 0
+[2012-08-20 02:02:30,797]P(5):INFO: Giving work [101] to 7
+[2012-08-20 02:02:30,797]P(1):INFO: Received request for work from 9
+[2012-08-20 02:02:30,797]P(7):INFO: Inspected 30
+[2012-08-20 02:02:30,797]P(1):INFO: Giving work [141] to 9
+[2012-08-20 02:02:30,797]P(8):INFO: Got work [75] from 9
+[2012-08-20 02:02:30,797]P(0):INFO: Inspected 48
+[2012-08-20 02:02:30,797]P(6):INFO: Got work [104] from 5
+[2012-08-20 02:02:30,797]P(7):INFO: Received request for work from 9
+[2012-08-20 02:02:30,797]P(4):INFO: Received request for work from 9
+[2012-08-20 02:02:30,798]P(0):INFO: Received request for work from 4
+[2012-08-20 02:02:30,798]P(1):INFO: Received request for work from 4
+[2012-08-20 02:02:30,798]P(0):INFO: Giving work [45] to 4
+[2012-08-20 02:02:30,798]P(1):INFO: Giving work [168] to 4
+[2012-08-20 02:02:30,797]P(9):INFO: Got work [44] from 0
+[2012-08-20 02:02:30,798]P(0):INFO: Received request for work from 3
+[2012-08-20 02:02:30,797]P(2):INFO: Received request for work from 7
+[2012-08-20 02:02:30,798]P(3):INFO: Received request for work from 9
+[2012-08-20 02:02:30,798]P(0):INFO: Giving work [46] to 3
+[2012-08-20 02:02:30,798]P(3):INFO: Received request for work from 4
+[2012-08-20 02:02:30,798]P(2):INFO: Got work [133] from 6
+[2012-08-20 02:02:30,798]P(9):INFO: Received request for work from 4
+[2012-08-20 02:02:30,798]P(2):INFO: Inspected 36
+[2012-08-20 02:02:30,797]P(5):INFO: Got work [144] from 4
+[2012-08-20 02:02:30,798]P(0):INFO: Inspected 47
+[2012-08-20 02:02:30,798]P(8):INFO: Received request for work from 1
+[2012-08-20 02:02:30,798]P(2):INFO: Received request for work from 7
+[2012-08-20 02:02:30,798]P(3):INFO: Got work [92] from 8
+[2012-08-20 02:02:30,798]P(7):INFO: Giving work [82] to 9
+[2012-08-20 02:02:30,798]P(6):INFO: Received request for work from 9
+[2012-08-20 02:02:30,799]P(4):INFO: Received request for work from 3
+[2012-08-20 02:02:30,798]P(1):INFO: Inspected 165
+[2012-08-20 02:02:30,798]P(5):INFO: Got work [85] from 1
+[2012-08-20 02:02:30,799]P(6):INFO: Giving work [299] to 9
+[2012-08-20 02:02:30,799]P(4):INFO: Got work [45] from 0
+[2012-08-20 02:02:30,799]P(2):INFO: Giving work [133] to 7
+[2012-08-20 02:02:30,799]P(4):INFO: Got work [168] from 1
+[2012-08-20 02:02:30,799]P(7):INFO: Received request for work from 4
+[2012-08-20 02:02:30,799]P(1):INFO: Received request for work from 3
+[2012-08-20 02:02:30,799]P(1):INFO: Giving work [166] to 3
+[2012-08-20 02:02:30,799]P(7):INFO: Giving work [142] to 4
+[2012-08-20 02:02:30,799]P(4):INFO: Inspected 45
+[2012-08-20 02:02:30,799]P(6):INFO: Received request for work from 4
+[2012-08-20 02:02:30,799]P(4):INFO: Inspected 168
+[2012-08-20 02:02:30,799]P(6):INFO: Giving work [300] to 4
+[2012-08-20 02:02:30,799]P(2):INFO: Received request for work from 6
+[2012-08-20 02:02:30,799]P(2):INFO: Giving work [145] to 6
+[2012-08-20 02:02:30,799]P(6):INFO: Received request for work from 3
+[2012-08-20 02:02:30,799]P(7):INFO: Got work [101] from 5
+[2012-08-20 02:02:30,799]P(6):INFO: Giving work [29] to 3
+[2012-08-20 02:02:30,799]P(0):INFO: Inspected 49
+[2012-08-20 02:02:30,800]P(7):INFO: Received request for work from 3
+[2012-08-20 02:02:30,800]P(1):INFO: Inspected 167
+[2012-08-20 02:02:30,800]P(7):INFO: Giving work [90] to 3
+[2012-08-20 02:02:30,800]P(2):INFO: Got work [88] from 1
+[2012-08-20 02:02:30,800]P(1):INFO: Inspected 111
+[2012-08-20 02:02:30,800]P(7):INFO: Inspected 121
+[2012-08-20 02:02:30,800]P(1):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,800]P(6):INFO: Inspected 86
+[2012-08-20 02:02:30,799]P(8):INFO: Giving work [327] to 1
+[2012-08-20 02:02:30,800]P(7):INFO: Got work [133] from 2
+[2012-08-20 02:02:30,800]P(2):INFO: Received request for work from 3
+[2012-08-20 02:02:30,800]P(2):INFO: Giving work [146] to 3
+[2012-08-20 02:02:30,799]P(9):INFO: Got work [141] from 1
+[2012-08-20 02:02:30,800]P(8):INFO: Inspected 75
+[2012-08-20 02:02:30,800]P(9):INFO: Received request for work from 3
+[2012-08-20 02:02:30,800]P(1):INFO: Got work [327] from 8
+[2012-08-20 02:02:30,800]P(9):INFO: Giving work [44] to 3
+[2012-08-20 02:02:30,799]P(3):INFO: Got work [46] from 0
+[2012-08-20 02:02:30,799]P(5):INFO: Inspected 102
+[2012-08-20 02:02:30,801]P(1):INFO: Inspected 327
+[2012-08-20 02:02:30,800]P(6):INFO: Got work [145] from 2
+[2012-08-20 02:02:30,801]P(3):INFO: Got work [166] from 1
+[2012-08-20 02:02:30,801]P(5):INFO: Received request for work from 3
+[2012-08-20 02:02:30,801]P(1):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,801]P(3):INFO: Inspected 92
+[2012-08-20 02:02:30,801]P(5):INFO: Giving work [103] to 3
+[2012-08-20 02:02:30,801]P(6):INFO: Inspected 89
+[2012-08-20 02:02:30,799]P(4):INFO: Inspected 184
+[2012-08-20 02:02:30,800]P(0):INFO: Inspected 50
+[2012-08-20 02:02:30,800]P(7):INFO: Inspected 122
+[2012-08-20 02:02:30,800]P(2):INFO: Inspected 147
+[2012-08-20 02:02:30,801]P(8):INFO: Received request for work from 9
+[2012-08-20 02:02:30,801]P(7):INFO: Received request for work from 1
+[2012-08-20 02:02:30,801]P(2):INFO: Got work [76] from 9
+[2012-08-20 02:02:30,801]P(7):INFO: Giving work [123] to 1
+[2012-08-20 02:02:30,801]P(5):INFO: Got work [294] from 9
+[2012-08-20 02:02:30,801]P(2):INFO: Received request for work from 1
+[2012-08-20 02:02:30,801]P(2):INFO: Giving work [148] to 1
+[2012-08-20 02:02:30,801]P(5):INFO: Received request for work from 1
+[2012-08-20 02:02:30,802]P(5):INFO: Giving work [144] to 1
+[2012-08-20 02:02:30,801]P(8):INFO: Giving work [304] to 9
+[2012-08-20 02:02:30,802]P(7):INFO: Inspected 124
+[2012-08-20 02:02:30,802]P(8):INFO: Received request for work from 4
+[2012-08-20 02:02:30,801]P(9):INFO: Inspected 141
+[2012-08-20 02:02:30,801]P(3):INFO: Got work [29] from 6
+[2012-08-20 02:02:30,801]P(4):INFO: Got work [300] from 6
+[2012-08-20 02:02:30,802]P(5):INFO: Inspected 85
+[2012-08-20 02:02:30,802]P(8):INFO: Giving work [301] to 4
+[2012-08-20 02:02:30,802]P(9):INFO: Got work [299] from 6
+[2012-08-20 02:02:30,802]P(5):INFO: Received request for work from 9
+[2012-08-20 02:02:30,802]P(4):INFO: Got work [142] from 7
+[2012-08-20 02:02:30,802]P(3):INFO: Got work [90] from 7
+[2012-08-20 02:02:30,802]P(1):INFO: Got work [123] from 7
+[2012-08-20 02:02:30,802]P(9):INFO: Got work [82] from 7
+[2012-08-20 02:02:30,802]P(2):INFO: Got work [136] from 5
+[2012-08-20 02:02:30,802]P(5):INFO: Received request for work from 4
+[2012-08-20 02:02:30,802]P(1):INFO: Got work [148] from 2
+[2012-08-20 02:02:30,802]P(0):INFO: Received request for work from 1
+[2012-08-20 02:02:30,802]P(6):INFO: Received request for work from 1
+[2012-08-20 02:02:30,802]P(7):INFO: Received request for work from 1
+[2012-08-20 02:02:30,802]P(4):INFO: Received request for work from 1
+[2012-08-20 02:02:30,803]P(1):INFO: Got work [144] from 5
+[2012-08-20 02:02:30,803]P(6):INFO: Giving work [104] to 1
+[2012-08-20 02:02:30,802]P(5):INFO: Inspected 294
+[2012-08-20 02:02:30,803]P(4):INFO: Giving work [181] to 1
+[2012-08-20 02:02:30,802]P(8):INFO: Inspected 302
+[2012-08-20 02:02:30,803]P(1):INFO: Inspected 123
+[2012-08-20 02:02:30,803]P(5):INFO: Received request for work from 3
+[2012-08-20 02:02:30,803]P(6):INFO: Received request for work from 1
+[2012-08-20 02:02:30,803]P(5):INFO: Received request for work from 1
+[2012-08-20 02:02:30,802]P(2):INFO: Received request for work from 9
+[2012-08-20 02:02:30,802]P(3):INFO: Received request for work from 1
+[2012-08-20 02:02:30,803]P(5):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,803]P(6):INFO: Inspected 145
+[2012-08-20 02:02:30,803]P(9):INFO: Received request for work from 1
+[2012-08-20 02:02:30,803]P(3):INFO: Giving work [46] to 1
+[2012-08-20 02:02:30,803]P(9):INFO: Giving work [299] to 1
+[2012-08-20 02:02:30,803]P(6):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,803]P(0):INFO: Giving work [51] to 1
+[2012-08-20 02:02:30,803]P(3):INFO: Got work [146] from 2
+[2012-08-20 02:02:30,803]P(7):INFO: Giving work [101] to 1
+[2012-08-20 02:02:30,803]P(9):INFO: Inspected 82
+[2012-08-20 02:02:30,803]P(0):INFO: Received request for work from 1
+[2012-08-20 02:02:30,803]P(8):INFO: Received request for work from 3
+[2012-08-20 02:02:30,804]P(3):INFO: Inspected 166
+[2012-08-20 02:02:30,803]P(1):INFO: Inspected 148
+[2012-08-20 02:02:30,804]P(0):INFO: Giving work [52] to 1
+[2012-08-20 02:02:30,803]P(4):INFO: Received request for work from 1
+[2012-08-20 02:02:30,803]P(2):INFO: Giving work [88] to 9
+[2012-08-20 02:02:30,804]P(1):INFO: Got work [104] from 6
+[2012-08-20 02:02:30,804]P(2):INFO: Inspected 76
+[2012-08-20 02:02:30,804]P(1):INFO: Got work [181] from 4
+[2012-08-20 02:02:30,804]P(2):INFO: Received request for work from 4
+[2012-08-20 02:02:30,804]P(1):INFO: Got work [46] from 3
+[2012-08-20 02:02:30,804]P(2):INFO: Giving work [136] to 4
+[2012-08-20 02:02:30,804]P(5):INFO: Received request for work from 1
+[2012-08-20 02:02:30,803]P(9):INFO: Received request for work from 1
+[2012-08-20 02:02:30,804]P(7):INFO: Inspected 133
+[2012-08-20 02:02:30,804]P(3):INFO: Got work [44] from 9
+[2012-08-20 02:02:30,804]P(8):INFO: Inspected 303
+[2012-08-20 02:02:30,805]P(9):INFO: Giving work [329] to 1
+[2012-08-20 02:02:30,805]P(5):INFO: Received request for work from 6
+[2012-08-20 02:02:30,805]P(7):INFO: Received request for work from 6
+[2012-08-20 02:02:30,805]P(8):INFO: Received request for work from 1
+[2012-08-20 02:02:30,804]P(6):INFO: Received request for work from 5
+[2012-08-20 02:02:30,804]P(1):INFO: Inspected 144
+[2012-08-20 02:02:30,805]P(7):INFO: Received request for work from 5
+[2012-08-20 02:02:30,805]P(8):INFO: Received request for work from 1
+[2012-08-20 02:02:30,805]P(2):INFO: Received request for work from 3
+[2012-08-20 02:02:30,805]P(7):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,805]P(3):INFO: Got work [103] from 5
+[2012-08-20 02:02:30,805]P(8):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,805]P(2):INFO: Giving work [305] to 3
+[2012-08-20 02:02:30,805]P(4):INFO: Giving work [182] to 1
+[2012-08-20 02:02:30,805]P(1):INFO: Got work [51] from 0
+[2012-08-20 02:02:30,805]P(0):INFO: Received request for work from 6
+[2012-08-20 02:02:30,805]P(0):INFO: Giving work [65] to 6
+[2012-08-20 02:02:30,805]P(1):INFO: Got work [299] from 9
+[2012-08-20 02:02:30,806]P(1):INFO: Got work [101] from 7
+[2012-08-20 02:02:30,806]P(4):INFO: Inspected 183
+[2012-08-20 02:02:30,806]P(2):INFO: Inspected 306
+[2012-08-20 02:02:30,806]P(0):INFO: Inspected 66
+[2012-08-20 02:02:30,805]P(3):INFO: Received request for work from 1
+[2012-08-20 02:02:30,806]P(1):INFO: Received request for work from 6
+[2012-08-20 02:02:30,806]P(3):INFO: Giving work [29] to 1
+[2012-08-20 02:02:30,806]P(6):INFO: Got work [65] from 0
+[2012-08-20 02:02:30,806]P(1):INFO: Giving work [104] to 6
+[2012-08-20 02:02:30,806]P(6):INFO: Received request for work from 8
+[2012-08-20 02:02:30,807]P(8):INFO: Received request for work from 6
+[2012-08-20 02:02:30,807]P(6):INFO: Received request for work from 7
+[2012-08-20 02:02:30,807]P(4):INFO: Got work [301] from 8
+[2012-08-20 02:02:30,806]P(9):INFO: Got work [304] from 8
+[2012-08-20 02:02:30,806]P(2):INFO: Received request for work from 1
+[2012-08-20 02:02:30,807]P(4):INFO: Received request for work from 6
+[2012-08-20 02:02:30,806]P(5):INFO: Received request for work from 8
+[2012-08-20 02:02:30,807]P(9):INFO: Inspected 330
+[2012-08-20 02:02:30,807]P(3):INFO: Inspected 90
+[2012-08-20 02:02:30,807]P(1):INFO: Inspected 181
+[2012-08-20 02:02:30,806]P(7):INFO: Received request for work from 8
+[2012-08-20 02:02:30,806]P(0):INFO: Received request for work from 5
+[2012-08-20 02:02:30,807]P(8):INFO: Received request for work from 5
+[2012-08-20 02:02:30,807]P(4):INFO: Giving work [300] to 6
+[2012-08-20 02:02:30,807]P(3):INFO: Received request for work from 6
+[2012-08-20 02:02:30,807]P(0):INFO: Giving work [67] to 5
+[2012-08-20 02:02:30,807]P(8):INFO: Received request for work from 7
+[2012-08-20 02:02:30,807]P(0):INFO: Received request for work from 8
+[2012-08-20 02:02:30,807]P(2):INFO: Giving work [307] to 1
+[2012-08-20 02:02:30,807]P(9):INFO: Received request for work from 6
+[2012-08-20 02:02:30,807]P(1):INFO: Got work [52] from 0
+[2012-08-20 02:02:30,807]P(5):INFO: Received request for work from 7
+[2012-08-20 02:02:30,807]P(6):INFO: Got work [104] from 1
+[2012-08-20 02:02:30,807]P(3):INFO: Giving work [146] to 6
+[2012-08-20 02:02:30,808]P(9):INFO: Giving work [331] to 6
+[2012-08-20 02:02:30,807]P(0):INFO: Giving work [68] to 8
+[2012-08-20 02:02:30,807]P(4):INFO: Received request for work from 5
+[2012-08-20 02:02:30,808]P(1):INFO: Received request for work from 5
+[2012-08-20 02:02:30,808]P(1):INFO: Giving work [46] to 5
+[2012-08-20 02:02:30,808]P(4):INFO: Giving work [142] to 5
+[2012-08-20 02:02:30,808]P(5):INFO: Got work [67] from 0
+[2012-08-20 02:02:30,808]P(6):INFO: Inspected 65
+[2012-08-20 02:02:30,808]P(3):INFO: Received request for work from 5
+[2012-08-20 02:02:30,809]P(8):INFO: Got work [68] from 0
+[2012-08-20 02:02:30,809]P(3):INFO: Giving work [44] to 5
+[2012-08-20 02:02:30,808]P(2):INFO: Received request for work from 1
+[2012-08-20 02:02:30,809]P(0):INFO: Inspected 56
+[2012-08-20 02:02:30,809]P(4):INFO: Inspected 301
+[2012-08-20 02:02:30,809]P(2):INFO: Inspected 308
+[2012-08-20 02:02:30,808]P(9):INFO: Got work [88] from 2
+[2012-08-20 02:02:30,809]P(8):INFO: Inspected 68
+[2012-08-20 02:02:30,809]P(0):INFO: Received request for work from 7
+[2012-08-20 02:02:30,809]P(1):INFO: Got work [329] from 9
+[2012-08-20 02:02:30,809]P(2):INFO: Received request for work from 5
+[2012-08-20 02:02:30,809]P(0):INFO: Giving work [53] to 7
+[2012-08-20 02:02:30,809]P(4):INFO: Got work [136] from 2
+[2012-08-20 02:02:30,809]P(9):INFO: Received request for work from 5
+[2012-08-20 02:02:30,809]P(1):INFO: Got work [182] from 4
+[2012-08-20 02:02:30,809]P(5):INFO: Got work [46] from 1
+[2012-08-20 02:02:30,809]P(8):INFO: Inspected 273
+[2012-08-20 02:02:30,809]P(2):INFO: Received request for work from 6
+[2012-08-20 02:02:30,809]P(9):INFO: Giving work [332] to 5
+[2012-08-20 02:02:30,809]P(2):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,809]P(4):INFO: Received request for work from 8
+[2012-08-20 02:02:30,810]P(9):INFO: Inspected 304
+[2012-08-20 02:02:30,810]P(4):INFO: Inspected 136
+[2012-08-20 02:02:30,809]P(6):INFO: Got work [300] from 4
+[2012-08-20 02:02:30,809]P(3):INFO: Received request for work from 8
+[2012-08-20 02:02:30,809]P(8):INFO: Inspected 274
+[2012-08-20 02:02:30,810]P(4):INFO: Received request for work from 7
+[2012-08-20 02:02:30,810]P(6):INFO: Got work [146] from 3
+[2012-08-20 02:02:30,809]P(5):INFO: Got work [142] from 4
+[2012-08-20 02:02:30,810]P(8):INFO: Received request for work from 2
+[2012-08-20 02:02:30,810]P(3):INFO: Got work [305] from 2
+[2012-08-20 02:02:30,810]P(4):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,810]P(8):INFO: Giving work [275] to 2
+[2012-08-20 02:02:30,810]P(3):INFO: Inspected 103
+[2012-08-20 02:02:30,810]P(5):INFO: Got work [44] from 3
+[2012-08-20 02:02:30,810]P(6):INFO: Got work [331] from 9
+[2012-08-20 02:02:30,811]P(8):INFO: Inspected 276
+[2012-08-20 02:02:30,811]P(2):INFO: Received request for work from 7
+[2012-08-20 02:02:30,811]P(6):INFO: Received request for work from 2
+[2012-08-20 02:02:30,811]P(2):INFO: Received request for work from 8
+[2012-08-20 02:02:30,811]P(6):INFO: Giving work [104] to 2
+[2012-08-20 02:02:30,811]P(2):INFO: Received request for work from 4
+[2012-08-20 02:02:30,810]P(1):INFO: Inspected 51
+[2012-08-20 02:02:30,810]P(7):INFO: Got work [53] from 0
+[2012-08-20 02:02:30,811]P(7):INFO: Received request for work from 2
+[2012-08-20 02:02:30,811]P(1):INFO: Received request for work from 8
+[2012-08-20 02:02:30,810]P(9):INFO: Received request for work from 8
+[2012-08-20 02:02:30,810]P(0):INFO: Received request for work from 2
+[2012-08-20 02:02:30,810]P(3):INFO: Received request for work from 7
+[2012-08-20 02:02:30,811]P(1):INFO: Giving work [299] to 8
+[2012-08-20 02:02:30,810]P(5):INFO: Inspected 67
+[2012-08-20 02:02:30,811]P(4):INFO: Received request for work from 2
+[2012-08-20 02:02:30,811]P(0):INFO: Giving work [54] to 2
+[2012-08-20 02:02:30,811]P(9):INFO: Received request for work from 7
+[2012-08-20 02:02:30,811]P(3):INFO: Inspected 305
+[2012-08-20 02:02:30,811]P(5):INFO: Got work [332] from 9
+[2012-08-20 02:02:30,811]P(9):INFO: Inspected 88
+[2012-08-20 02:02:30,811]P(3):INFO: Received request for work from 2
+[2012-08-20 02:02:30,812]P(5):INFO: Received request for work from 2
+[2012-08-20 02:02:30,812]P(9):INFO: Received request for work from 2
+[2012-08-20 02:02:30,812]P(3):INFO: Received request for work from 4
+[2012-08-20 02:02:30,812]P(0):INFO: Inspected 55
+[2012-08-20 02:02:30,811]P(8):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,812]P(3):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,811]P(2):INFO: Got work [275] from 8
+[2012-08-20 02:02:30,812]P(0):INFO: Received request for work from 4
+[2012-08-20 02:02:30,811]P(7):INFO: Received request for work from 4
+[2012-08-20 02:02:30,812]P(0):INFO: Giving work [57] to 4
+[2012-08-20 02:02:30,812]P(7):INFO: Inspected 53
+[2012-08-20 02:02:30,812]P(7):INFO: Inspected 216
+[2012-08-20 02:02:30,811]P(6):INFO: Inspected 264
+[2012-08-20 02:02:30,812]P(5):INFO: Giving work [46] to 2
+[2012-08-20 02:02:30,812]P(4):INFO: Got work [57] from 0
+[2012-08-20 02:02:30,812]P(0):INFO: Received request for work from 3
+[2012-08-20 02:02:30,812]P(7):INFO: Inspected 213
+[2012-08-20 02:02:30,812]P(9):INFO: Received request for work from 4
+[2012-08-20 02:02:30,812]P(0):INFO: Giving work [58] to 3
+[2012-08-20 02:02:30,812]P(9):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,812]P(2):INFO: Got work [104] from 6
+[2012-08-20 02:02:30,813]P(7):INFO: Received request for work from 3
+[2012-08-20 02:02:30,813]P(7):INFO: Giving work [214] to 3
+[2012-08-20 02:02:30,813]P(5):INFO: Received request for work from 4
+[2012-08-20 02:02:30,813]P(5):INFO: Giving work [142] to 4
+[2012-08-20 02:02:30,813]P(2):INFO: Got work [54] from 0
+[2012-08-20 02:02:30,813]P(5):INFO: Inspected 44
+[2012-08-20 02:02:30,813]P(0):INFO: Inspected 59
+[2012-08-20 02:02:30,813]P(2):INFO: Received request for work from 3
+[2012-08-20 02:02:30,813]P(5):INFO: Inspected 272
+[2012-08-20 02:02:30,813]P(2):INFO: Giving work [275] to 3
+[2012-08-20 02:02:30,813]P(0):INFO: Received request for work from 9
+[2012-08-20 02:02:30,813]P(0):INFO: Giving work [60] to 9
+[2012-08-20 02:02:30,813]P(5):INFO: Inspected 269
+[2012-08-20 02:02:30,814]P(5):INFO: Inspected 270
+[2012-08-20 02:02:30,812]P(1):INFO: Received request for work from 7
+[2012-08-20 02:02:30,814]P(3):INFO: Received request for work from 8
+[2012-08-20 02:02:30,814]P(0):INFO: Received request for work from 8
+[2012-08-20 02:02:30,812]P(4):INFO: Inspected 57
+[2012-08-20 02:02:30,814]P(0):INFO: Giving work [64] to 8
+[2012-08-20 02:02:30,814]P(3):INFO: Got work [58] from 0
+[2012-08-20 02:02:30,814]P(5):INFO: Received request for work from 8
+[2012-08-20 02:02:30,813]P(6):INFO: Received request for work from 4
+[2012-08-20 02:02:30,814]P(3):INFO: Received request for work from 9
+[2012-08-20 02:02:30,813]P(7):INFO: Inspected 215
+[2012-08-20 02:02:30,814]P(6):INFO: Giving work [261] to 4
+[2012-08-20 02:02:30,814]P(2):INFO: Inspected 104
+[2012-08-20 02:02:30,814]P(7):INFO: Received request for work from 9
+[2012-08-20 02:02:30,814]P(7):INFO: Received request for work from 8
+[2012-08-20 02:02:30,814]P(2):INFO: Received request for work from 8
+[2012-08-20 02:02:30,814]P(7):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,814]P(0):INFO: Inspected 61
+[2012-08-20 02:02:30,814]P(5):INFO: Giving work [271] to 8
+[2012-08-20 02:02:30,814]P(8):INFO: Received request for work from 4
+[2012-08-20 02:02:30,814]P(1):INFO: Giving work [101] to 7
+[2012-08-20 02:02:30,814]P(4):INFO: Got work [142] from 5
+[2012-08-20 02:02:30,814]P(2):INFO: Got work [46] from 5
+[2012-08-20 02:02:30,815]P(4):INFO: Received request for work from 3
+[2012-08-20 02:02:30,815]P(5):INFO: Received request for work from 3
+[2012-08-20 02:02:30,815]P(2):INFO: Received request for work from 9
+[2012-08-20 02:02:30,814]P(6):INFO: Received request for work from 3
+[2012-08-20 02:02:30,815]P(4):INFO: Giving work [232] to 3
+[2012-08-20 02:02:30,814]P(0):INFO: Inspected 62
+[2012-08-20 02:02:30,815]P(2):INFO: Giving work [54] to 9
+[2012-08-20 02:02:30,815]P(6):INFO: Giving work [262] to 3
+[2012-08-20 02:02:30,815]P(5):INFO: Giving work [332] to 3
+[2012-08-20 02:02:30,815]P(4):INFO: Received request for work from 8
+[2012-08-20 02:02:30,814]P(9):INFO: Received request for work from 3
+[2012-08-20 02:02:30,815]P(1):INFO: Got work [29] from 3
+[2012-08-20 02:02:30,815]P(3):INFO: Got work [214] from 7
+[2012-08-20 02:02:30,815]P(4):INFO: Giving work [229] to 8
+[2012-08-20 02:02:30,815]P(1):INFO: Inspected 52
+[2012-08-20 02:02:30,815]P(1):INFO: Got work [307] from 2
+[2012-08-20 02:02:30,815]P(2):INFO: Inspected 46
+[2012-08-20 02:02:30,816]P(2):INFO: Received request for work from 7
+[2012-08-20 02:02:30,816]P(8):INFO: Got work [299] from 1
+[2012-08-20 02:02:30,815]P(9):INFO: Got work [60] from 0
+[2012-08-20 02:02:30,815]P(0):INFO: Received request for work from 7
+[2012-08-20 02:02:30,815]P(3):INFO: Got work [275] from 2
+[2012-08-20 02:02:30,815]P(1):INFO: Received request for work from 2
+[2012-08-20 02:02:30,816]P(8):INFO: Received request for work from 3
+[2012-08-20 02:02:30,816]P(9):INFO: Received request for work from 8
+[2012-08-20 02:02:30,816]P(3):INFO: Inspected 58
+[2012-08-20 02:02:30,816]P(6):INFO: Received request for work from 9
+[2012-08-20 02:02:30,816]P(1):INFO: Giving work [329] to 2
+[2012-08-20 02:02:30,816]P(2):INFO: Giving work [185] to 7
+[2012-08-20 02:02:30,816]P(8):INFO: Received request for work from 9
+[2012-08-20 02:02:30,816]P(9):INFO: Received request for work from 7
+[2012-08-20 02:02:30,816]P(5):INFO: Received request for work from 9
+[2012-08-20 02:02:30,816]P(3):INFO: Received request for work from 7
+[2012-08-20 02:02:30,816]P(8):INFO: Inspected 299
+[2012-08-20 02:02:30,816]P(9):INFO: Inspected 60
+[2012-08-20 02:02:30,816]P(5):INFO: Giving work [177] to 9
+[2012-08-20 02:02:30,816]P(8):INFO: Got work [64] from 0
+[2012-08-20 02:02:30,816]P(9):INFO: Got work [54] from 2
+[2012-08-20 02:02:30,816]P(8):INFO: Got work [271] from 5
+[2012-08-20 02:02:30,816]P(3):INFO: Giving work [214] to 7
+[2012-08-20 02:02:30,816]P(2):INFO: Inspected 186
+[2012-08-20 02:02:30,816]P(7):INFO: Got work [101] from 1
+[2012-08-20 02:02:30,816]P(4):INFO: Received request for work from 9
+[2012-08-20 02:02:30,817]P(3):INFO: Got work [232] from 4
+[2012-08-20 02:02:30,817]P(2):INFO: Got work [329] from 1
+[2012-08-20 02:02:30,817]P(4):INFO: Giving work [230] to 9
+[2012-08-20 02:02:30,817]P(7):INFO: Got work [185] from 2
+[2012-08-20 02:02:30,816]P(0):INFO: Giving work [63] to 7
+[2012-08-20 02:02:30,817]P(3):INFO: Got work [332] from 5
+[2012-08-20 02:02:30,817]P(2):INFO: Inspected 187
+[2012-08-20 02:02:30,817]P(7):INFO: Got work [214] from 3
+[2012-08-20 02:02:30,817]P(2):INFO: Inspected 188
+[2012-08-20 02:02:30,817]P(7):INFO: Inspected 101
+[2012-08-20 02:02:30,817]P(2):INFO: Inspected 329
+[2012-08-20 02:02:30,817]P(2):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,816]P(6):INFO: Giving work [263] to 9
+[2012-08-20 02:02:30,816]P(8):INFO: Received request for work from 7
+[2012-08-20 02:02:30,816]P(5):INFO: Inspected 178
+[2012-08-20 02:02:30,817]P(7):INFO: Got work [63] from 0
+[2012-08-20 02:02:30,817]P(8):INFO: Giving work [64] to 7
+[2012-08-20 02:02:30,816]P(9):INFO: Inspected 241
+[2012-08-20 02:02:30,818]P(5):INFO: Received request for work from 7
+[2012-08-20 02:02:30,817]P(1):INFO: Received request for work from 4
+[2012-08-20 02:02:30,818]P(5):INFO: Giving work [179] to 7
+[2012-08-20 02:02:30,817]P(3):INFO: Inspected 275
+[2012-08-20 02:02:30,818]P(6):INFO: Inspected 300
+[2012-08-20 02:02:30,817]P(4):INFO: Inspected 231
+[2012-08-20 02:02:30,817]P(0):INFO: Inspected 72
+[2012-08-20 02:02:30,818]P(3):INFO: Got work [262] from 6
+[2012-08-20 02:02:30,817]P(7):INFO: Inspected 185
+[2012-08-20 02:02:30,818]P(3):INFO: Received request for work from 2
+[2012-08-20 02:02:30,818]P(1):INFO: Giving work [182] to 4
+[2012-08-20 02:02:30,818]P(4):INFO: Got work [261] from 6
+[2012-08-20 02:02:30,818]P(6):INFO: Element 300 found. BFS Completed!!!
+[2012-08-20 02:02:30,818]P(5):INFO: Inspected 180
+[2012-08-20 02:02:30,818]P(3):INFO: Giving work [233] to 2
+[2012-08-20 02:02:30,818]P(4):INFO: Received request for work from 7
+[2012-08-20 02:02:30,818]P(5):INFO: Received request for work from 2
+[2012-08-20 02:02:30,818]P(3):INFO: Inspected 234
+[2012-08-20 02:02:30,818]P(9):INFO: Got work [177] from 5
+[2012-08-20 02:02:30,818]P(0):INFO: Received request for work from 2
+[2012-08-20 02:02:30,819]P(3):INFO: Inspected 235
+[2012-08-20 02:02:30,819]P(1):INFO: Inspected 208
+[2012-08-20 02:02:30,818]P(7):INFO: Got work [64] from 8
+[2012-08-20 02:02:30,818]P(8):INFO: Inspected 271
+[2012-08-20 02:02:30,819]P(3):INFO: Received notice that 6 found elem 300. Terminating!
+[2012-08-20 02:02:30,819]P(7):INFO: Got work [179] from 5
+[2012-08-20 02:02:30,819]P(0):INFO: Giving work [69] to 2
+[2012-08-20 02:02:30,819]P(7):INFO: Received request for work from 2
+[2012-08-20 02:02:30,818]P(5):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,819]P(1):INFO: Received request for work from 8
+[2012-08-20 02:02:30,819]P(1):INFO: Giving work [205] to 8
+[2012-08-20 02:02:30,819]P(4):INFO: Giving work [142] to 7
+[2012-08-20 02:02:30,819]P(9):INFO: Got work [230] from 4
+[2012-08-20 02:02:30,819]P(0):INFO: Received notice that 6 found elem 300. Terminating!
+[2012-08-20 02:02:30,819]P(8):INFO: Got work [229] from 4
+[2012-08-20 02:02:30,819]P(2):INFO: Received notice that 6 found elem 300. Terminating!
+[2012-08-20 02:02:30,819]P(7):INFO: Giving work [214] to 2
+[2012-08-20 02:02:30,819]P(9):INFO: Got work [263] from 6
+[2012-08-20 02:02:30,820]P(8):INFO: Received request for work from 2
+[2012-08-20 02:02:30,840]P(8):INFO: Inspected 229
+[2012-08-20 02:02:30,840]P(9):INFO: Received request for work from 2
+[2012-08-20 02:02:30,841]P(9):INFO: Giving work [242] to 2
+[2012-08-20 02:02:30,820]P(4):INFO: Inspected 261
+[2012-08-20 02:02:30,841]P(9):INFO: Inspected 243
+[2012-08-20 02:02:30,847]P(9):INFO: Received notice that 6 found elem 300. Terminating!
+[2012-08-20 02:02:30,847]P(9):INFO: Received request for work from 5
+[2012-08-20 02:02:30,847]P(9):INFO: Giving work [244] to 5
+[2012-08-20 02:02:30,820]P(5):INFO: Received notice that 6 found elem 300. Terminating!
+[2012-08-20 02:02:30,821]P(1):INFO: Received request for work from 3
+[2012-08-20 02:02:30,841]P(8):INFO: Received notice that 6 found elem 300. Terminating!
+[2012-08-20 02:02:30,845]P(7):INFO: Received notice that 6 found elem 300. Terminating!
+[2012-08-20 02:02:30,849]P(8):INFO: Got work [205] from 1
+[2012-08-20 02:02:30,850]P(1):INFO: Giving work [206] to 3
+[2012-08-20 02:02:30,851]P(1):INFO: Received request for work from 9
+[2012-08-20 02:02:30,851]P(1):INFO: Giving work [207] to 9
+[2012-08-20 02:02:30,851]P(1):INFO: Inspected 29
+[2012-08-20 02:02:30,852]P(1):INFO: Received request for work from 7
+[2012-08-20 02:02:30,852]P(1):INFO: Giving work [209] to 7
+[2012-08-20 02:02:30,853]P(1):INFO: Received request for work from 2
+[2012-08-20 02:02:30,853]P(7):INFO: Inspected 63
+[2012-08-20 02:02:30,853]P(4):INFO: Received request for work from 2
+[2012-08-20 02:02:30,853]P(1):INFO: Giving work [210] to 2
+[2012-08-20 02:02:30,853]P(7):INFO: Got work [142] from 4
+[2012-08-20 02:02:30,858]P(7):INFO: Received request for work from 5
+[2012-08-20 02:02:30,858]P(4):INFO: Empty queue; sending requests for work
+[2012-08-20 02:02:30,858]P(1):INFO: Inspected 211
+[2012-08-20 02:02:30,858]P(7):INFO: Giving work [64] to 5
+[2012-08-20 02:02:30,865]P(4):INFO: Got work [182] from 1
+[2012-08-20 02:02:30,865]P(4):INFO: Received notice that 6 found elem 300. Terminating!
+[2012-08-20 02:02:30,865]P(1):INFO: Received notice that 6 found elem 300. Terminating!
+[2012-08-20 02:02:30,866]P(1):INFO: Received request for work from 5
+[2012-08-20 02:02:30,866]P(1):INFO: Giving work [212] to 5
+[2012-08-20 02:02:30,869]runtime:INFO: ***** Statistics *****
+* Total procs: 10
+
+[2012-08-20 02:02:30,870]runtime:INFO: Terminating...
+arjun@arjun-desktop:~/Development/workspace/DistAlgo$ 
