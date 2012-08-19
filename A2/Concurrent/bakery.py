@@ -18,20 +18,6 @@ class Bakery(threading.Thread):
     
     x, y = 0, 0
     
-    @staticmethod
-    def setup(threads, req_count):
-        Bakery.threads = threads
-        Bakery.thread_count = len(threads)
-        Bakery.req_count = req_count
-        
-        Bakery.choosing = [0] * (Bakery.thread_count + 1)
-        Bakery.num      = [0] * (Bakery.thread_count + 1)
-    
-    @staticmethod
-    def start_all():
-        [thread.start() for thread in Bakery.threads]
-        Bakery.go = True
-    
     def __init__(self, i):
         super().__init__()
         self.i = i
@@ -70,3 +56,16 @@ class Bakery(threading.Thread):
         # call cs() req_count times:
         [self.cs() for _ in range(Bakery.req_count)]
     
+
+def setup(threads, req_count):
+    Bakery.threads = threads
+    Bakery.thread_count = len(threads)
+    Bakery.req_count = req_count
+    
+    Bakery.choosing = [0] * (Bakery.thread_count + 1)
+    Bakery.num      = [0] * (Bakery.thread_count + 1)
+
+def start():
+    for thread in Bakery.threads:
+        thread.start()
+    Bakery.go = True

@@ -2,10 +2,6 @@
 import threading
 from auxiliary import await, default_task
 
-def await(func):
-    while not func():
-        pass
-
 class Fast(threading.Thread):
     """ Lamport's fast mutual exclusion algorithm """
     
@@ -19,19 +15,6 @@ class Fast(threading.Thread):
     
     choosing = []
     x, y = 0, 0
-    
-    @staticmethod
-    def setup(threads, req_count):
-        Fast.threads = threads
-        Fast.thread_count = len(threads)
-        Fast.req_count = req_count
-        
-        Fast.choosing = [0] * (Fast.thread_count + 1)
-    
-    @staticmethod
-    def start_all():
-        [thread.start() for thread in Fast.threads]
-        Fast.go = True
     
     def __init__(self, i):
         super().__init__()
@@ -89,3 +72,15 @@ class Fast(threading.Thread):
         # call cs() req_count times:
         [self.cs() for _ in range(Fast.req_count)]
     
+
+def setup(threads, req_count):
+    Fast.threads = threads
+    Fast.thread_count = len(threads)
+    Fast.req_count = req_count
+    
+    Fast.choosing = [0] * (Fast.thread_count + 1)
+
+def start():
+    for thread in Fast.threads:
+        thread.start()
+    Fast.go = True
