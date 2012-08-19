@@ -16,7 +16,8 @@ if __name__ == "__main__":
     Fast.start_all()
     
     # wait for all threads to die..
-    [thread.join() for thread in threads]
+    for thread in threads:
+        thread.join()
     
     print("\n\nRunning Lamport's bakery algorithm")
     threads = [Bakery(i) for i in range(1, num_of_threads+1)]
@@ -24,6 +25,7 @@ if __name__ == "__main__":
     Bakery.start_all()
     
     # wait for all threads to die..
-    [thread.join() for thread in threads]
+    for thread in threads:
+        thread.join()
     
     print()
