@@ -1,0 +1,127 @@
+#!/usr/bin/python3
+
+#
+# Sequential implementation of Minimum Spanning Tree
+#
+
+import networkx as nx
+
+A, B, C, D, E, F, G, H, I, J = 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'
+def edge(n1, n2, w):
+    return (n1, n2, {'weight':w})
+
+edge_list = [
+edge(A,F,2),
+edge(F,G,7),
+edge(G,H,15 ),
+edge(H,J,13),
+edge(J,I,9),
+edge(I,C,18),
+edge(C,B,17),
+edge(B,A,3),
+
+edge(E,F,1),
+edge(E,G,6),
+edge(E,H,5),
+edge(E,I,10),
+edge(E,D,11),
+
+edge(I,H,12),
+edge(D,I,4),
+edge(D,C,8),
+edge(D,B,16)]
+             
+G = nx.Graph()
+
+G.add_edges_from(edge_list)
+#for e in G.edges(data=True):
+#    print(e)
+
+"""
+Implementation of _sequential_ Kruskal's algorithm based on Wikipedia description:
+-----------------------------------------------------------------------------------
+create a forest F (a set of trees), where each vertex in the graph is a separate tree
+create a set S containing all the edges in the graph
+while S is nonempty and F is not yet spanning
+    remove an edge with minimum weight from S
+    if that edge connects two different trees, then add it to the forest, combining two trees into a single tree
+    otherwise discard that edge.
+At the termination of the algorithm, the forest has only one component and forms a minimum spanning tree of the graph.
+"""
+
+class Forest(object):
+    
+    class TreeInForest(object):
+        def __init__(self, node):
+            self.nodes = {node}
+            self.edges = set()
+        def __str__(self):
+            return repr(self.nodes) + " | " + repr(self.edges)
+    
+    def __init__(self, nodes):
+        self.forest = list()
+        
+        for node in nodes:
+            self.forest.append( Forest.TreeInForest(node) )
+    
+    def attempt_merge(self, edge):
+        e1, e2 = edge
+        e1_t = None
+        e2_t = None
+        
+        for t in self.forest:
+            if e1 in t.nodes and e2 in t.nodes:
+                return False
+            
+            if e1 in t.nodes:
+                e1_t = t
+            if e2 in t.nodes:
+                e2_t = t
+        
+        "Merge: "
+        e1_t.nodes.update(e2_t.nodes)
+        e1_t.edges.update({edge})
+        e1_t.edges.update(e2_t.edges)
+        
+        self.forest.remove(e2_t)
+        return True
+    
+    def isSpanning(self):
+        return len(self.forest) == 1
+    
+    def __str__(self):
+        return '\n' + '\n'.join(str(t) for t in self.forest)
+    
+    def solution(self):
+        if self.isSpanning():
+            return self.forest[0].edges
+
+forest = Forest(G.nodes())
+
+edges = set(G.edges())
+edge_weight = lambda edge: G[ edge[0] ][ edge[1] ]['weight']
+
+while len(edges) and not forest.isSpanning():
+    min_wt_edge = min(edges, key=edge_weight)
+    forest.attempt_merge(min_wt_edge)
+    edges.remove(min_wt_edge)
+
+sol = forest.solution()
+
+def draw_solution(sol):
+    import matplotlib
+    matplotlib.rcParams['backend'] = "Qt4Agg"
+    import matplotlib.pyplot as plt
+    
+    def draw_G(G, select_edges=[]):
+        pos=nx.spring_layout(G, weight = None)
+        nx.draw_networkx_nodes(G,pos, node_size=330)
+        nx.draw_networkx_edges(G,pos, set(G.edges()) - set(select_edges), width=2)
+        nx.draw_networkx_edges(G,pos, select_edges, width=3, edge_color='blue')
+        nx.draw_networkx_labels(G,pos, font_size=12, font_family='sans-serif')
+
+    draw_G(G, sol)    
+    plt.draw()
+    plt.show()
+
+draw_solution(sol)
