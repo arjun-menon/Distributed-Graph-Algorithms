@@ -108,6 +108,11 @@ while len(edges) and not forest.isSpanning():
 
 sol = forest.solution()
 
+"Print the solution... "
+print("Solution:")
+for edge in sol:
+    print(edge)
+
 def draw_solution(sol):
     import matplotlib
     matplotlib.rcParams['backend'] = "Qt4Agg"
