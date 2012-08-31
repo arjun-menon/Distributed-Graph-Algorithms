@@ -1,13 +1,20 @@
 
+from MST_sequential import *
+
+G = construct_graph()
+
 procs = dict() # dict mapping process numbers to processes
-Pi = lambda p: int(str(p))
 
 class P(DistProcess):
     
-    def setup(ps):
-        other_procs = ps
+    def setup(my_edges):
+        my_edges = my_edges
 
-    def cs(search_for):
+        my_min_wt_edge = min(my_edges, key=my_edges.get)
+        
+        print(self, my_edges, " --> ",my_min_wt_edge)
+
+    def cs():
         pass
 
     def OnRequest(ts):
@@ -17,23 +24,22 @@ class P(DistProcess):
         pass
 
     def main():
-        pass
+        cs()
 
 def main():
-    nprocs = 1
-        
-    # create n process
     use_channel("tcp")
-    ps = createprocs(P, {str(i) for i in range(0, nprocs)})
+    
     global procs
-    for (pn, p) in ps.items():
-        procs[int(pn)] = p
-    ps = set(ps.values())
+    procs = createprocs(P, set(G.nodes()))
 
     # setup the processes
-    for p in ps: setupprocs([p], [ps-{p}])
+    ps = set(procs.values())
+    for p in ps:
+        p_edges = { n : d['weight'] for (n,d) in G[repr(p)].items() }
+        setupprocs([p], [p_edges])
 
     startprocs(ps)
 
-    for p in (ps): p.join()
+    for p in (ps):
+        p.join()
     
