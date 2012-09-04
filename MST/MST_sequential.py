@@ -5,11 +5,16 @@
 # theMinimum Spanning Tree (MST) of a graph.
 #
 
+import sys
+sys.path.append('..')
 import networkx as nx
 
-def construct_graph():
-    
-    A, B, C, D, E, F, G, H, I, J = 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'
+def construct_graph(numbered=False):
+
+    if numbered:
+        A, B, C, D, E, F, G, H, I, J = [str(i) for i in range(1,11)]
+    else:    
+        A, B, C, D, E, F, G, H, I, J = 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'
     
     def edge(n1, n2, w):
         return (n1, n2, {'weight':w})
