@@ -1,130 +1,272 @@
-
-#from MST_sequential import *
-#G = construct_graph()
-#
-#procs = dict() # dict mapping process numbers to processes
-#Pi = lambda p: int(str(p))
-#
-#class P(DistProcess):
-#    
-#    def setup(ps):
-#        other_procs = ps        
-#        completed = False
-#
-#    def cs():
-#        --start
-#        send(Request(None), other_procs)
-#        --reply
-#        --release
-#        --end
-#
-#    def OnRequest(ts):
-#        pass
-#
-#    def OnReply(m):
-#        pass
-#
-#    def main():
-#        while not completed:
-#            cs()
-#
-#def main():
-#    nprocs = len(G.nodes()) + 1
-#    # create n process
-#    use_channel("tcp")
-#    ps = createprocs(P, {str(i) for i in range(0, nprocs)})
-#    global procs
-#    for (pn, p) in ps.items():
-#        procs[int(pn)] = p
-#    ps = set(ps.values())
-#
-#    # setup the processes
-#    for p in ps: setupprocs([p], [ps-{p}])
-#
-#    startprocs(ps)
-#
-#    for p in (ps): p.join()
-
-
 from MST_sequential import *
 
-G = construct_graph(numbered=True)
+G = construct_graph()
+
+#class P(DistProcess):
+#    
+#    def setup(ps, my_edges):
+#        SLEEPING = 'Sleeping'
+#        FIND = 'Find'
+#        FOUND = 'Found'
+#
+#        BASIC = 'Basic'
+#        BRANCH = 'Branch'
+#        REJECTED = 'Rejected'
+#
+#        WAKEUP = 'WakeUp'
+#        CONNECT = 'Connect'
+#        
+#        other_procs = ps
+#        
+#        if str(self) == '0':
+#            sent_wakeups = False
+#        
+#        else:
+#            my_edges = my_edges
+#            min_wt_neighbor = min(my_edges, key=my_edges.get)
+#            output("(%r, %r)" % (self, min_wt_neighbor))
+#            edge_status = dict()
+#            for edge in my_edges.keys():
+#                edge_status[edge] = BASIC
+#            #print(self, ps, my_edges, " --> ", min_wt_neighbor, edge_status)
+#            
+#            fragment_id = None
+#            fragment_level = 0
+#            
+#            status = SLEEPING
+#        
+#        completed = False
+#    
+#    def cs():
+#        if str(self) == '0':
+#            if sent_wakeups == False:
+#                output('Sending WakeUp to all...')
+#                send(Request(WAKEUP), other_procs)
+#                sent_wakeups = True
+#        
+#        else:
+#            await(status != 'Sleeping')
+#            #if fragment_level == 0:
+#                #send(Request('Connect', fragment_id, fragment_level), ps)
+#                #await(fragment_level > 0)
+#        --reply
+#        await(completed)
+#
+#    def wakeup():
+#        edge_status[min_wt_neighbor] = BRANCH # SE(m) <- Branch
+#        node_level = 0 # LN <- 0
+#        node_status = FOUND # SN <- Found
+#        find_count = 0 # Find-count <- 0
+#        output('Sending Connect(0) to '+str(min_wt_neighbor))
+#        send(Request(CONNECT, node_level), min_wt_neighbor)
+#
+#    def onReceivingConnect(level):
+#        pass
+#
+#    def OnRequest(msg):
+#        if msg == WAKEUP:
+#            output('Received Request ' + msg)
+#            wakeup()
+#    
+#    def OnRequest(msg, a1):
+#        if msg == CONNECT:
+#            output('Received Request %s(%d) from %r' % (msg, a1, _source))
+#            onReceivingConnect(a1)
+#    
+#    def OnReply(x):
+#        pass
+#    
+#    def main():
+#class P(DistProcess):
+#    
+#    def setup(ps, my_edges):
+#        SLEEPING = 'Sleeping'
+#        FIND = 'Find'
+#        FOUND = 'Found'
+#
+#        BASIC = 'Basic'
+#        BRANCH = 'Branch'
+#        REJECTED = 'Rejected'
+#
+#        WAKEUP = 'WakeUp'
+#        CONNECT = 'Connect'
+#        
+#        other_procs = ps
+#        
+#        if str(self) == '0':
+#            sent_wakeups = False
+#        
+#        else:
+#            my_edges = my_edges
+#            min_wt_neighbor = min(my_edges, key=my_edges.get)
+#            output("(%r, %r)" % (self, min_wt_neighbor))
+#            edge_status = dict()
+#            for edge in my_edges.keys():
+#                edge_status[edge] = BASIC
+#            #print(self, ps, my_edges, " --> ", min_wt_neighbor, edge_status)
+#            
+#            fragment_id = None
+#            fragment_level = 0
+#            
+#            status = SLEEPING
+#        
+#        completed = False
+#    
+#    def cs():
+#        if str(self) == '0':
+#            if sent_wakeups == False:
+#                output('Sending WakeUp to all...')
+#                send(Request(WAKEUP), other_procs)
+#                sent_wakeups = True
+#        
+#        else:
+#            await(status != 'Sleeping')
+#            #if fragment_level == 0:
+#                #send(Request('Connect', fragment_id, fragment_level), ps)
+#                #await(fragment_level > 0)
+#        --reply
+#        await(completed)
+#
+#    def wakeup():
+#        edge_status[min_wt_neighbor] = BRANCH # SE(m) <- Branch
+#        node_level = 0 # LN <- 0
+#        node_status = FOUND # SN <- Found
+#        find_count = 0 # Find-count <- 0
+#        output('Sending Connect(0) to '+str(min_wt_neighbor))
+#        send(Request(CONNECT, node_level), min_wt_neighbor)
+#
+#    def onReceivingConnect(level):
+#        pass
+#
+#    def OnRequest(msg):
+#        if msg == WAKEUP:
+#            output('Received Request ' + msg)
+#            wakeup()
+#    
+#    def OnRequest(msg, a1):
+#        if msg == CONNECT:
+#            output('Received Request %s(%d) from %r' % (msg, a1, _source))
+#            onReceivingConnect(a1)
+#    
+#    def OnReply(x):
+#        pass
+#    
+#    def main():
+#        cs()
+
+class Fragment(object):
+    pass
 
 class P(DistProcess):
-    
-    def setup(ps, my_edges):
-        SLEEPING = 'Sleeping'
-        FIND = 'Find'
-        FOUND = 'Found'
-
-        BASIC = 'Basic'
-        BRANCH = 'Branch'
-        REJECTED = 'Rejected'
-
-        WAKEUP = 'WakeUp'
-        CONNECT = 'Connect'
         
+    def isControlProc(proc):
+        return str(self) == control_proc
+    
+    def setup(ps, edges):
+        CONNECT = 'Connect'
+        WAKEUP = 'WakeUp'
+        
+        control_proc = '0'
         other_procs = ps
         
-        if str(self) == '0':
+        if isControlProc(self):
             sent_wakeups = False
-        
+
         else:
-            my_edges = my_edges
-            min_wt_neighbor = min(my_edges, key=my_edges.get)
-            edge_status = dict()
-            for edge in my_edges.keys():
-                edge_status[edge] = BASIC
-            #print(self, ps, my_edges, " --> ", min_wt_neighbor, edge_status)
+            edges = edges
+            edges_only = set(edges.keys())
+            min_wt_neighbor = min(edges, key=edges.get)
+            #output("(%r, %r)" % (self, min_wt_neighbor))
+#            edge_status = dict()
+#            for edge in edges.keys():
+#                edge_status[edge] = BASIC
+            #print(self, ps, edges, " --> ", min_wt_neighbor, edge_status)
             
-            fragment_id = None
-            fragment_level = 0
+            f = Fragment()
+            f.level = 0
+            f.core_id = None
+            #branches = set()
             
-            status = SLEEPING
+            waiting_to_connect = set()
         
+        cycle = False
         completed = False
     
-    def cs():
-        if str(self) == '0':
-            if sent_wakeups == False:
-                output('Sending WakeUp to all...')
-                send(Request(WAKEUP), other_procs)
-                sent_wakeups = True
-        
-        else:
-            await(status != 'Sleeping')
-            #if fragment_level == 0:
-                #send(Request('Connect', fragment_id, fragment_level), ps)
-                #await(fragment_level > 0)
-        --reply
+    def sort_pair(p):
+        #return p if (p[0] < [1]) else (p[1], p[0])
+        pl = list(p)
+        pl.sort()
+        return (pl[0], pl[1])
+
+    def controlProc():
         await(completed)
 
-    def wakeup():
-        edge_status[min_wt_neighbor] = BRANCH # SE(m) <- Branch
-        node_level = 0 # LN <- 0
-        node_status = FOUND # SN <- Found
-        find_count = 0 # Find-count <- 0
-        output('Sending Connect(0) to '+str(min_wt_neighbor))
-        send(Request(CONNECT, node_level), min_wt_neighbor)
+    def absorb():
+        to_remove = set()
+        for p, level in waiting_to_connect:
+            if level < f.level:
+                send(JoinMe(f), p)
+                #branches.update({ p })
+                to_remove.update({ (p, level) })
 
-    def onReceivingConnect(level):
+        waiting_to_connect -= to_remove
+    
+    def OnJoinMe(_f):
+        #output("Received JoinMe from %r" % _source)
+        f.level = _f.level
+        f.core_id = _f.core_id
+        cycle = True
+
+    def node():
+        prev_level = f.level
+
+        while not completed:
+            cycle = False
+
+            if f.level == 0:
+                send(ZeroConnect(), min_wt_neighbor)
+                await(f.level > 0)
+                output("%s has joined fragment %r" % (self, f.core_id))
+                absorb()
+
+            absorb()
+
+            "Every time we grow in level: "
+            if f.level > prev_level:
+                """Find the minimum weight outgoing edge of the 
+                   fragment, send a Connect & wait for a reply"""
+                #output("Branches of %r: %r" % (self, branches))
+
+                master_node = f.core_id[0]
+                if self == master_node:
+                    pass
+                    #not_branches = edges_only - branches
+                    #output("Not Branches of %r: %r" % (self, not_branches))
+
+            await(cycle or completed)
+    
+    def OnZeroConnect():
+        "Initial Connect (to form Level-1 fragments)"
+        #output("%r received ZeroConnect from %r" % (self, _source))
+        
+        if _source == min_wt_neighbor:
+            f.core_id = edges[_source]
+            f.core_id =  sort_pair( (self, _source) )
+            f.level += 1
+        
+        else:
+            waiting_to_connect.update({ (_source, 0) })
+
+        cycle = True
+    
+    def OnFindMinWtOutgoing():
         pass
 
-    def OnRequest(msg):
-        if msg == WAKEUP:
-            output('Received Request ' + msg)
-            wakeup()
-    
-    def OnRequest(msg, a1):
-        if msg == CONNECT:
-            output('Received Request %s(%d) from %r' % (msg, a1, _source))
-            onReceivingConnect(a1)
-    
-    def OnReply(x):
-        pass
-    
     def main():
-        cs()
+         if isControlProc(self):
+             controlProc()
+         else:
+            node()
 
 def main():
     use_channel("tcp")

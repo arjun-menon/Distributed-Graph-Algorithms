@@ -148,7 +148,7 @@ def draw_graph_using_matplotlib(highlighted_edges, show = False):
 
 
 if __name__ == "__main__":
-    G = construct_graph()
+    G = construct_graph(numbered=True)
     
     sol = kruskal(G)
     
