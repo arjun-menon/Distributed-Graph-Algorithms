@@ -185,9 +185,23 @@ class P(DistProcess):
             f = Fragment()
             f.level = 0
             f.core_id = None
-            #branches = set()
             
-            waiting_to_connect = set()
+            INITIAL = -1
+            FIND = 0
+            FOUND = 1
+            state = INITIAL
+            deferredFindMinWtOutgoing = None
+
+            '''If a second OnFindMinWtOutgoing is sent to this 
+               node, from a node on the initial sender's path, 
+               then reply with an empty set.'''
+            find_initiator_path = set()
+            find_source = None
+            find_replies = dict()
+            waiting_for_replies = 0
+            
+            connect_requests = set()
+            waiting_to_zero_connect = None
         
         cycle = False
         completed = False
@@ -203,13 +217,12 @@ class P(DistProcess):
 
     def absorb():
         to_remove = set()
-        for p, level in waiting_to_connect:
+        for p, level in connect_requests:
             if level < f.level:
                 send(JoinMe(f), p)
-                #branches.update({ p })
                 to_remove.update({ (p, level) })
 
-        waiting_to_connect -= to_remove
+        connect_requests -= to_remove
     
     def OnJoinMe(_f):
         #output("Received JoinMe from %r" % _source)
@@ -225,23 +238,38 @@ class P(DistProcess):
 
             if f.level == 0:
                 send(ZeroConnect(), min_wt_neighbor)
+                waiting_to_zero_connect = min_wt_neighbor
                 await(f.level > 0)
-                output("%s has joined fragment %r" % (self, f.core_id))
-                absorb()
+                #output("%s has joined fragment %r" % (self, f.core_id))
+                waiting_to_zero_connect = None
 
             absorb()
+
+            if deferredFindMinWtOutgoing != None:
+                onFindMinWtOutgoing(*deferredFindMinWtOutgoing)
+                deferredFindMinWtOutgoing = None
 
             "Every time we grow in level: "
             if f.level > prev_level:
                 """Find the minimum weight outgoing edge of the 
                    fragment, send a Connect & wait for a reply"""
-                #output("Branches of %r: %r" % (self, branches))
+                if self == f.core_id[0]:
 
-                master_node = f.core_id[0]
-                if self == master_node:
-                    pass
-                    #not_branches = edges_only - branches
-                    #output("Not Branches of %r: %r" % (self, not_branches))
+                    if state == INITIAL:
+                        output("Searching for minimum outgoing edge of fragment %s..." % repr(f.core_id))
+                        state = FIND
+                        for edge in edges_only:
+                            send(FindMinWtOutgoing(f, [self]), edge)
+                            waiting_for_replies += 1
+
+                    if state == FOUND:
+                        min_wt_outgoing_edge_path = find_replies[ min(find_replies.keys()) ]
+
+                        output("Outgoing edges of fragment %s are: %r\nPath to minimum weight outgoing edge is: %s" % (repr(f.core_id), find_replies, " -> ".join(str(x) for x in min_wt_outgoing_edge_path)))
+
+                        send(FragConnectPath(min_wt_outgoing_edge_path[1:]), min_wt_outgoing_edge_path[0])
+
+                        prev_level = f.level
 
             await(cycle or completed)
     
@@ -255,12 +283,88 @@ class P(DistProcess):
             f.level += 1
         
         else:
-            waiting_to_connect.update({ (_source, 0) })
+            connect_requests.update({ (_source, 0) })
 
         cycle = True
-    
-    def OnFindMinWtOutgoing():
-        pass
+
+    def OnFragConnect():
+        cycle = True
+
+    def OnFragConnectPath(path):
+        if len(path) > 1:
+            send(FragConnectPath(path[1:]), path[0])
+        elif len(path) == 1:
+            output("Sending Connect request to %r" % path[0])
+
+        cycle = True
+
+    def OnFindMinWtOutgoing(source_f, path):
+        onFindMinWtOutgoing(_source, source_f, path)
+
+    def onFindMinWtOutgoing(source, source_f, path):
+        if source_f.core_id != f.core_id:
+
+            if waiting_to_zero_connect != None:
+                deferredFindMinWtOutgoing = (source, source_f, path)
+
+            elif source == waiting_to_zero_connect:
+                if source_f.level > f.level:
+                    'Expect a future "JoinMe" message'
+                    f.level = source_f.level
+                    f.core_id = source_f.core_id
+                else:
+                    send(FindMinWtOutgoingReply('Outgoing'), source)
+
+            else:
+                send(FindMinWtOutgoingReply('Outgoing'), source)
+
+        else: # source_f.core_id == f.core_id:
+            if not find_initiator_path & set(path):
+                "Send outoging find reqs to neighboring nodes"
+                find_initiator_path.update(path)
+                state = FIND
+                find_source = source
+
+                new_path = path + [self]
+
+                #output(".....%r will send Find to %r" % (self, (edges_only - set(path))))
+                waiting_for_replies = 0
+                for edge in (edges_only - set(path)):
+                    send(FindMinWtOutgoing(source_f, new_path), edge)
+                    waiting_for_replies += 1
+
+            else:
+                "Reject this FindMinWtOutgoing request"
+                #output("...%r rejected FindMinWtOutgoing from %r" % (self, source))
+                send(FindMinWtOutgoingReply(None), source)
+
+        cycle = True
+
+    def OnFindMinWtOutgoingReply(r):
+        #output("Received REPLY from %r: %r" % (_source, r))
+
+        if isinstance(r, dict):
+            for _wt, _path in r.items():
+                find_replies.update({ _wt : [self]+_path })
+
+        if r == 'Outgoing':
+            find_replies.update({ edges[_source] : [self, _source] })
+
+        waiting_for_replies -= 1
+
+        if not waiting_for_replies:
+            #output("..Find COMPLETE! " + repr(find_replies))
+            if find_source != None:
+                send(FindMinWtOutgoingReply(find_replies), find_source)
+
+            state = FOUND
+            find_initiator_path = set()
+            find_source = None
+
+            if find_source != None:
+                find_replies = dict()
+
+        cycle = True
 
     def main():
          if isControlProc(self):
