@@ -155,7 +155,8 @@ G = construct_graph()
 #        cs()
 
 class Fragment(object):
-    pass
+    def __repr__():
+        return "$[%r at %r]" % (self.core_id, self.level)
 
 class P(DistProcess):
         
@@ -199,9 +200,10 @@ class P(DistProcess):
             find_source = None
             find_replies = dict()
             waiting_for_replies = 0
-            
+
             connect_requests = set()
             waiting_to_zero_connect = None
+            waiting_to_frag_connect = None
         
         cycle = False
         completed = False
@@ -215,32 +217,17 @@ class P(DistProcess):
     def controlProc():
         await(completed)
 
-    def absorb():
-        to_remove = set()
-        for p, level in connect_requests:
-            if level < f.level:
-                send(JoinMe(f), p)
-                to_remove.update({ (p, level) })
-
-        connect_requests -= to_remove
-    
-    def OnJoinMe(_f):
-        #output("Received JoinMe from %r" % _source)
-        f.level = _f.level
-        f.core_id = _f.core_id
-        cycle = True
-
     def node():
         prev_level = f.level
 
         while not completed:
             cycle = False
 
-            if f.level == 0:
-                send(ZeroConnect(), min_wt_neighbor)
+            if f.level == 0 and not waiting_to_zero_connect:
+                send(ZeroConnect(f), min_wt_neighbor)
                 waiting_to_zero_connect = min_wt_neighbor
                 await(f.level > 0)
-                #output("%s has joined fragment %r" % (self, f.core_id))
+                #output("%r has joined fragment %r" % (self, f.core_id))
                 waiting_to_zero_connect = None
 
             absorb()
@@ -265,17 +252,33 @@ class P(DistProcess):
                     if state == FOUND:
                         min_wt_outgoing_edge_path = find_replies[ min(find_replies.keys()) ]
 
-                        output("Outgoing edges of fragment %s are: %r\nPath to minimum weight outgoing edge is: %s" % (repr(f.core_id), find_replies, " -> ".join(str(x) for x in min_wt_outgoing_edge_path)))
+                        output("Outgoing edges of fragment %s are: %r\nPath to minimum weight outgoing edge is: %s" % 
+                            (repr(f.core_id), find_replies, " -> ".join(str(x) for x in min_wt_outgoing_edge_path)))
 
                         send(FragConnectPath(min_wt_outgoing_edge_path[1:]), min_wt_outgoing_edge_path[0])
 
                         prev_level = f.level
 
             await(cycle or completed)
-    
-    def OnZeroConnect():
+
+    def absorb():
+        to_remove = set()
+        for p, _f in connect_requests:
+            if _f.level < f.level:
+                output("Absorbing node %r [fragment %r].." % (p, _f.core_id))
+                send(JoinMe(f), p)
+                to_remove.update({ (p, _f) })
+            if _f.level == f.level:
+                if p == waiting_to_frag_connect:
+                    output("%r Merging with %r of %r" % (p, _f))
+        
+        connect_requests -= to_remove
+
+        cycle = True
+
+    def OnZeroConnect(_f):
         "Initial Connect (to form Level-1 fragments)"
-        #output("%r received ZeroConnect from %r" % (self, _source))
+        output("%r received ZeroConnect from %r" % (self, _source))
         
         if _source == min_wt_neighbor:
             f.core_id = edges[_source]
@@ -283,18 +286,43 @@ class P(DistProcess):
             f.level += 1
         
         else:
-            connect_requests.update({ (_source, 0) })
+            connect_requests.update({ (_source, _f) })
 
         cycle = True
 
-    def OnFragConnect():
+    def OnJoinMe(_f):
+        output("Received JoinMe from %r" % _source)
+
+        if f.level == 0:
+            f.level = _f.level
+            f.core_id = _f.core_id
+
+        else:
+            # TODO: Fragment must propogate JoinMe message to other nodes in the same fragment
+            pass
+
+        cycle = True
+
+    def OnFragConnect(_f):
+        connect_requests.update({ (_source, _f) })
+
+        # if waiting_to_frag_connect == _source:
+        #     'Merge: '
+        #     pass
+
+        # else:
+        #     'Add to connect queue'
+        #     connect_requests.update({ (_source, _f) })
+
         cycle = True
 
     def OnFragConnectPath(path):
         if len(path) > 1:
             send(FragConnectPath(path[1:]), path[0])
         elif len(path) == 1:
-            output("Sending Connect request to %r" % path[0])
+            output("Sending Fragment Connect request to %r" % path[0])
+            send(FragConnect(f), path[0])
+            waiting_to_frag_connect = path[0]
 
         cycle = True
 
