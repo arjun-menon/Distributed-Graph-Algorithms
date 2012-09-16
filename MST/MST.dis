@@ -85,7 +85,7 @@ class P(DistProcess):
                 deferredFindMinWtOutgoing = None
 
             "Every time we grow in level: "
-            if f.level > prev_level:
+            if f.level > prev_level and False:
                 """Find the minimum weight outgoing edge of the 
                    fragment, send a Connect & wait for a reply"""
                 if self == f.core_id[0]:
@@ -116,17 +116,17 @@ class P(DistProcess):
                 output("Absorbing node %r [fragment %r].." % (p, _f.core_id))
                 send(JoinMe(f), p)
                 to_remove.update({ (p, _f) })
-            if _f.level == f.level:
-                if p == waiting_to_frag_connect:
-                    output("%r Merging with %r of %r" % (p, _f))
+            # if _f.level == f.level:
+            #     if p == waiting_to_frag_connect:
+            #         output("%r Merging with %r of %r" % (p, _f))
         
         connect_requests -= to_remove
 
         cycle = True
 
     def OnZeroConnect(_f):
-        "Initial Connect (to form Level-1 fragments)"
-        output("%r received ZeroConnect from %r" % (self, _source))
+        'Initial Connect (to form Level-1 fragments)'
+        #output("%r received ZeroConnect from %r" % (self, _source))
         
         if _source == min_wt_neighbor:
             f.core_id = edges[_source]
@@ -139,7 +139,7 @@ class P(DistProcess):
         cycle = True
 
     def OnJoinMe(_f):
-        output("Received JoinMe from %r" % _source)
+        #output("Received JoinMe from %r" % _source)
 
         if f.level == 0:
             f.level = _f.level
