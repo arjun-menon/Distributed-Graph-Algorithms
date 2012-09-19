@@ -14,7 +14,6 @@ class P(DistProcess):
         edges = edges
         weight = INFINITY
         path = ""
-        done = False
 
     def OnNewWeight(new_weight, new_path):
         newWeight(new_weight, new_path)
@@ -31,14 +30,11 @@ class P(DistProcess):
     def propogate():
         for p, e_w in edges.items():
             send(NewWeight(weight + e_w, path+str(p)), p)
-        if not done:
-            output("Prop %r" % self)
-            done = True
 
     def main():
         if str(self) == S:
             newWeight(0, str(self))
-        await(None)
+        await(False)
 
 def main():
     use_channel("tcp")
