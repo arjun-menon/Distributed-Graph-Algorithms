@@ -1,0 +1,126 @@
+"""
+
+Overview
+
+Selective leader election.
+
+Nodes have 3 states: NORMAL, VERTEX, OUT
+
+1. Pick a leader
+2. Mark the leader as VERTEX, and all its neighbors as OUT
+3. Repeat leader selection, only consider NORMAL nodes
+4. Repeat steps 2 and 3 until there are no more NORMAL nodes left
+
+Algorithm for selective leader election
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Note: The program has to consider the case where there are _no_ NORMAL nodes. 
+      It must recognize this state and terminate the program. In order to do 
+      so, the step 3 leader election is always iniated by previous leader, 
+      and in order to recognize the case where there are no NORMAL nodes, 
+      the result of the leader election is reported back to the previous 
+      leader, who either stops or continues the program.
+
+0. Initially all nodees are in the state `NORMAL`
+
+1. A node X is picked at random
+
+2. _procedue_ mark:
+
+"""
+
+from InputGraph import *
+
+G = construct_graph()
+
+output_proc = '0'
+
+class P(DistProcess):
+    def setup(ps, edges):
+        other_procs = ps
+        edges = edges
+
+        # Possible states a node could be in:
+        NORMAL = 'NORMAL' # Initial state of all nodes
+        VERTEX = 'VERTEX' # Indicates that the node is part of the MIS
+        OUT = 'OUT' # Nieghbor nodes marked as not being a part of the MIS
+
+        state = NORMAL
+
+        # Used while depth-first searching for NORMAL nodes
+        search_nodes = set()
+
+        done = False
+
+    ####################
+    # Search Functions #
+    ####################
+
+    def resetSearchNodes():
+        search_nodes = set( edges.keys() )
+
+    def startSearch():
+        resetSearchNodes()
+
+    ##########################
+    # Node Marking Functions #
+    ##########################
+
+    def setState(new_state):
+        state = new_state
+        output("%r marked as %s" % (self, state))
+
+    def OnMark():
+        mark()
+
+    def mark():
+        '''Node marks itself as a VERTEX and signals
+           neighbors to mark themselves as OUT '''
+
+        setState(VERTEX)
+
+        for neighbor in edges.keys():
+            send(Out(), neighbor)
+
+        startSearch()
+    
+    def OnOut():
+        setState(OUT)
+
+    def node():
+        await(done)
+    
+    def outputProc():
+        random_node = ps.pop()
+        send(Mark(), random_node)
+    
+    def main():
+         if str(self) == output_proc:
+             outputProc()
+         else:
+            node()
+
+def main():
+    use_channel("tcp")
+    
+    procs_names = set(G.nodes())
+    procs_names.update({'0'})# control process
+    
+    global procs
+    procs = createprocs(P, procs_names)
+    
+    # setup the processes
+    ps = set(procs.values())
+    
+    for p in ps:
+        if str(p) == '0':
+            setupprocs([p], [ps-{p}, None])
+        else:
+            p_edges = { procs[node] : data['weight'] 
+                       for (node, data) in G[repr(p)].items() }
+            setupprocs([p], [ps-{p, procs['0']}, p_edges])
+    
+    startprocs(ps)
+    
+    for p in (ps):
+        p.join()
