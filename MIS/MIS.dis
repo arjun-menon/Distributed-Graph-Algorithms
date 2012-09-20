@@ -50,6 +50,8 @@ class P(DistProcess):
         state = NORMAL
 
         # Used while depth-first searching for NORMAL nodes
+        FOUND = 'Found'
+        EXHAUSTED = "Exhausted"
         search_nodes = set()
         search_reply = None
         search_source = None
@@ -80,35 +82,44 @@ class P(DistProcess):
 
         history.append(self)
 
-        #output("Starting search %r" % history)
         while True:
             if len(search_nodes) == 0:
                 if search_source != None:
-                    send(SearchReply(False, history), search_source)
+                    send(SearchReply(EXHAUSTED, history), search_source)
                 return False
             
             node = search_nodes.pop()
 
+            output("Sending Search request to %r with %r" % (node, history))
             send(Search(history), node)
+            search_reply = None
+            #await(search_reply)
             await(received(SearchReply(a, b)))
             
-            #if search_reply == True:
-            return search_reply
+            if search_reply == FOUND:
+                if search_source != None:
+                    output("Sending reply %s to %r @ %r" % (search_reply, search_source, history))
+                    send(SearchReply(search_reply, history), search_source)
+                return True
+
+            # elif search_reply == EXHAUSTED:
+            #     if search_source != None:
+            #         output("Sending reply %s to %r @ %r" % (earch_reply, search_source, history))
+            #         send(SearchReply(search_reply, history), search_source)
+            #     return False
 
     def OnSearchReply(reply, history):
-        #output("Received SearchReply %r: %r" % (reply, history))
+        output("Received SearchReply %r: %r" % (reply, history))
         search_reply = reply
 
-        if search_source != None:
-            send(SearchReply(reply, history), search_source)
-
     def OnSearch(history):
-        #output("Search @ %r" % history) 
+        output("Search request @ %r" % history) 
         if state == NORMAL:
             history.append(self)
-            send(SearchReply(True, history), _source)
+            output("Sending reply True to %r @ %r" % (_source, history))
+            send(SearchReply(FOUND, history), _source)
             call = 'mark'
-            #output("Mark.")
+            output("Mark.")
 
         else:
             call = 'search'
@@ -120,9 +131,9 @@ class P(DistProcess):
     ##########################
 
     def setState(new_state):
-        state = new_state
-        if state == VERTEX:
-                output("%r marked as %s" % (self, state))
+        if new_state != state:
+            state = new_state
+            output("%r marked as %s" % (self, state))
 
     def OnMark():
         call = 'mark'
