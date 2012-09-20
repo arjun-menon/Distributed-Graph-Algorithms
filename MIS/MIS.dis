@@ -33,12 +33,14 @@ from InputGraph import *
 
 G = construct_graph()
 
-output_proc = '0'
-
 class P(DistProcess):
     def setup(ps, edges):
-        other_procs = ps
-        edges = edges
+        if str(self) == '0':
+            other_procs = ps
+            vertices = set()
+        else:
+            control_proc = ps
+            edges = edges
 
         # Possible states a node could be in:
         NORMAL = 'NORMAL' # Initial state of all nodes
@@ -49,6 +51,11 @@ class P(DistProcess):
 
         # Used while depth-first searching for NORMAL nodes
         search_nodes = set()
+        search_reply = None
+        search_source = None
+
+        call = 'none'
+        call_args = None
 
         done = False
 
@@ -59,8 +66,54 @@ class P(DistProcess):
     def resetSearchNodes():
         search_nodes = set( edges.keys() )
 
-    def startSearch():
+    def search(history):
+        '''search() performs 2 functions:
+            a. It find the next NORMAL node, calls mark() on it.
+            b. If there are no NORMAL nodes left, returns False.
+
+        The return value indicates to the caller that the search 
+        failed and the graph has been exhausted.
+        '''
+
         resetSearchNodes()
+        search_nodes -= set(history)
+
+        history.append(self)
+
+        #output("Starting search %r" % history)
+        while True:
+            if len(search_nodes) == 0:
+                if search_source != None:
+                    send(SearchReply(False, history), search_source)
+                return False
+            
+            node = search_nodes.pop()
+
+            send(Search(history), node)
+            await(received(SearchReply(a, b)))
+            
+            #if search_reply == True:
+            return search_reply
+
+    def OnSearchReply(reply, history):
+        #output("Received SearchReply %r: %r" % (reply, history))
+        search_reply = reply
+
+        if search_source != None:
+            send(SearchReply(reply, history), search_source)
+
+    def OnSearch(history):
+        #output("Search @ %r" % history) 
+        if state == NORMAL:
+            history.append(self)
+            send(SearchReply(True, history), _source)
+            call = 'mark'
+            #output("Mark.")
+
+        else:
+            call = 'search'
+            call_args = (history, )
+            search_source = _source
 
     ##########################
     # Node Marking Functions #
@@ -68,36 +121,73 @@ class P(DistProcess):
 
     def setState(new_state):
         state = new_state
-        output("%r marked as %s" % (self, state))
+        if state == VERTEX:
+                output("%r marked as %s" % (self, state))
 
     def OnMark():
-        mark()
+        call = 'mark'
 
     def mark():
         '''Node marks itself as a VERTEX and signals
            neighbors to mark themselves as OUT '''
 
         setState(VERTEX)
+        send(Marked(), control_proc)
 
         for neighbor in edges.keys():
             send(Out(), neighbor)
 
-        startSearch()
+        search_source = None
+        search_result = search([])
+
+        if search_result == False:
+            send(Finished(), control_proc)
     
     def OnOut():
         setState(OUT)
 
+    #####################
+    # Control Functions #
+    #####################
+
     def node():
-        await(done)
+        while call and not done:
+            # Using a copy of call
+            _call = str(call)
+            call = None
+
+            if _call == 'none':
+                pass
+            elif _call == 'mark':
+                mark()
+            elif _call == 'search':
+                search(*call_args)
+
+            await(done or call)
+
+    def OnDone():
+        done = True
     
-    def outputProc():
+    def OnFinished():
+        pass
+
+    def OnMarked():
+        vertices.update(str(_source))
+
+    def controlProc():
         random_node = ps.pop()
+        ps.add(random_node)
+
         send(Mark(), random_node)
+        await(received(Finished()))
+
+        send(Done(), other_procs)
+        output("Vertices in the MIS are: %s" % ", ".join(str(v) for v in vertices))
     
     def main():
-         if str(self) == output_proc:
-             outputProc()
-         else:
+        if str(self) == '0':
+            controlProc()
+        else:
             node()
 
 def main():
@@ -118,7 +208,8 @@ def main():
         else:
             p_edges = { procs[node] : data['weight'] 
                        for (node, data) in G[repr(p)].items() }
-            setupprocs([p], [ps-{p, procs['0']}, p_edges])
+            #setupprocs([p], [ps-{p, procs['0']}, p_edges])
+            setupprocs([p], [procs['0'], p_edges])
     
     startprocs(ps)
     
