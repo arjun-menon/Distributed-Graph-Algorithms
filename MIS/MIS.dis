@@ -48,13 +48,18 @@ class P(DistProcess):
         OUT = 'OUT' # Nieghbor nodes marked as not being a part of the MIS
 
         state = NORMAL
+        out_confirmations = set()
 
         # Used while depth-first searching for NORMAL nodes
-        FOUND = 'Found'
-        EXHAUSTED = "Exhausted"
-        search_nodes = set()
-        search_reply = None
-        search_source = None
+        # FOUND = 'Found'
+        # EXHAUSTED = "Exhausted"
+        # search_nodes = set()
+        # search_reply = None
+        #search_source = None
+
+        search_requested = set()
+        search_reply_count = 0
+        collected_replies = set()
 
         call = 'none'
         call_args = None
@@ -65,66 +70,106 @@ class P(DistProcess):
     # Search Functions #
     ####################
 
-    def resetSearchNodes():
-        search_nodes = set( edges.keys() )
+    def search(path, source):
+        output("search(%r, %r)..." % (path, source))
 
-    def search(history):
-        '''search() performs 2 functions:
-            a. It find the next NORMAL node, calls mark() on it.
-            b. If there are no NORMAL nodes left, returns False.
-
-        The return value indicates to the caller that the search 
-        failed and the graph has been exhausted.
-        '''
-
-        resetSearchNodes()
-        search_nodes -= set(history)
-
-        history.append(self)
-
-        while True:
-            if len(search_nodes) == 0:
-                if search_source != None:
-                    send(SearchReply(EXHAUSTED, history), search_source)
-                return False
-            
-            node = search_nodes.pop()
-
-            output("Sending Search request to %r with %r" % (node, history))
-            send(Search(history), node)
-            search_reply = None
-            #await(search_reply)
-            await(received(SearchReply(a, b)))
-            
-            if search_reply == FOUND:
-                if search_source != None:
-                    output("Sending reply %s to %r @ %r" % (search_reply, search_source, history))
-                    send(SearchReply(search_reply, history), search_source)
-                return True
-
-            # elif search_reply == EXHAUSTED:
-            #     if search_source != None:
-            #         output("Sending reply %s to %r @ %r" % (earch_reply, search_source, history))
-            #         send(SearchReply(search_reply, history), search_source)
-            #     return False
-
-    def OnSearchReply(reply, history):
-        output("Received SearchReply %r: %r" % (reply, history))
-        search_reply = reply
-
-    def OnSearch(history):
-        output("Search request @ %r" % history) 
+        collected_replies = []
         if state == NORMAL:
-            history.append(self)
-            output("Sending reply True to %r @ %r" % (_source, history))
-            send(SearchReply(FOUND, history), _source)
-            call = 'mark'
-            output("Mark.")
+            collected_replies.append(path)
+
+        neighbors = set( edges.keys() ) - set(path)
+
+        for neighbor in neighbors:
+            send(Search(path+[neighbor]), neighbor)
+
+        await( search_reply_count == len(neighbors) )
+
+        #output("%r ---- %r" % (self, collected_replies))
+        if source:
+            send(SearchReply(collected_replies), source)
+        else:
+            return collected_replies
+
+    def OnSearchReply(paths):
+        search_reply_count += 1
+        if paths:
+            collected_replies += paths
+
+    def OnSearch(path):
+        root = path[0]
+
+        if root in search_requested:
+            #output("__OUT__ --> " + repr(_source))
+            send(SearchReply(None), _source)
 
         else:
+            search_requested.update( {root} )
+
+            call_args = (path, _source)
             call = 'search'
-            call_args = (history, )
-            search_source = _source
+
+    # def resetSearchNodes():
+    #     search_nodes = set( edges.keys() )
+
+    # def search(history):
+    #     return False
+
+    #     '''search() performs 2 functions:
+    #         a. It find the next NORMAL node, calls mark() on it.
+    #         b. If there are no NORMAL nodes left, returns False.
+
+    #     The return value indicates to the caller that the search 
+    #     failed and the graph has been exhausted.
+    #     '''
+
+    #     resetSearchNodes()
+    #     search_nodes -= set(history)
+
+    #     history.append(self)
+
+    #     while True:
+    #         if len(search_nodes) == 0:
+    #             if search_source != None:
+    #                 send(SearchReply(EXHAUSTED, history), search_source)
+    #             return False
+            
+    #         node = search_nodes.pop()
+
+    #         output("Sending Search request to %r with %r" % (node, history))
+    #         send(Search(history), node)
+    #         search_reply = None
+    #         #await(search_reply)
+    #         await(received(SearchReply(a, b)))
+            
+    #         if search_reply == FOUND:
+    #             if search_source != None:
+    #                 output("Sending reply %s to %r @ %r" % (search_reply, search_source, history))
+    #                 send(SearchReply(search_reply, history), search_source)
+    #             return True
+
+    #         # elif search_reply == EXHAUSTED:
+    #         #     if search_source != None:
+    #         #         output("Sending reply %s to %r @ %r" % (earch_reply, search_source, history))
+    #         #         send(SearchReply(search_reply, history), search_source)
+    #         #     return False
+
+    # def OnSearchReply(reply, history):
+    #     output("Received SearchReply %r: %r" % (reply, history))
+    #     search_reply = reply
+
+    # def OnSearch(history):
+    #     output("Search request @ %r" % history) 
+    #     if state == NORMAL:
+    #         history.append(self)
+    #         output("Sending reply True to %r @ %r" % (_source, history))
+    #         send(SearchReply(FOUND, history), _source)
+    #         call = 'mark'
+    #         output("Mark.")
+
+    #     else:
+    #         call = 'search'
+    #         call_args = (history, )
+    #         search_source = _source
 
     ##########################
     # Node Marking Functions #
@@ -145,17 +190,30 @@ class P(DistProcess):
         setState(VERTEX)
         send(Marked(), control_proc)
 
-        for neighbor in edges.keys():
+        neighbors = set(edges.keys())
+        out_confirmations = set()
+
+        for neighbor in neighbors:
             send(Out(), neighbor)
 
+        await(out_confirmations == neighbors)
+        output("Out Confirmed: %r" % out_confirmations)
+
         search_source = None
-        search_result = search([])
+        search_result = search([self], None)
+
+        output(search_result)
 
         if search_result == False:
+            output("Sending control proc message FINISHED...")
             send(Finished(), control_proc)
     
     def OnOut():
         setState(OUT)
+        send(OutConfirmation(), _source)
+
+    def OnOutConfirmation():
+        out_confirmations.update({_source})
 
     #####################
     # Control Functions #
@@ -176,6 +234,8 @@ class P(DistProcess):
 
             await(done or call)
 
+        output("Node %r is going DOWN..." % self)
+
     def OnDone():
         done = True
     
@@ -193,7 +253,7 @@ class P(DistProcess):
         await(received(Finished()))
 
         send(Done(), other_procs)
-        output("Vertices in the MIS are: %s" % ", ".join(str(v) for v in vertices))
+        output("Vertices in the MIS are: %s ------------" % ", ".join(str(v) for v in vertices))
     
     def main():
         if str(self) == '0':
