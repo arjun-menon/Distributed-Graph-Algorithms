@@ -1,8 +1,8 @@
-Distributed Minimum Spanning Tree
-=================================
+Distributed Maximal Independent Set
+===================================
 
-This algorithms solves the minimum spanning tree problem in a distributed system 
-where the nodes are represented by processes in the system and edges between the 
+This algorithms solves the [Maximal independent set](https://en.wikipedia.org/wiki/Maximal_independent_set "Wikipedia") 
+problem in a distributed system where the nodes are represented by processes in the system and edges between the 
 nodes in the graph represent a valid communication link between these processes.
 
 The design of the algorithm largely follows the fundamental idea underpinning the 
