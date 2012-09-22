@@ -6,28 +6,28 @@ This algorithm is largely based on the sequential MST algorithm.
 
 Conditions and Constraints
 --------------------------
-    a. Each node in the graph is represented by a process.
+ -  Each node in the graph is represented by a process.
 
-    b. A process/node can only communicate with other processes/nodes 
-       that it has an edge with. Although DistAlgo allows a process to 
-       communicate with any other process, this constraint has been 
-       articially imposed upon this algorithm to imiate real-life 
-       networks where there isn't necessarily a communication link 
-       between every computer with every other computer.
+ -  A process/node can only communicate with other processes/nodes 
+    that it has an edge with. Although DistAlgo allows a process to 
+    communicate with any other process, this constraint has been 
+    articially imposed upon this algorithm to imiate real-life 
+    networks where there isn't necessarily a communication link 
+    between every computer with every other computer.
 
-    c. There's a special process known as the Control Process. The 
-       Control Process fulfills three roles: (1) It iniates the algorithm.
-       (2) It collects output. (3) It terminates the algorithm.
+ -  There's a special process known as the Control Process. The 
+    Control Process fulfills three roles: (1) It iniates the algorithm.
+    (2) It collects output. (3) It terminates the algorithm.
 
-       The control process is not bound by constraint (a), and any process is 
-       permitted to communicate to it and it to all other processes. However, 
-       ehe control process isn't absolutely necessary to the algorithm, or a 
-       crucial component of it. The initation of the algorithm could be moved to 
-       top-level main() function, and rather than collect output, each node could 
-       produce output declaring itself as a vertex of the MST (it does this already), 
-       and termination could be handled by the last VERTEX node; albeit in a less
-       elegant fashion. The control process is overall just a niceity that simplifies 
-       and renders more elegant this particular implementation.
+ -  The control process is not bound by constraint (a), and any process is 
+    permitted to communicate to it and it to all other processes. However, 
+    ehe control process isn't absolutely necessary to the algorithm, or a 
+    crucial component of it. The initation of the algorithm could be moved to 
+    top-level main() function, and rather than collect output, each node could 
+    produce output declaring itself as a vertex of the MST (it does this already), 
+    and termination could be handled by the last VERTEX node; albeit in a less
+    elegant fashion. The control process is overall just a niceity that simplifies 
+    and renders more elegant this particular implementation.
 
 
 High-Level Overview of the Algorithm
@@ -120,3 +120,4 @@ More on mark() and the Control Process:
     accomplished by means of a `Marked` message sent by each process/node 
     when it gets marked as VERTEX or OUT. This feature accomplishes 
     purpose (2) of the control process: output collection.
+
