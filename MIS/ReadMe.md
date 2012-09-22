@@ -1,18 +1,27 @@
-Overview
-========
+Distributed Minimum Spanning Tree
+=================================
 
-This algorithm is largely based on the sequential MST algorithm.
+This algorithms solves the minimum spanning tree problem in a distributed system 
+where the nodes are represented by processes in the system and edges between the 
+nodes in the graph represent a valid communication link between these processes.
 
+The design of the algorithm largely follows the fundamental idea underpinning the 
+sequential algorithm. The sequential algorithm for finding MST is shown below:
+
+![MIS Sequential](https://raw.github.com/arjungmenon/DistAlgo/master/MIS/MIS-sequential.png)
 
 Conditions and Constraints
 --------------------------
  -  Each node in the graph is represented by a process.
 
  -  A process/node can only communicate with other processes/nodes 
-    that it has an edge with. Although DistAlgo allows a process to 
-    communicate with any other process, this constraint has been 
-    articially imposed upon this algorithm to imiate real-life 
-    networks where there isn't necessarily a communication link 
+    that it has an edge with. This constraint is soft-enforced.
+    Although DistAlgo allows a process to communicate with any 
+    other process, the algorithm does not communicate to any process 
+    that it does not have an edge with. (An exception is the control 
+    process, which is not key player in the algorithm.) This constraint 
+    is crucial has been articially imposed upon this algorithm to imiate 
+    real-life networks where there necessarily isn't a communication link 
     between every computer with every other computer.
 
  -  There's a special process known as the Control Process. The 
