@@ -1,9 +1,9 @@
-Assignment 2 Part I
--------------------
+Concurrent Mutex algorithms
+---------------------------
 This is an implementation of Lamport's fast mutual exclusion and bakery 
 algorithms for atomizing access to crucial resources. The purpose of 
 both algorithms are to ensure that a segment of code known as the 
-`critical section` does _not_ get executed concurrently.
+**critical section** does _not_ get executed concurrently.
 
 The module `fast.py`   implements Lamport's fast mutex algorithm and 
 the module `bakery.py` implements Lamport's bakery algorithm.
