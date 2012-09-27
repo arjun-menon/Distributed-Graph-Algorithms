@@ -1,0 +1,275 @@
+
+from MST_sequential import *
+
+G = construct_graph()
+
+class Fragment(object):
+    def __repr__():
+        return "$[%r at %r]" % (self.core_id, self.level)
+
+class P(DistProcess):
+        
+    def isControlProc(proc):
+        return str(self) == control_proc
+    
+    def setup(ps, edges):
+        CONNECT = 'Connect'
+        WAKEUP = 'WakeUp'
+        
+        control_proc = '0'
+        other_procs = ps
+        
+        if isControlProc(self):
+            sent_wakeups = False
+
+        else:
+            edges = edges
+            edges_only = set(edges.keys())
+            min_wt_neighbor = min(edges, key=edges.get)
+            #output("(%r, %r)" % (self, min_wt_neighbor))
+#            edge_status = dict()
+#            for edge in edges.keys():
+#                edge_status[edge] = BASIC
+            #print(self, ps, edges, " --> ", min_wt_neighbor, edge_status)
+            
+            f = Fragment()
+            f.level = 0
+            f.core_id = None
+            
+            INITIAL = -1
+            FIND = 0
+            FOUND = 1
+            state = INITIAL
+            deferredFindMinWtOutgoing = None
+
+            '''If a second OnFindMinWtOutgoing is sent to this 
+               node, from a node on the initial sender's path, 
+               then reply with an empty set.'''
+            find_initiator_path = set()
+            find_source = None
+            find_replies = dict()
+            waiting_for_replies = 0
+
+            connect_requests = set()
+            waiting_to_zero_connect = None
+            waiting_to_frag_connect = None
+        
+        cycle = False
+        completed = False
+    
+    def sort_pair(p):
+        #return p if (p[0] < [1]) else (p[1], p[0])
+        pl = list(p)
+        pl.sort()
+        return (pl[0], pl[1])
+
+    def controlProc():
+        await(completed)
+
+    def node():
+        prev_level = f.level
+
+        while not completed:
+            cycle = False
+
+            if f.level == 0 and not waiting_to_zero_connect:
+                send(ZeroConnect(f), min_wt_neighbor)
+                waiting_to_zero_connect = min_wt_neighbor
+                await(f.level > 0)
+                #output("%r has joined fragment %r" % (self, f.core_id))
+                waiting_to_zero_connect = None
+
+            absorb()
+
+            if deferredFindMinWtOutgoing != None:
+                onFindMinWtOutgoing(*deferredFindMinWtOutgoing)
+                deferredFindMinWtOutgoing = None
+
+            "Every time we grow in level: "
+            if f.level > prev_level and False:
+                """Find the minimum weight outgoing edge of the 
+                   fragment, send a Connect & wait for a reply"""
+                if self == f.core_id[0]:
+
+                    if state == INITIAL:
+                        output("Searching for minimum outgoing edge of fragment %s..." % repr(f.core_id))
+                        state = FIND
+                        for edge in edges_only:
+                            send(FindMinWtOutgoing(f, [self]), edge)
+                            waiting_for_replies += 1
+
+                    if state == FOUND:
+                        min_wt_outgoing_edge_path = find_replies[ min(find_replies.keys()) ]
+
+                        output("Outgoing edges of fragment %s are: %r\nPath to minimum weight outgoing edge is: %s" % 
+                            (repr(f.core_id), find_replies, " -> ".join(str(x) for x in min_wt_outgoing_edge_path)))
+
+                        send(FragConnectPath(min_wt_outgoing_edge_path[1:]), min_wt_outgoing_edge_path[0])
+
+                        prev_level = f.level
+
+            await(cycle or completed)
+
+    def absorb():
+        to_remove = set()
+        for p, _f in connect_requests:
+            if _f.level < f.level:
+                output("Absorbing node %r [fragment %r].." % (p, _f.core_id))
+                send(JoinMe(f), p)
+                to_remove.update({ (p, _f) })
+            # if _f.level == f.level:
+            #     if p == waiting_to_frag_connect:
+            #         output("%r Merging with %r of %r" % (p, _f))
+        
+        connect_requests -= to_remove
+
+        cycle = True
+
+    def OnZeroConnect(_f):
+        'Initial Connect (to form Level-1 fragments)'
+        #output("%r received ZeroConnect from %r" % (self, _source))
+        
+        if _source == min_wt_neighbor:
+            f.core_id = edges[_source]
+            f.core_id =  sort_pair( (self, _source) )
+            f.level += 1
+        
+        else:
+            connect_requests.update({ (_source, _f) })
+
+        cycle = True
+
+    def OnJoinMe(_f):
+        #output("Received JoinMe from %r" % _source)
+
+        if f.level == 0:
+            f.level = _f.level
+            f.core_id = _f.core_id
+
+        else:
+            # TODO: Fragment must propogate JoinMe message to other nodes in the same fragment
+            pass
+
+        cycle = True
+
+    def OnFragConnect(_f):
+        connect_requests.update({ (_source, _f) })
+
+        # if waiting_to_frag_connect == _source:
+        #     'Merge: '
+        #     pass
+
+        # else:
+        #     'Add to connect queue'
+        #     connect_requests.update({ (_source, _f) })
+
+        cycle = True
+
+    def OnFragConnectPath(path):
+        if len(path) > 1:
+            send(FragConnectPath(path[1:]), path[0])
+        elif len(path) == 1:
+            output("Sending Fragment Connect request to %r" % path[0])
+            send(FragConnect(f), path[0])
+            waiting_to_frag_connect = path[0]
+
+        cycle = True
+
+    def OnFindMinWtOutgoing(source_f, path):
+        onFindMinWtOutgoing(_source, source_f, path)
+
+    def onFindMinWtOutgoing(source, source_f, path):
+        if source_f.core_id != f.core_id:
+
+            if waiting_to_zero_connect != None:
+                deferredFindMinWtOutgoing = (source, source_f, path)
+
+            elif source == waiting_to_zero_connect:
+                if source_f.level > f.level:
+                    'Expect a future "JoinMe" message'
+                    f.level = source_f.level
+                    f.core_id = source_f.core_id
+                else:
+                    send(FindMinWtOutgoingReply('Outgoing'), source)
+
+            else:
+                send(FindMinWtOutgoingReply('Outgoing'), source)
+
+        else: # source_f.core_id == f.core_id:
+            if not find_initiator_path & set(path):
+                "Send outoging find reqs to neighboring nodes"
+                find_initiator_path.update(path)
+                state = FIND
+                find_source = source
+
+                new_path = path + [self]
+
+                #output(".....%r will send Find to %r" % (self, (edges_only - set(path))))
+                waiting_for_replies = 0
+                for edge in (edges_only - set(path)):
+                    send(FindMinWtOutgoing(source_f, new_path), edge)
+                    waiting_for_replies += 1
+
+            else:
+                "Reject this FindMinWtOutgoing request"
+                #output("...%r rejected FindMinWtOutgoing from %r" % (self, source))
+                send(FindMinWtOutgoingReply(None), source)
+
+        cycle = True
+
+    def OnFindMinWtOutgoingReply(r):
+        #output("Received REPLY from %r: %r" % (_source, r))
+
+        if isinstance(r, dict):
+            for _wt, _path in r.items():
+                find_replies.update({ _wt : [self]+_path })
+
+        if r == 'Outgoing':
+            find_replies.update({ edges[_source] : [self, _source] })
+
+        waiting_for_replies -= 1
+
+        if not waiting_for_replies:
+            #output("..Find COMPLETE! " + repr(find_replies))
+            if find_source != None:
+                send(FindMinWtOutgoingReply(find_replies), find_source)
+
+            state = FOUND
+            find_initiator_path = set()
+            find_source = None
+
+            if find_source != None:
+                find_replies = dict()
+
+        cycle = True
+
+    def main():
+         if isControlProc(self):
+             controlProc()
+         else:
+            node()
+
+def main():
+    use_channel("tcp")
+    
+    procs_names = set(G.nodes())
+    procs_names.update({'0'})# control process
+    
+    global procs
+    procs = createprocs(P, procs_names)
+    
+    # setup the processes
+    ps = set(procs.values())
+    
+    for p in ps:
+        if str(p) == '0':
+            setupprocs([p], [ps-{p}, None])
+        else:
+            p_edges = { procs[node] : data['weight'] 
+                       for (node, data) in G[repr(p)].items() }
+            setupprocs([p], [ps-{p, procs['0']}, p_edges])
+    
+    startprocs(ps)
+    
+    for p in (ps):
+        p.join()
