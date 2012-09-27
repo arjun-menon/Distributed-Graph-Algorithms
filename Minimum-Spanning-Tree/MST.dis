@@ -248,6 +248,7 @@
 #          else:
 #             node()
 
+from collections import deque
 from MST_sequential import *
 
 G = construct_graph()
@@ -257,15 +258,128 @@ class Spark(DistProcess):
         ps = ps
 
     def main():
-        pass
+        random_node =  ps.pop()
+        ps.update( {random_node} )
+        send( Wakeup(), random_node )
+
+INFINITE = 999999999
+
+# Used by the 'state' variable in Node:
+BASIC = 'Basic'
+BRANCH = 'Branch'
+REJECTED = 'Rejected'
+
+SLEEPING = "Sleeping"
+FOUND = 'Found'
+FIND = 'Find'
 
 class Node(DistProcess):
     def setup(edges):
-        edges = edges
+        w = edges
         neighbors = set( edges.keys() )
 
-    def main():
+        # adjacent edge/node of minimum weight:
+        m = min(edges, key=edges.get)
+
+        # State of each Edge/node:
+        SE = dict()
+        for n in neighbors:
+            SE[n] = BASIC
+
+        # Level, State & Find-count of this Node:
+        LN = 0
+        SN = SLEEPING
+        Fc = 0
+
+        # ...
+        FN = None
+
+        # ...
+        Q = deque()
+
+        # ???
+        in_branch = None
+        best_edge = None
+        best_wt = INFINITE
+
+        test_edge = None
+
+        # Special variable to indicate when to terminate:
+        finished = False
+
+    # (1)
+    def OnWakeup():
+        output("Received spontaneous Wakeup from: %r" % _source)
+        wakeup()
+
+    # (2)
+    def wakeup():
+        SE[m] = BRANCH
+        LN = 0
+        SN = FOUND
+        Fc = 0
+        send( Connect(LN), m )
+
+    # (3)
+    def OnConnect(L):
+        j = _source
+        output("Received Connect(%r) from: %r" % (L, j))
+
+        if SN == SLEEPING:
+            wakeup()
+
+        if L < LN:
+            SE[j] = BRANCH
+            send( Initiate(LN, FN, SN), j )
+            if SN == FIND:
+                Fc = Fc + 1
+
+        elif SE[j] == BASIC:
+            Q.append( (j, L) )
+
+        else:
+            send( Initiate(LN + 1, w[j], FIND), j )
+
+    # (4)
+    def OnInitiate(L, F, S):
+        j = _source
+        output("Received Initiate(%r, %r, %r) from: %r" % (L, F, S, j))
+
+        LN = L
+        FN = F
+        SN = S
+        in_branch = j
+        best_edge = None
+        best_wt = INFINITE
+
+        for i in neighbors:
+            if i != j and SE[i] == BRANCH:
+                send( Initiate(LN, FN, SN), i )
+                if S == FIND:
+                    Fc = Fc + 1
+
+        if S == FIND:
+            test()
+
+    # (5)
+    def test():
+        # Edges in the state BASIC:
+        basic_edges = [edge for edge, state in SE.items() if state == BASIC]
+        if basic_edges:
+            # find the minimum-weight adjacent edge in state BASIC:
+            test_edge = min(basic_edges, key = lambda edge: w[edge])
+            send( Test(LN, FN), test_edge )
+
+        else:
+            test_edge = None
+            report()
+
+    # (9)
+    def report():
         pass
+
+    def main():
+        await(finished)
 
 def main():
     use_channel("tcp")
