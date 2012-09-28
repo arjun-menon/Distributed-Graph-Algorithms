@@ -196,7 +196,7 @@ class Node(DistProcess):
 
         elif w == best_wt and best_wt == INFINITE:
             # TODO: halt()
-            pass
+            output("HALT!!!")
 
     # (11)
     def change_core():
