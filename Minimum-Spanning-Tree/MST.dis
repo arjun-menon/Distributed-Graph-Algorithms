@@ -1,221 +1,163 @@
 
+"""
+
+wakeup:
+    send Connect to minimum-weight
+
+OnConnect:
+    add to connect_reqs queue
+
+
+
+merge_condition = lambda: conn in set(connect_reqs)
+
+absorb_condition = lambda: connect_reqs.lowest_level < my_level
+
+await(  merge_condition or absorb_condition or finished  )
+
+"""
+
 from collections import deque
 from MST_sequential import *
 
 G = construct_graph()
+
+INFINITY = 999999999
+
+class ConnectRequests(object):
+    def __init__():
+        self.reqs = dict()
+
+    def insert(p, l):
+        if p in self.reqs:
+            output("%r already made a request" % p)
+
+        self.reqs[p] = l
+
+    def get_least_level_req():
+        if self.reqs:
+            return min(self.reqs, key=self.reqs.get)
+
+    def least_level():
+        if self.reqs:
+            return self.reqs[self.get_least_level_req()]
+        else:
+            return INFINITY
 
 class Spark(DistProcess):
     def setup(ps):
         ps = ps
 
     def main():
-        random_node =  ps.pop()
-        ps.update( {random_node} )
-        send( Wakeup(), random_node )
+        while ps:
+            random_node =  ps.pop()
+            #ps.update( {random_node} )
+            send( Wakeup(), random_node )
 
-INFINITE = 999999999
+        # cr = ConnectRequests()
+        # cr.insert('a', 3)
+        # cr.get_least_level_req()
+        # cr.least_level()
 
-# Used by the 'state' variable in Node:
+# Used by the SE variable in Node:
 BASIC = 'Basic'
 BRANCH = 'Branch'
-REJECTED = 'Rejected'
 
 SLEEPING = "Sleeping"
 FOUND = 'Found'
 FIND = 'Find'
-
+                                                                                                                                                                                                                                                                                                                                                           
 class Node(DistProcess):
     def setup(edges):
         w = edges
         neighbors = set( edges.keys() )
-
-        # adjacent edge/node of minimum weight:
-        m = min(edges, key=edges.get)
 
         # State of each Edge/node:
         SE = dict()
         for n in neighbors:
             SE[n] = BASIC
 
-        # Level, State & Find-count of this Node:
-        LN = 0
-        SN = SLEEPING
-        Fc = 0
+        # Level & State of this Node:
+        my_level = 0
+        my_fragm = None
+        my_state = SLEEPING
 
-        FN = None
-
-        Q = deque()
-
-        in_branch = None
-        best_edge = None
-        best_wt = INFINITE
-
-        test_edge = None
+        # for future use:
+        waiting_to_connect_to = None
+        connect_reqs = ConnectRequests()
 
         # Special variable to indicate when to terminate:
         finished = False
 
-    # (1)
     def OnWakeup():
-        output("Received spontaneous Wakeup from: %r" % _source)
-        wakeup()
+        #output("Received spontaneous Wakeup from: %r" % _source)
+        if my_state == SLEEPING:
+            wakeup()
 
-    # (2)
     def wakeup():
-        SE[m] = BRANCH
-        LN = 0
-        SN = FOUND
-        Fc = 0
-        send( Connect(LN), m )
+        # todo: call a function that finds min-wt BASIC node instead..
+        # adjacent edge/node of minimum weight:
+        m = min(edges, key=edges.get)
 
-    # (3)
+        send( Connect(my_level), m )
+        SE[m] = BRANCH
+        waiting_to_connect_to = m
+        my_state = FOUND
+
     def OnConnect(L):
         j = _source
-        output("Received Connect(%r) from: %r" % (L, j))
+        #output("Received Connect(%r) from: %r" % (L, j))
 
-        if SN == SLEEPING:
+        if my_state == SLEEPING:
             wakeup()
 
-        if L < LN:
-            SE[j] = BRANCH
-            send( Initiate(LN, FN, SN), j )
-            if SN == FIND:
-                Fc = Fc + 1
+        connect_reqs.insert(j, L)
 
-        elif SE[j] == BASIC:
-            #Q.append( (j, L) )
-            Q.append(( 'Connect', (L) ))
-
-        else:
-            send( Initiate(LN + 1, w[j], FIND), j )
-
-    # (4)
     def OnInitiate(L, F, S):
         j = _source
+        #output("%r JOINED w(%d)" % (self, F))
         output("Received Initiate(%r, %r, %r) from: %r" % (L, F, S, j))
 
-        LN = L
-        FN = F
-        SN = S
-        in_branch = j
-        best_edge = None
-        best_wt = INFINITE
+        my_level = L
+        my_fragm = F
+        my_state = S
 
-        for i in neighbors:
-            if i != j and SE[i] == BRANCH:
-                send( Initiate(LN, FN, SN), i )
-                if S == FIND:
-                    Fc = Fc + 1
+    def merge_with(node):
+        #output("%r <--> %r" % (self, waiting_to_connect_to))
 
-        if S == FIND:
-            test()
+        new_level = my_level + 1
+        new_fragm = w[waiting_to_connect_to]
 
-    # (5)
-    def test():
-        # Edges in the state BASIC:
-        basic_edges = [edge for edge, state in SE.items() if state == BASIC]
-        if basic_edges:
-            # find the minimum-weight adjacent edge in state BASIC:
-            test_edge = min(basic_edges, key = lambda edge: w[edge])
-            send( Test(LN, FN), test_edge )
+        # Send Initiate to node
+        send( Initiate(new_level, new_fragm, FIND), waiting_to_connect_to )
+        SE[waiting_to_connect_to] = BRANCH
 
-        else:
-            test_edge = None
-            report()
+    def absorb_node(node):
+        #output("%r Absorbing %r" % (self, node))
 
-    # (6)
-    def OnTest(L, F):
-        j = _source
-        output("Received Test(%r, %r) from: %r" % (L, F, j))
+        send( Initiate(my_level, my_fragm, my_state), node )
+        SE[node] = BRANCH
 
-        if SN == SLEEPING:
-            wakeup()
-
-        if L > LN:
-            Q.append(( 'Test', (L, F) ))
-        elif F == FN:
-            send( Accept(), j )
-
-        else:
-            if SE[j] == BASIC:
-                SE[j] = REJECTED
-
-            if test_edge != j:
-                send( Reject(), j )
-            else:
-                test()
-
-    # (7)
-    def OnAccept():
-        j = _source
-        output("Received Accept() from: %r" % j)
-
-        test_edge = None
-        if w[j] < best_wt:
-            best_edge = j
-            best_wt = w[j]
-
-        test()
-
-    # (8)
-    def Reject():
-        j = _source
-        output("Received Reject() from: %r" % j)
-
-        if SE[j] == BASIC:
-            SE[j] = REJECTED
-        test()
-
-    # (9)
-    def report():
-        output("Executing change core")
-
-        if Fc == 0 and test_edge == None:
-            SN = FOUND
-            send( Report(best_wt), in_branch )
-
-    # (10)
-    def OnReport(w):
-        j = _source
-        output("Received Report(%r) from: %r" % (w, j))
-
-        if j != in_branch:
-            Fc = Fc - 1
-
-            if w < best_wt:
-                best_wt = w
-                best_edge = j
-
-            report()
-
-        elif SN == FIND:
-            Q.append(( 'Report', (w) ))
-
-        elif w > best_wt:
-            change_core()
-
-        elif w == best_wt and best_wt == INFINITE:
-            # TODO: halt()
-            output("HALT!!!")
-
-    # (11)
-    def change_core():
-        output("Executing change core")
-
-        if SE[best_edge] == BRANCH:
-            send( ChangeCore(), best_edge )
-
-        else:
-            send( Connect(LN), best_edge )
-            SE[best_edge] = BRANCH
-
-    # (12)
-    def OnChange():
-        change_core()
- 
-    # (*)
     def main():
-        await(finished)
+        while not finished:
+
+            merge_condition = lambda: waiting_to_connect_to in set(connect_reqs.reqs)
+
+            absorb_condition = lambda: connect_reqs.least_level() < my_level
+
+            await(  merge_condition() or absorb_condition() or finished  )
+
+            if merge_condition():
+                merge_with(waiting_to_connect_to)
+                connect_reqs.reqs.pop(waiting_to_connect_to)
+                waiting_to_connect_to = None
+
+            elif absorb_condition():
+                node = connect_reqs.get_least_level_req()
+                absorb_node(node)
+                connect_reqs.reqs.pop(node)
+
+        output("%r exiting..." % self   )
 
 def main():
     use_channel("tcp")
