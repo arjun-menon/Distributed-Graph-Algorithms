@@ -30,9 +30,9 @@ class ConnectRequests(object):
 
     def insert(p, l):
         if p in self.reqs:
-            output("%r already made a request" % p)
-
-        self.reqs[p] = l
+            print("ERROR: %r already made a request" % p)
+        else:
+            self.reqs[p] = l
 
     def get_least_level_req():
         if self.reqs:
@@ -91,25 +91,23 @@ class Node(DistProcess):
 
     def OnWakeup():
         #output("Received spontaneous Wakeup from: %r" % _source)
+        wakeup_if_necessary()
+
+    def wakeup_if_necessary():
         if my_state == SLEEPING:
-            wakeup()
+            # todo: call a function that finds min-wt BASIC node instead..
+            # adjacent edge/node of minimum weight:
+            m = min(edges, key=edges.get)
 
-    def wakeup():
-        # todo: call a function that finds min-wt BASIC node instead..
-        # adjacent edge/node of minimum weight:
-        m = min(edges, key=edges.get)
-
-        send( Connect(my_level), m )
-        SE[m] = BRANCH
-        waiting_to_connect_to = m
-        my_state = FOUND
+            send( Connect(my_level), m )
+            SE[m] = BRANCH
+            waiting_to_connect_to = m
+            my_state = FOUND
 
     def OnConnect(L):
         j = _source
         #output("Received Connect(%r) from: %r" % (L, j))
-
-        if my_state == SLEEPING:
-            wakeup()
+        wakeup_if_necessary()
 
         connect_reqs.insert(j, L)
 
@@ -140,11 +138,8 @@ class Node(DistProcess):
 
     def main():
         while not finished:
-
+            absorb_condition = lambda: connect_reqs.least_level() < my_level            
             merge_condition = lambda: waiting_to_connect_to in set(connect_reqs.reqs)
-
-            absorb_condition = lambda: connect_reqs.least_level() < my_level
-
             await(  merge_condition() or absorb_condition() or finished  )
 
             if merge_condition():
