@@ -1,0 +1,59 @@
+
+"""
+Test to see if DistAlgo sends messages sequentially regardless of message size (and not out of order)
+
+This is a necessary precondition for the GHS MST algorithm.
+
+Result: YES, it does!
+"""
+
+def l(n):
+    n = 101 - n
+    return [i for i in range(n)]
+
+class Spark(DistProcess):
+    def setup(ps):
+        ps = ps
+
+    def main():
+        random_node =  ps.pop()
+        ps.update( {random_node} )
+
+        for i in range(1, 101):
+            send( Msg( l(i) ), random_node )
+
+class Node(DistProcess):
+    def setup():
+        pass
+
+    def OnMsg(m):
+        output(len(m))
+
+    def main():
+        await(False)
+
+def main():
+    use_channel("tcp")
+
+    # Setup the nodes
+    # ===============
+    node_ps = createprocs(Node, 10)
+
+    for p in node_ps:
+        setupprocs([p], [])
+
+    # Setup up spark
+    # ===============
+    spark = createprocs(Spark, set(['Spark']))
+    spark_p = spark['Spark']
+    setupprocs([spark_p], [node_ps])
+    
+    startprocs(node_ps)
+    startprocs([spark_p])
+
+    # Wait for all processes to die...
+    # --------------------------------
+    for p in node_ps:
+        p.join()
+    
+    spark_p.join()
