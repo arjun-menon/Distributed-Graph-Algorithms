@@ -3,6 +3,7 @@
 import sys
 from distalgo.runtime import *
 
-sys.argv = [sys.argv[0], "MST.dis"]
+if len(sys.argv) == 1:
+	sys.argv = [sys.argv[0], "MST.dis"]
 
 libmain()
