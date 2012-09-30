@@ -49,19 +49,15 @@ class Spark(DistProcess):
         ps = ps
 
     def main():
-        while ps:
-            random_node =  ps.pop()
-            #ps.update( {random_node} )
-            send( Wakeup(), random_node )
-
-        # cr = ConnectRequests()
-        # cr.insert('a', 3)
-        # cr.get_least_level_req()
-        # cr.least_level()
+        #while ps:
+        random_node =  ps.pop()
+        #ps.update( {random_node} )
+        send( Wakeup(), random_node )
 
 # Used by the SE variable in Node:
 BASIC = 'Basic'
 BRANCH = 'Branch'
+REJECTED = 'Rejected'
 
 SLEEPING = "Sleeping"
 FOUND = 'Found'
@@ -82,18 +78,26 @@ class Node(DistProcess):
         my_fragm = None
         my_state = SLEEPING
 
-        # for future use:
+        # misc:
         waiting_to_connect_to = None
         connect_reqs = ConnectRequests()
+        find_count = None
+        test_reqs = set()
+        min_wt_outgoing = (None, INFINITY)
+
+        # Used by the Test functions:
+        best_wt = INFINITY
+        best_edge = None
 
         # Special variable to indicate when to terminate:
         finished = False
 
     def OnWakeup():
-        #output("Received spontaneous Wakeup from: %r" % _source)
+        output("Received spontaneous Wakeup from: %r" % _source)
         wakeup_if_necessary()
 
     def wakeup_if_necessary():
+        #output("%r WAKING" % self)
         if my_state == SLEEPING:
             # todo: call a function that finds min-wt BASIC node instead..
             # adjacent edge/node of minimum weight:
@@ -107,9 +111,16 @@ class Node(DistProcess):
     def OnConnect(L):
         j = _source
         #output("Received Connect(%r) from: %r" % (L, j))
-        wakeup_if_necessary()
 
+        wakeup_if_necessary()
         connect_reqs.insert(j, L)
+
+    def OnTest(L, F):
+        j = _source
+        #output("Received Test(%r, %r) from: %r" % (L, F, j))
+
+        wakeup_if_necessary()
+        test_reqs.update({ (L, F, j) })
 
     def OnInitiate(L, F, S):
         j = _source
@@ -120,15 +131,36 @@ class Node(DistProcess):
         my_fragm = F
         my_state = S
 
+        SE[j] = BRANCH
+
+        my_branches = {edge for edge, state in SE.items() if state == BRANCH}
+        my_branches -= {_source}
+
+        for b in my_branches:
+            send( Initiate(my_level, my_fragm, my_state), b )
+
+        if my_state == FIND:
+            # Count of Initiate messages with FIND (already) sent along BRANCH edges:
+            find_count = len(my_branches)
+
+            test()
+
     def merge_with(node):
-        #output("%r <--> %r" % (self, waiting_to_connect_to))
+        #output("%r <--> %r" % (self, node))
 
         new_level = my_level + 1
-        new_fragm = w[waiting_to_connect_to]
+        new_fragm = w[node]
 
-        # Send Initiate to node
-        send( Initiate(new_level, new_fragm, FIND), waiting_to_connect_to )
-        SE[waiting_to_connect_to] = BRANCH
+        # Edge marked as branch. It has not been sent an Initiate yet though:
+        SE[node] = BRANCH
+
+        send( Initiate(new_level, new_fragm, FIND), node )
+
+        # Send Initiate to the just-marked edge and all other BRANCH edges:
+        # branches = [edge for edge, state in SE.items() if state == BRANCH]
+        # find_count = len(branches)
+        # for branch in branches:
+        #     send( Initiate(new_level, new_fragm, FIND), branch )
 
     def absorb_node(node):
         #output("%r Absorbing %r" % (self, node))
@@ -136,11 +168,77 @@ class Node(DistProcess):
         send( Initiate(my_level, my_fragm, my_state), node )
         SE[node] = BRANCH
 
+        if my_state == FIND:
+            find_count += 1
+
+    def test():
+        # Edges in the state BASIC:
+        basic_edges = [edge for edge, state in SE.items() if state == BASIC]
+        #output(basic_edges)
+
+        if basic_edges:
+            # find the minimum-weight adjacent edge in state BASIC:
+            test_edge = min(basic_edges, key = lambda edge: w[edge])
+
+            send( Test(my_level, my_fragm), test_edge )
+
+    def test_reply_condition():
+        # Condition (3) [pg. 8 of the enhanced GHS paper]
+        # If the id in the message differs from the id of the fragment the node 
+        # belongs to and the level in the message is higher than that of the 
+        # node's fragment – no reply is sent until the situation has changed. 
+        return bool( { True for (L, F, j) in test_reqs if F == my_fragm 
+            or (F!=my_fragm and L <= my_level) } )
+
+    def test_reqs_process():
+        to_remove = set()
+
+        for (L, F, j) in test_reqs:
+            # Condition (1)
+            # If the id in the message is the same as the id of the fragment the 
+            # node belongs to – a reject message is sent back
+            if F == my_fragm:
+                send( Reject(), j )
+                to_remove.update({ (L, F, j) })
+
+            # Condition (2)
+            # If the id in the message differs from the id of the fragment the node 
+            # belongs to and the level in the message is lower or equal to that of 
+            # the node's fragment – an accept message is sent back.
+            elif L <= my_level: # F != my_fragm is implied
+                send( Accept(), j )
+                to_remove.update({ (L, F, j) })
+
+        test_reqs -= to_remove
+
+    def OnReject():
+        j = _source
+        #output("Received Reject() from: %r" % j)
+
+        if SE[j] == BASIC:
+            SE[j] = REJECTED
+
+        test()
+
+    def OnAccept():
+        j = _source
+        #output("Received Accept() from: %r" % j)
+
+        if w[j] < best_wt:
+            best_edge = j
+            best_wt = w[j]
+
+        # REPORT !!!
+        output("%r --> %r @ %d" % (self, best_edge, best_wt))
+
     def main():
         while not finished:
-            absorb_condition = lambda: connect_reqs.least_level() < my_level            
+
+            absorb_condition = lambda: connect_reqs.least_level() < my_level
             merge_condition = lambda: waiting_to_connect_to in set(connect_reqs.reqs)
-            await(  merge_condition() or absorb_condition() or finished  )
+
+            await(  merge_condition() or absorb_condition() or test_reply_condition() 
+                or finished  )
 
             if merge_condition():
                 merge_with(waiting_to_connect_to)
@@ -151,6 +249,13 @@ class Node(DistProcess):
                 node = connect_reqs.get_least_level_req()
                 absorb_node(node)
                 connect_reqs.reqs.pop(node)
+
+            elif test_reply_condition():
+                test_reqs_process()
+
+            else:
+                pass
+                # propogate Initiate messages if state == FIND?
 
         output("%r exiting..." % self   )
 
