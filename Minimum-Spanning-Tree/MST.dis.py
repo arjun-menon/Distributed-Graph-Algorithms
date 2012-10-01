@@ -70,7 +70,9 @@ class Node(DistProcess):
 
         # misc:
         expect_core_report = None
+        report_over = False
         other_core_node = None
+        discovery = None
 
         waiting_to_connect_to = None
         connect_reqs = ConnectRequests()
@@ -92,8 +94,8 @@ class Node(DistProcess):
         wakeup_if_necessary()
 
     def wakeup_if_necessary():
-        #output("%r WAKING" % self)
         if my_state == SLEEPING:
+            output("%r is waking up!" % self)
             # todo: call a function that finds min-wt BASIC node instead..
             # adjacent edge/node of minimum weight:
             m = min(edges, key=edges.get)
@@ -105,7 +107,7 @@ class Node(DistProcess):
 
     def OnConnect(L):
         j = _source
-        #output("Received Connect(%r) from: %r" % (L, j))
+        output("Received Connect(%r) from: %r" % (L, j))
 
         wakeup_if_necessary()
         connect_reqs.insert(j, L)
@@ -130,18 +132,20 @@ class Node(DistProcess):
         my_branches = {edge for edge, state in SE.items() if state == BRANCH}
         my_branches -= {_source}
 
+        find_count = 0
         for b in my_branches:
             send( Initiate(my_level, my_fragm, my_state), b )
+            if my_state == FIND:
+                find_count += 1
+                output("%r has sent FIND to branch %r" % (self, b))
 
         if my_state == FIND:
-            # Count of Initiate messages with FIND (already) sent along BRANCH edges:
-            find_count = len(my_branches)
-
             find_source = j
+            report_over = False
             test()
 
     def merge_with(node):
-        #output("%r merging with %r" % (self, node))
+        output("%r merging with %r" % (self, node))
 
         new_level = my_level + 1
         new_fragm = w[node]
@@ -152,15 +156,17 @@ class Node(DistProcess):
         send( Initiate(new_level, new_fragm, FIND), node )
         other_core_node = node
         expect_core_report = True
+        discovery = False
 
     def absorb_node(node):
-        #output("%r Absorbing %r" % (self, node))
+        output("%r absorbing %r" % (self, node))
 
         send( Initiate(my_level, my_fragm, my_state), node )
         SE[node] = BRANCH
 
         if my_state == FIND:
             find_count += 1
+            output("%r has sent FIND to branch %r" % (self, node))
 
     def test():
         # Edges in the state BASIC:
@@ -174,7 +180,7 @@ class Node(DistProcess):
             test_edge = min(basic_edges, key = lambda edge: w[edge])
 
             send( Test(my_level, my_fragm), test_edge )
-            output("%r has sent Test() to ---> %r" % (self, test_edge))
+            output("%r has sent Test() to %r" % (self, test_edge))
         else:
             # There are no BASIC edges.
             test_over = True
@@ -196,6 +202,7 @@ class Node(DistProcess):
             # node belongs to – a reject message is sent back
             if F == my_fragm:
                 send( Reject(), j )
+                output("%r sent Reject() to %r" % (self, j))
                 to_remove.update({ (L, F, j) })
 
             # Condition (2)
@@ -204,6 +211,7 @@ class Node(DistProcess):
             # the node's fragment – an accept message is sent back.
             elif L <= my_level: # F != my_fragm is implied
                 send( Accept(), j )
+                output("%r sent Accept() to %r" % (self, j))
                 to_remove.update({ (L, F, j) })
 
         test_reqs -= to_remove
@@ -225,7 +233,6 @@ class Node(DistProcess):
 
     def OnAccept(): # reply to Test
         j = _source
-        #output("Received Accept() from: %r" % j)
 
         if w[j] < best_wt:
             best_path = [self, j]
@@ -239,24 +246,33 @@ class Node(DistProcess):
         test_over = None
 
         state = FOUND
-        output("---------------- Least weight (%d) outgoing edge: %s" % (best_wt, best_path_repr()))
+        output("Least weight(%d) outgoing edge from %r: %s" % (best_wt, self, best_path_repr()))
 
         send(Report(best_wt, best_path), find_source)
+        report_over = True
 
     def OnReport(w, path):
-        output("received %s @ %d from %r [find_count = %d]" % (path, w, _source, find_count))
+        if _source == other_core_node:
+            expect_core_report = False
+            output("received %s @ %d from other core node %r" % (path, w, _source))
+        else:
+            if find_count > 0:
+                find_count -= 1
+                output("received %s @ %d from %r [find_count = %d]" % (path, w, _source, find_count))
+            else:
+                output("ERROR: Received non-core Report(%r, %r) from %r when find_count is %r" % (w, path, _source, find_count))
 
         if w < best_wt:
             best_path = [self] + path
             best_wt = w
 
-        if find_count > 0:
-            find_count -= 1
-        else:
-            if expect_core_report:
-                expect_core_report = False
-            else:
-                output("ERROR: Received non-core Report(%r, %r) from %r when find_count is %r" % (w, path, _source, find_count))
+        # if find_count > 0:
+        #     find_count -= 1
+        # else:
+        #     if not expect_core_report:
+        #         expect_core_report = False
+        #     else:
+        #         output("ERROR: Received non-core Report(%r, %r) from %r when find_count is %r" % (w, path, _source, find_count))
 
     def main():
         while not finished:
@@ -264,9 +280,10 @@ class Node(DistProcess):
             absorb_condition = lambda: connect_reqs.least_level() < my_level
             merge_condition = lambda: waiting_to_connect_to in set(connect_reqs.reqs)
             report_condition = lambda: test_over and find_count == 0 # must be 0, not None
+            core_discovery_condition = lambda: expect_core_report == False and report_over and discovery == False
 
             await(  merge_condition() or absorb_condition() or test_reply_condition() 
-                or report_condition() or finished  )
+                or report_condition() or core_discovery_condition() or finished  )
 
             if merge_condition():
                 merge_with(waiting_to_connect_to)
@@ -283,6 +300,11 @@ class Node(DistProcess):
 
             elif report_condition():
                 report()
+
+            elif core_discovery_condition():
+                output("Least weight(%d) outgoing edge of fragment(%d): %s !!!!!!!!!!!!!!!"
+                    % (best_wt, my_fragm, best_path_repr()))
+                discovery = True
 
             else:
                 pass
