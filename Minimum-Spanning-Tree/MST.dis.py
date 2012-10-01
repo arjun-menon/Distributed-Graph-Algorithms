@@ -245,7 +245,7 @@ class Node(DistProcess):
         # Reset test_over, so that report_conition doesn't become true again
         test_over = None
 
-        state = FOUND
+        my_state = FOUND
         output("Least weight(%d) outgoing edge from %r: %s" % (best_wt, self, best_path_repr()))
 
         send(Report(best_wt, best_path), find_source)
@@ -266,16 +266,43 @@ class Node(DistProcess):
             best_path = [self] + path
             best_wt = w
 
+    def OnFragConn(path):
+        if my_state != FOUND:
+            output("ERROR")
+
+        if len(path) == 1:
+            node = path[0]
+            output("Fragment (%d) --- Sending Connect(%d) to %r" % (my_fragm, my_level, node))
+
+            send( Connect(my_level), node )
+
+        elif len(path) > 1:
+            hd = path[0]
+            tl = path[1:]
+            send(FragConn(tl), hd)
+
+    def init_fragment_connect():
+        """The fragment sends a Connect() over the minimum-weight outgoing edge."""
+        discovery = True
+
+        if best_path[1] != other_core_node:
+            output("Least weight(%d) outgoing edge of fragment(%d): %s !!!!!!!!!!!!!!!"
+                    % (best_wt, my_fragm, best_path_repr()))
+            
+            hd = best_path[0]
+            tl = best_path[1:]
+            send(FragConn(tl), hd)
+
     def main():
         while not finished:
 
             absorb_condition = lambda: connect_reqs.least_level() < my_level
             merge_condition = lambda: waiting_to_connect_to in set(connect_reqs.reqs)
             report_condition = lambda: test_over and find_count == 0 # must be 0, not None
-            core_discovery_condition = lambda: expect_core_report == False and report_over and discovery == False
+            fragment_connect_condition = lambda: expect_core_report == False and report_over and discovery == False
 
             await(  merge_condition() or absorb_condition() or test_reply_condition() 
-                or report_condition() or core_discovery_condition() or finished  )
+                or report_condition() or fragment_connect_condition() or finished  )
 
             if merge_condition():
                 merge_with(waiting_to_connect_to)
@@ -293,10 +320,8 @@ class Node(DistProcess):
             elif report_condition():
                 report()
 
-            elif core_discovery_condition():
-                output("Least weight(%d) outgoing edge of fragment(%d): %s !!!!!!!!!!!!!!!"
-                    % (best_wt, my_fragm, best_path_repr()))
-                discovery = True
+            elif fragment_connect_condition():
+                init_fragment_connect()
 
             else:
                 pass
