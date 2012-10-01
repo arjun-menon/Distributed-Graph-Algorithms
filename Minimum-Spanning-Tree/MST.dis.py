@@ -1,21 +1,11 @@
 
-"""
-
-wakeup:
-    send Connect to minimum-weight
-
-OnConnect:
-    add to connect_reqs queue
-
-
-
-merge_condition = lambda: conn in set(connect_reqs)
-
-absorb_condition = lambda: connect_reqs.lowest_level < my_level
-
-await(  merge_condition or absorb_condition or finished  )
-
-"""
+# Note:
+# This program cannot be run directly using Python.
+# You can use the `run.py` file instead to run this program.
+# Alternatively you can use the symlink pointing to this file, 
+# with the extension `.dis` and run it directly with DistAlgo.
+# The .py extnesion was appended to obtain syntax highlighting 
+# in various editors, GitHub, etc.
 
 from collections import deque
 from MST_sequential import *
