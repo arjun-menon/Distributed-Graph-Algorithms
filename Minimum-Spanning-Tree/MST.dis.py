@@ -112,7 +112,7 @@ class Node(DistProcess):
 
     def OnTest(L, F):
         j = _source
-        #output("Received Test(%r, %r) from: %r" % (L, F, j))
+        output("Received Test(%r, %r) from: %r" % (L, F, j))
 
         wakeup_if_necessary()
         test_reqs.update({ (L, F, j) })
@@ -165,7 +165,6 @@ class Node(DistProcess):
     def test():
         # Edges in the state BASIC:
         basic_edges = [edge for edge, state in SE.items() if state == BASIC]
-        #output(basic_edges)
 
         # test_over is used to notify the await condition that the testing is over
         test_over = False
@@ -175,6 +174,7 @@ class Node(DistProcess):
             test_edge = min(basic_edges, key = lambda edge: w[edge])
 
             send( Test(my_level, my_fragm), test_edge )
+            output("%r has sent Test() to ---> %r" % (self, test_edge))
         else:
             # There are no BASIC edges.
             test_over = True
@@ -210,16 +210,16 @@ class Node(DistProcess):
 
     def OnReject(): # reply to Test
         j = _source
-        #output("Received Reject() from: %r" % j)
+        output("%r received Reject() from: %r" % (self, j))
 
         if SE[j] == BASIC:
             SE[j] = REJECTED
 
         test()
 
-    def path_str(path):
-        if path:
-            return " -> ".join(str(node) for node in path)
+    def best_path_repr():
+        if best_path:
+            return " -> ".join(str(node) for node in best_path)
         else:
             return "No Outgoing edges"
 
@@ -231,20 +231,20 @@ class Node(DistProcess):
             best_path = [self, j]
             best_wt = w[j]
 
-        output("%s @ %d [find_count = %d]" % (path_str(best_path), best_wt, find_count))
+        output("Outgoing Neighbor %s @ %d [find_count = %d]" % (best_path_repr(), best_wt, find_count))
         test_over = True
 
     def report():
         # Reset test_over, so that report_conition doesn't become true again
         test_over = None
 
+        state = FOUND
+        output("---------------- Least weight (%d) outgoing edge: %s" % (best_wt, best_path_repr()))
+
         send(Report(best_wt, best_path), find_source)
 
-        state = FOUND
-        #output("REPORT: %s" % path_str(best_path))
-
     def OnReport(w, path):
-        output("received %s @ %d [find_count = %d]" % (path, w, find_count))
+        output("received %s @ %d from %r [find_count = %d]" % (path, w, _source, find_count))
 
         if w < best_wt:
             best_path = [self] + path
@@ -253,11 +253,10 @@ class Node(DistProcess):
         if find_count > 0:
             find_count -= 1
         else:
-            if not expect_core_report:
-                output("ERROR: Received non-core Report(%r, %r) from %r when find_count is %r" % (w, path, _source, find_count))
-            else:
+            if expect_core_report:
                 expect_core_report = False
-                output("Done")
+            else:
+                output("ERROR: Received non-core Report(%r, %r) from %r when find_count is %r" % (w, path, _source, find_count))
 
     def main():
         while not finished:
