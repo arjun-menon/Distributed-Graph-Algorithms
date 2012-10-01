@@ -155,10 +155,10 @@ class Node(DistProcess):
             best_edge = j
             best_wt = w[j]
 
-        test()
+        report()
 
     # (8)
-    def Reject():
+    def OnReject():
         j = _source
         output("Received Reject() from: %r" % j)
 
