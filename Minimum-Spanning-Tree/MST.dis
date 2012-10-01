@@ -79,15 +79,20 @@ class Node(DistProcess):
         my_state = SLEEPING
 
         # misc:
+        expect_core_report = None
+        other_core_node = None
+
         waiting_to_connect_to = None
         connect_reqs = ConnectRequests()
-        find_count = None
+        find_count = None # hmmm
+        find_source = None
         test_reqs = set()
         min_wt_outgoing = (None, INFINITY)
 
         # Used by the Test functions:
         best_wt = INFINITY
-        best_edge = None
+        best_path = None
+        test_over = None
 
         # Special variable to indicate when to terminate:
         finished = False
@@ -124,7 +129,6 @@ class Node(DistProcess):
 
     def OnInitiate(L, F, S):
         j = _source
-        #output("%r JOINED w(%d)" % (self, F))
         output("Received Initiate(%r, %r, %r) from: %r" % (L, F, S, j))
 
         my_level = L
@@ -143,10 +147,11 @@ class Node(DistProcess):
             # Count of Initiate messages with FIND (already) sent along BRANCH edges:
             find_count = len(my_branches)
 
+            find_source = j
             test()
 
     def merge_with(node):
-        #output("%r <--> %r" % (self, node))
+        #output("%r merging with %r" % (self, node))
 
         new_level = my_level + 1
         new_fragm = w[node]
@@ -155,12 +160,8 @@ class Node(DistProcess):
         SE[node] = BRANCH
 
         send( Initiate(new_level, new_fragm, FIND), node )
-
-        # Send Initiate to the just-marked edge and all other BRANCH edges:
-        # branches = [edge for edge, state in SE.items() if state == BRANCH]
-        # find_count = len(branches)
-        # for branch in branches:
-        #     send( Initiate(new_level, new_fragm, FIND), branch )
+        other_core_node = node
+        expect_core_report = True
 
     def absorb_node(node):
         #output("%r Absorbing %r" % (self, node))
@@ -176,11 +177,17 @@ class Node(DistProcess):
         basic_edges = [edge for edge, state in SE.items() if state == BASIC]
         #output(basic_edges)
 
+        # test_over is used to notify the await condition that the testing is over
+        test_over = False
+
         if basic_edges:
             # find the minimum-weight adjacent edge in state BASIC:
             test_edge = min(basic_edges, key = lambda edge: w[edge])
 
             send( Test(my_level, my_fragm), test_edge )
+        else:
+            # There are no BASIC edges.
+            test_over = True
 
     def test_reply_condition():
         # Condition (3) [pg. 8 of the enhanced GHS paper]
@@ -211,7 +218,7 @@ class Node(DistProcess):
 
         test_reqs -= to_remove
 
-    def OnReject():
+    def OnReject(): # reply to Test
         j = _source
         #output("Received Reject() from: %r" % j)
 
@@ -220,25 +227,57 @@ class Node(DistProcess):
 
         test()
 
-    def OnAccept():
+    def path_str(path):
+        if path:
+            return " -> ".join(str(node) for node in path)
+        else:
+            return "No Outgoing edges"
+
+    def OnAccept(): # reply to Test
         j = _source
         #output("Received Accept() from: %r" % j)
 
         if w[j] < best_wt:
-            best_edge = j
+            best_path = [self, j]
             best_wt = w[j]
 
-        # REPORT !!!
-        output("%r --> %r @ %d" % (self, best_edge, best_wt))
+        output("%s @ %d [find_count = %d]" % (path_str(best_path), best_wt, find_count))
+        test_over = True
+
+    def report():
+        # Reset test_over, so that report_conition doesn't become true again
+        test_over = None
+
+        send(Report(best_wt, best_path), find_source)
+
+        state = FOUND
+        #output("REPORT: %s" % path_str(best_path))
+
+    def OnReport(w, path):
+        output("received %s @ %d [find_count = %d]" % (path, w, find_count))
+
+        if w < best_wt:
+            best_path = [self] + path
+            best_wt = w
+
+        if find_count > 0:
+            find_count -= 1
+        else:
+            if not expect_core_report:
+                output("ERROR: Received non-core Report(%r, %r) from %r when find_count is %r" % (w, path, _source, find_count))
+            else:
+                expect_core_report = False
+                output("Done")
 
     def main():
         while not finished:
 
             absorb_condition = lambda: connect_reqs.least_level() < my_level
             merge_condition = lambda: waiting_to_connect_to in set(connect_reqs.reqs)
+            report_condition = lambda: test_over and find_count == 0 # must be 0, not None
 
             await(  merge_condition() or absorb_condition() or test_reply_condition() 
-                or finished  )
+                or report_condition() or finished  )
 
             if merge_condition():
                 merge_with(waiting_to_connect_to)
@@ -253,9 +292,11 @@ class Node(DistProcess):
             elif test_reply_condition():
                 test_reqs_process()
 
+            elif report_condition():
+                report()
+
             else:
                 pass
-                # propogate Initiate messages if state == FIND?
 
         output("%r exiting..." % self   )
 
