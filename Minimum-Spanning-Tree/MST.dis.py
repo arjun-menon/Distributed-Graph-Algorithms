@@ -4,8 +4,8 @@
 # You can use the `run.py` file instead to run this program.
 # Alternatively you can use the symlink pointing to this file, 
 # with the extension `.dis` and run it directly with DistAlgo.
-# The .py extnesion was appended to obtain syntax highlighting 
-# in various editors, GitHub, etc.
+# The .py extnesion was appended to activate Python syntax
+# highlighting in various editors, GitHub, etc.
 
 from collections import deque
 from MST_sequential import *
@@ -265,14 +265,6 @@ class Node(DistProcess):
         if w < best_wt:
             best_path = [self] + path
             best_wt = w
-
-        # if find_count > 0:
-        #     find_count -= 1
-        # else:
-        #     if not expect_core_report:
-        #         expect_core_report = False
-        #     else:
-        #         output("ERROR: Received non-core Report(%r, %r) from %r when find_count is %r" % (w, path, _source, find_count))
 
     def main():
         while not finished:
