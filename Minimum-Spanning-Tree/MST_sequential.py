@@ -122,8 +122,8 @@ def kruskal(G):
 
 
 def verify_solution(G, sol):
-    '''Verify a solution for MST against 
-       NetworkX's built MST solver.'''
+    '''Verify the solution for MST against NetworkX's built-in MST solver.
+       Only works if the solution is unique (=> edges have unique weights.)'''
     
     nx_sol = set( nx.minimum_spanning_tree(G).edges() )
     
@@ -132,7 +132,9 @@ def verify_solution(G, sol):
 
 def draw_graph_using_matplotlib(highlighted_edges, show = False):
     import matplotlib
-    matplotlib.rcParams['backend'] = "Qt4Agg"
+    if matplotlib.rcParams['backend'] == 'agg':
+        matplotlib.rcParams['backend'] = "Qt4Agg"
+    
     import matplotlib.pyplot as plt
     
     pos=nx.spring_layout(G, weight = None)
@@ -146,19 +148,26 @@ def draw_graph_using_matplotlib(highlighted_edges, show = False):
     if show:
         plt.show()
 
+def render_solution(sol):
+    edge_list = ["(%s, %s)" % (min(edge), max(edge)) for edge in sol]
+    edge_list.sort()
+    return ", ".join(edge_list)
 
 if __name__ == "__main__":
-    G = construct_graph(numbered=True)
+    visualize = False
+    if len(sys.argv) > 1 and sys.argv[1] == '-v':
+        visualize = True
+    else:
+        print("To visualize the graph and its solution using matplotlib, use the optarg -v")
+
+    G = construct_graph(numbered=False)
     
     sol = kruskal(G)
     
     if not verify_solution(G, sol):
         raise Exception("Solution to MST is incorrect")
     
-    "Print the solution... "
-    print("Solution:")
-    for edge in sol:
-        print(edge)
+    print("Solution:", render_solution(sol))
     
-    draw_graph_using_matplotlib(sol, show=True)
-
+    if visualize:
+        draw_graph_using_matplotlib(sol, show=True)
