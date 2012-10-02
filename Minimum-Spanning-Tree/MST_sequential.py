@@ -10,12 +10,10 @@ sys.path.append('..')
 import networkx as nx
 
 def construct_graph(numbered=False):
-
-    if numbered:
-        A, B, C, D, E, F, G, H, I, J, K, L, M = [str(i) for i in range(1,14)]
-    else:
-        #A, B, C, D, E, F, G, H, I, J = 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'
-        A, B, C, D, E, F, G, H, I, J, K, L, M = 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'
+    n = 13
+    A, B, C, D, E, F, G, H, I, J, K, L, M = (
+             [str(i+1)        for i in range(n)] if numbered 
+        else [chr(ord('A')+i) for i in range(n)])
     
     def edge(n1, n2, w):
         return (n1, n2, {'weight':w})
