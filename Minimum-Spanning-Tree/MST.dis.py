@@ -14,26 +14,6 @@ G = construct_graph()
 
 INFINITY = 999999999
 
-class ConnectRequests(object):
-    def __init__():
-        self.reqs = dict()
-
-    def insert(p, l):
-        if p in self.reqs:
-            print("ERROR: %r already made a request" % p)
-        else:
-            self.reqs[p] = l
-
-    def get_least_level_req():
-        if self.reqs:
-            return min(self.reqs, key=self.reqs.get)
-
-    def least_level():
-        if self.reqs:
-            return self.reqs[self.get_least_level_req()]
-        else:
-            return INFINITY
-
 class Spark(DistProcess):
     def setup(ps):
         ps = ps
@@ -69,9 +49,27 @@ class Spark(DistProcess):
 
         branches_list = list(branches)
         branches_list.sort()
-        output(branches_list)
+        output("Solution: %s" % ", ".join(branches_list))
 
-        return 5
+class ConnectRequests(object):
+    def __init__():
+        self.reqs = dict()
+
+    def insert(p, l):
+        if p in self.reqs:
+            print("ERROR: %r already made a request" % p)
+        else:
+            self.reqs[p] = l
+
+    def get_least_level_req():
+        if self.reqs:
+            return min(self.reqs, key=self.reqs.get)
+
+    def least_level():
+        if self.reqs:
+            return self.reqs[self.get_least_level_req()]
+        else:
+            return INFINITY
 
 # Used by the SE variable in Node:
 BASIC = 'Basic'
@@ -377,11 +375,6 @@ class Node(DistProcess):
 
             elif fragment_connect_condition():
                 init_fragment_connect()
-
-            else:
-                pass
-
-        #output("%r exiting..." % self   )
 
 def main():
     use_channel("tcp")
