@@ -161,7 +161,7 @@ class Node(DistProcess):
         wakeup_if_necessary()
         test_reqs.update({ (L, F, j) })
 
-    def OnInitiate(L, F, S):
+    def OnInitiate(L, F, S, merge):
         j = _source
         output("Received Initiate(%r, %r, %r) from: %r" % (L, F, S, j))
 
@@ -172,6 +172,11 @@ class Node(DistProcess):
         best_wt = INFINITY
         best_path = None
 
+        if merge == True:
+            other_core_node = j
+        else:
+            other_core_node = None
+
         SE[j] = BRANCH
 
         my_branches = {edge for edge, state in SE.items() if state == BRANCH}
@@ -179,7 +184,7 @@ class Node(DistProcess):
 
         find_count = 0
         for b in my_branches:
-            send( Initiate(my_level, my_fragm, my_state), b )
+            send( Initiate(my_level, my_fragm, my_state, False), b )
             if my_state == FIND:
                 find_count += 1
                 output("%r has sent FIND to branch %r" % (self, b))
@@ -198,15 +203,14 @@ class Node(DistProcess):
         # Edge marked as branch. It has not been sent an Initiate yet though:
         SE[node] = BRANCH
 
-        send( Initiate(new_level, new_fragm, FIND), node )
-        other_core_node = node
+        send( Initiate(new_level, new_fragm, FIND, True), node )
         expect_core_report = True
         discovery = False
 
     def absorb_node(node):
         output("%r absorbing %r" % (self, node))
 
-        send( Initiate(my_level, my_fragm, my_state), node )
+        send( Initiate(my_level, my_fragm, my_state, False), node )
         SE[node] = BRANCH
 
         if my_state == FIND:
@@ -263,7 +267,7 @@ class Node(DistProcess):
 
     def OnReject(): # reply to Test
         j = _source
-        output("%r received Reject() from: %r" % (self, j))
+        output("%r Received Reject() from: %r" % (self, j))
 
         if SE[j] == BASIC:
             SE[j] = REJECTED
@@ -299,11 +303,11 @@ class Node(DistProcess):
     def OnReport(w, path):
         if _source == other_core_node:
             expect_core_report = False
-            output("received %s @ %d from other core node %r" % (path, w, _source))
+            output("Received %s @ %d from other core node %r" % (path, w, _source))
         else:
             if find_count > 0:
                 find_count -= 1
-                output("received %s @ %d from %r [find_count = %d]" % (path, w, _source, find_count))
+                output("Received %s @ %d from %r [find_count = %d]" % (path, w, _source, find_count))
             else:
                 output("ERROR: Received non-core Report(%r, %r) from %r when find_count is %r" % (w, path, _source, find_count))
 

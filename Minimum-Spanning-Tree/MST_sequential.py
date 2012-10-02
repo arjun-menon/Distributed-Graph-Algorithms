@@ -12,9 +12,10 @@ import networkx as nx
 def construct_graph(numbered=False):
 
     if numbered:
-        A, B, C, D, E, F, G, H, I, J = [str(i) for i in range(1,11)]
-    else:    
-        A, B, C, D, E, F, G, H, I, J = 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'
+        A, B, C, D, E, F, G, H, I, J, K, L, M = [str(i) for i in range(1,14)]
+    else:
+        #A, B, C, D, E, F, G, H, I, J = 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'
+        A, B, C, D, E, F, G, H, I, J, K, L, M = 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'
     
     def edge(n1, n2, w):
         return (n1, n2, {'weight':w})
@@ -38,7 +39,13 @@ def construct_graph(numbered=False):
     edge(I,H,12),
     edge(D,I,4),
     edge(D,C,8),
-    edge(D,B,16)]
+    edge(D,B,16),
+
+    edge(L,M,20),
+    edge(K,L,21),
+    edge(K,M,22),
+    edge(J,K,23),
+    ]
     
     G = nx.Graph()
     G.add_edges_from(edge_list)
@@ -157,6 +164,8 @@ if __name__ == "__main__":
     visualize = False
     if len(sys.argv) > 1 and sys.argv[1] == '-v':
         visualize = True
+    elif len(sys.argv) > 1 and sys.argv[1] == '-V':
+        pass
     else:
         print("To visualize the graph and its solution using matplotlib, use the optarg -v")
 
