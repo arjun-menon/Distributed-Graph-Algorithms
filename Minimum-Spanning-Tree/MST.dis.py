@@ -37,12 +37,41 @@ class ConnectRequests(object):
 class Spark(DistProcess):
     def setup(ps):
         ps = ps
+        finished = False
+        branches = set()
+        query_reply_count = None
+
+    def OnFinished():
+        finished = True
+
+    def OnBranches(bset):
+        branches.update(bset)
+        query_reply_count -= 1
 
     def main():
-        #while ps:
+        # for p in ps:
+        #     send( Wakeup(), p )        
         random_node =  ps.pop()
-        #ps.update( {random_node} )
+        ps.update( {random_node} )
         send( Wakeup(), random_node )
+
+        await(finished)
+
+        query_reply_count = 0
+        for p in ps:
+            send( QueryBranches(), p )
+            query_reply_count += 1
+
+        await(query_reply_count == 0)
+
+        for p in ps:
+            send( Finished(), p )
+
+        branches_list = list(branches)
+        branches_list.sort()
+        output(branches_list)
+
+        return 5
 
 # Used by the SE variable in Node:
 BASIC = 'Basic'
@@ -54,7 +83,9 @@ FOUND = 'Found'
 FIND = 'Find'
                                                                                                                                                                                                                                                                                                                                                            
 class Node(DistProcess):
-    def setup(edges):
+    def setup(edges, spark):
+        spark = spark
+
         w = edges
         neighbors = set( edges.keys() )
 
@@ -89,6 +120,19 @@ class Node(DistProcess):
         # Special variable to indicate when to terminate:
         finished = False
 
+    def OnQueryBranches():
+        branches = set()
+
+        for node in {edge for edge, state in SE.items() if state == BRANCH}:
+            edge_nodes = [str(self), str(node)]
+            edge_str = "(%s, %s)" % ( min(edge_nodes), max(edge_nodes) )
+            branches.update( { edge_str } )
+
+        send( Branches(branches), spark )
+
+    def OnFinished():
+        finished = True
+
     def OnWakeup():
         output("Received spontaneous Wakeup from: %r" % _source)
         wakeup_if_necessary()
@@ -99,11 +143,11 @@ class Node(DistProcess):
             # todo: call a function that finds min-wt BASIC node instead..
             # adjacent edge/node of minimum weight:
             m = min(edges, key=edges.get)
+            my_state = FOUND
 
             send( Connect(my_level), m )
             SE[m] = BRANCH
             waiting_to_connect_to = m
-            my_state = FOUND
 
     def OnConnect(L):
         j = _source
@@ -126,6 +170,9 @@ class Node(DistProcess):
         my_level = L
         my_fragm = F
         my_state = S
+
+        best_wt = INFINITY
+        best_path = None
 
         SE[j] = BRANCH
 
@@ -272,9 +319,11 @@ class Node(DistProcess):
 
         if len(path) == 1:
             node = path[0]
-            output("Fragment (%d) --- Sending Connect(%d) to %r" % (my_fragm, my_level, node))
+            output("Fragment (%d) ------------ Sending Connect(%d) to %r" % (my_fragm, my_level, node))
 
             send( Connect(my_level), node )
+            SE[node] = BRANCH
+            waiting_to_connect_to = node
 
         elif len(path) > 1:
             hd = path[0]
@@ -284,8 +333,14 @@ class Node(DistProcess):
     def init_fragment_connect():
         """The fragment sends a Connect() over the minimum-weight outgoing edge."""
         discovery = True
+        expect_core_report = None
+        report_over = False # necessary ?
 
-        if best_path[1] != other_core_node:
+        if not best_path:
+            output("----- NO MORE OUTGOING EDGES -----")
+            send( Finished(), spark )
+
+        elif best_path[1] != other_core_node:
             output("Least weight(%d) outgoing edge of fragment(%d): %s !!!!!!!!!!!!!!!"
                     % (best_wt, my_fragm, best_path_repr()))
             
@@ -326,31 +381,38 @@ class Node(DistProcess):
             else:
                 pass
 
-        output("%r exiting..." % self   )
+        #output("%r exiting..." % self   )
 
 def main():
     use_channel("tcp")
 
-    # Setup the nodes
-    # ===============
+    # Create the processes
+    # --------------------
+
     nodes = createprocs(Node, set(G.nodes()))
     node_ps = set(nodes.values())
 
-    for p in node_ps:
-        edges = { nodes[node] : data['weight'] for (node, data) in G[repr(p)].items() }
-        setupprocs([p], [edges])
-
-    # Setup up spark
-    # ===============
     spark = createprocs(Spark, set(['Spark']))
     spark_p = spark['Spark']
+
+    # Setup the processes
+    # -------------------
+
+    for p in node_ps:
+        edges = { nodes[node] : data['weight'] for (node, data) in G[repr(p)].items() }
+        setupprocs([p], [edges, spark_p])
+
     setupprocs([spark_p], [node_ps])
+
+    # Start the processes
+    # -------------------
     
     startprocs(node_ps)
     startprocs([spark_p])
 
-    # Wait for all processes to die...
-    # --------------------------------
+    # Wait for the processes to die
+    # -----------------------------
+
     for p in node_ps:
         p.join()
     
