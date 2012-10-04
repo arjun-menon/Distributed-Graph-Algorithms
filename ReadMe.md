@@ -1,10 +1,12 @@
 Distributed Algorithms in DistAlgo
 ----------------------------------
-This repository contains the implementations of a few _distributed_ graph algorithms as well as some mutex algorithms in ***DistAlgo***, a distributed programming language developed at Stony Brook University by Annie Liu, Bo Lin, Jon Brandvein and others.
+This repository contains the implementations of a some _distributed_ graph algorithms as well as two token-based mutex algorithms in ***DistAlgo***. DistAlgo is a superset of Python that adds special constructs to Python for specifying distributed algorithms in a high-level and succint manner. The DistAlgo program files end with extension *.dis and get compiled to portable Python 3 programs. DistAlgo was developed at [Stony Brook University](http://www.cs.sunysb.edu/) by [Annie Liu](http://www.cs.sunysb.edu/~liu/) and her PhD students Bo Lin, Jon Brandvein, etc. It is used in instruction of the graduate-level class [CSE 535 Asynchronous Systems](http://www.cs.stonybrook.edu/~liu/cse535/) at Stony Brook University.
 
-The distributed algorithms that have implemented so far are:
+The distributed algorithms that have been implemented are:
 * [Minimum Spanning Tree](https://github.com/arjungmenon/DistAlgo/tree/master/Minimum-Spanning-Tree)
 * [Maximal Independent Set](https://github.com/arjungmenon/DistAlgo/tree/master/Maximal-Independent-Set)
 * [Breadth First Search](https://github.com/arjungmenon/DistAlgo/tree/master/Breadth-First-Search)
 * [Single-pair Shortest Path](https://github.com/arjungmenon/DistAlgo/tree/master/ShortestPath)
 * Ricart-Agrawala's and Suzuki-Kasami's token-based [distributed mutex algorithms](https://github.com/arjungmenon/DistAlgo/tree/master/DistributedMutex)
+
+Each link contains a relevant ***ReadMe*** file that describes the particular algorithm in detail with specific information about its implementation, limitations, etc.
