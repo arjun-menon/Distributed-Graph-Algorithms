@@ -23,4 +23,5 @@ Test Cases
 ----------
 This diagram depicts one of the test cases used to tes the algorithm:
 ![Test Case 1](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/test_case_1.png)
-The red edges mark the branches of the Minimum Spanning Tree (MST).
+
+The red edges denote the branches of the MST (Minimum Spanning Tree).
