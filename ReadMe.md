@@ -1,5 +1,5 @@
-Distributed Algorithms
-======================
+Distributed Algorithms in DistAlgo
+----------------------------------
 This repository contains the implementations of a few _distributed_ graph algorithms as well as some mutex algorithms in ***DistAlgo***, a distributed programming language developed at Stony Brook University by Annie Liu, Bo Lin, Jon Brandvein and others.
 
 The distributed algorithms that have implemented so far are:
