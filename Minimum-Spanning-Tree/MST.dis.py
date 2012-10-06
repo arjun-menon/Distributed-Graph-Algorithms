@@ -1,4 +1,9 @@
 
+'''
+Distributed Minimum Spanning Tree (MST) Solver in DistAlgo.
+Based on the Gallager, Humblet and Spira algorithm for distributed MST.
+'''
+
 # Note:
 # This program cannot be run directly using Python.
 # You can use the `run.py` file instead to run this program.
@@ -8,7 +13,7 @@
 # highlighting in various editors, GitHub, etc.
 
 from collections import deque
-from MST_sequential import *
+from tools import *
 
 G = construct_graph()
 
