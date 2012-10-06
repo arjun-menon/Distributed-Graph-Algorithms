@@ -15,15 +15,12 @@ Based on the Gallager, Humblet and Spira algorithm for distributed MST.
 from collections import deque
 from tools import *
 
-G = construct_graph()
-
-INFINITY = 999999999
+sys.argv = sys.argv[1:]
+tools = Tools()
 
 class Spark(DistProcess):
-    def setup(ps, visualize):
+    def setup(ps):
         ps = ps
-        visualize = visualize
-
         finished = False
         branches = set()
         query_reply_count = None
@@ -54,10 +51,11 @@ class Spark(DistProcess):
         for p in ps:
             send( Finished(), p )
 
-        output("Solution: %s" % render_solution(branches))
+        output("Solution: %s" % tools.repr_solution(branches))
+        tools.opt_visualize(branches)
 
-        if visualize:
-            draw_graph_using_matplotlib(G, branches)
+
+INFINITY = 999999999
 
 class ConnectRequests(object):
     def __init__():
@@ -84,10 +82,11 @@ BASIC = 'Basic'
 BRANCH = 'Branch'
 REJECTED = 'Rejected'
 
+# Used by the my_state variable in Node:
 SLEEPING = "Sleeping"
 FOUND = 'Found'
 FIND = 'Find'
-                                                                                                                                                                                                                                                                                                                                                           
+
 class Node(DistProcess):
     def setup(edges, spark):
         spark = spark
@@ -389,7 +388,7 @@ class Node(DistProcess):
                 init_fragment_connect()
 
 def main():
-    visualize = test_visualize_optarg()
+    G = tools.graph
 
     # Create the processes
     # --------------------
@@ -407,7 +406,7 @@ def main():
         edges = { nodes[node] : data['weight'] for (node, data) in G[repr(p)].items() }
         setupprocs([p], [edges, spark_p])
 
-    setupprocs([spark_p], [node_ps, visualize])
+    setupprocs([spark_p], [node_ps])
 
     # Start the processes
     # -------------------
