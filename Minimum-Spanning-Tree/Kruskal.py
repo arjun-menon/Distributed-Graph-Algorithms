@@ -80,16 +80,13 @@ def kruskal(G):
     return forest.solution()
 
 if __name__ == "__main__":
-    visualize = test_visualize_optarg()
+    tools = Tools()
+    G = tools.graph
 
-    G = construct_graph(numbered=False)
-    
     sol = kruskal(G)
     
-    if not verify_solution(G, sol):
+    if not tools.verify_solution(sol):
         raise Exception("Solution to MST is incorrect")
     
-    print("Solution:", render_solution(sol))
-    
-    if visualize:
-        draw_graph_using_matplotlib(G, sol)
+    print("Solution:", tools.repr_solution(sol))
+    tools.opt_visualize(sol)
