@@ -7,7 +7,7 @@ This is a distributed program that implements a distributed [Minimum Spanning Tr
 
 The algorithm used here to solve for the distributed MST problem is the classic canonical one by R. G. Gallager, P. A. Humblet and P. M. Spira. This algorithm, commonly known as GHS, is the best known algorithm (***state of art***) for the problem. I've added following documents to this repository which describe the GHS algorithm in detail:
 * The [Original paper by Gallager, Humblet and Spira](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/papers/GHS_original.pdf) from 1983.
-* An enhanced (and much nicer looking) version of the original, prepared by [Guy Flysher and Amir Rubinshtein](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/papers/GHS_enhanced.pdf). (*I recommend this one*)
+* A much better looking paper based on the original, [prepared by Guy Flysher and Amir Rubinshtein](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/papers/GHS_enhanced.pdf). (*recommended*)
 
 Core Ideas
 ----------
