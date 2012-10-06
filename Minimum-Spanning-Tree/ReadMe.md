@@ -12,16 +12,16 @@ The algorithm used here to solve for the distributed MST problem is the classic 
 Core Ideas
 ----------
 The following diagram (from Guy Flysher and Amir Rubinshtein's version of the GHS paper) depicts the core idea behing the algorithm:
-![Diagram showing fragment mergers and absorptions](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/MST-figure.png)
+![Diagram showing fragment mergers and absorptions](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/img/MST-figure.png)
 
 Pseudocode from the paper
 -------------------------
 The following is pseudocode for the GHS algorithm (taken from Guy Flysher and Amir Rubinshtein's version of the GHS paper):
-![Distributed MST by Gallager, Humblet & Spira](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/MST_algorithm.png)
+![Distributed MST by Gallager, Humblet & Spira](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/img/MST_algorithm.png)
 
 Test Cases
 ----------
 This diagram depicts one of the test cases used to tes the algorithm:
-![Test Case 1](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/test_case_1.png)
+![Test Case 1](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/img/test_case_1.png)
 
-The red edges denote the branches of the MST (Minimum Spanning Tree).
+The blue edges denote the branches of the MST (Minimum Spanning Tree).
