@@ -125,7 +125,6 @@ def kruskal(G):
     
     return forest.solution()
 
-
 def verify_solution(G, sol):
     '''Verify the solution for MST against NetworkX's built-in MST solver.
        Only works if the solution is unique (=> edges have unique weights.)'''
@@ -134,11 +133,10 @@ def verify_solution(G, sol):
     
     return nx_sol == sol
 
-
-def draw_graph_using_matplotlib(highlighted_edges, show = False):
+def draw_graph_using_matplotlib(G, highlighted_edges, backend='Qt4Agg'):
     import matplotlib
     if matplotlib.rcParams['backend'] == 'agg':
-        matplotlib.rcParams['backend'] = "Qt4Agg"
+        matplotlib.rcParams['backend'] = backend
     
     import matplotlib.pyplot as plt
     
@@ -149,23 +147,24 @@ def draw_graph_using_matplotlib(highlighted_edges, show = False):
     nx.draw_networkx_labels(G,pos, font_size=12, font_family='sans-serif')
 
     plt.draw()
-    
-    if show:
-        plt.show()
+    plt.show()
 
-def render_solution(sol):
+def render_solution(sol):   
     edge_list = ["(%s, %s)" % (min(edge), max(edge)) for edge in sol]
     edge_list.sort()
     return ", ".join(edge_list)
 
-if __name__ == "__main__":
-    visualize = False
+def test_visualize_optarg():
     if len(sys.argv) > 1 and sys.argv[1] == '-v':
-        visualize = True
+        return True
     elif len(sys.argv) > 1 and sys.argv[1] == '-V':
-        pass
+        return False
     else:
-        print("To visualize the graph and its solution using matplotlib, use the optarg -v")
+        print("To visualize the graph and its solution using matplotlib, use the optarg -v")    
+        return False
+
+if __name__ == "__main__":
+    visualize = test_visualize_optarg()
 
     G = construct_graph(numbered=False)
     
@@ -177,4 +176,4 @@ if __name__ == "__main__":
     print("Solution:", render_solution(sol))
     
     if visualize:
-        draw_graph_using_matplotlib(sol, show=True)
+        draw_graph_using_matplotlib(G, sol)

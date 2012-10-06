@@ -15,8 +15,10 @@ G = construct_graph()
 INFINITY = 999999999
 
 class Spark(DistProcess):
-    def setup(ps):
+    def setup(ps, visualize):
         ps = ps
+        visualize = visualize
+
         finished = False
         branches = set()
         query_reply_count = None
@@ -47,9 +49,10 @@ class Spark(DistProcess):
         for p in ps:
             send( Finished(), p )
 
-        branches_list = list(branches)
-        branches_list.sort()
-        output("Solution: %s" % ", ".join(branches_list))
+        output("Solution: %s" % render_solution(branches))
+
+        if visualize:
+            draw_graph_using_matplotlib(G, branches)
 
 class ConnectRequests(object):
     def __init__():
@@ -123,7 +126,7 @@ class Node(DistProcess):
 
         for node in {edge for edge, state in SE.items() if state == BRANCH}:
             edge_nodes = [str(self), str(node)]
-            edge_str = "(%s, %s)" % ( min(edge_nodes), max(edge_nodes) )
+            edge_str = ( str( min(edge_nodes) ), str( max(edge_nodes) ) )
             branches.update( { edge_str } )
 
         send( Branches(branches), spark )
@@ -381,10 +384,11 @@ class Node(DistProcess):
                 init_fragment_connect()
 
 def main():
-    use_channel("tcp")
+    visualize = test_visualize_optarg()
 
     # Create the processes
     # --------------------
+    use_channel("tcp")
 
     nodes = createprocs(Node, set(G.nodes()))
     node_ps = set(nodes.values())
@@ -394,22 +398,19 @@ def main():
 
     # Setup the processes
     # -------------------
-
     for p in node_ps:
         edges = { nodes[node] : data['weight'] for (node, data) in G[repr(p)].items() }
         setupprocs([p], [edges, spark_p])
 
-    setupprocs([spark_p], [node_ps])
+    setupprocs([spark_p], [node_ps, visualize])
 
     # Start the processes
     # -------------------
-    
     startprocs(node_ps)
     startprocs([spark_p])
 
     # Wait for the processes to die
     # -----------------------------
-
     for p in node_ps:
         p.join()
     
