@@ -14,13 +14,13 @@ I've added following documents to this repository which describe the GHS algorit
 Usage
 -----
 Both the distributed `MST.dis` and sequential `Kruskal.py` share a common 
-set of tools encapsulated in the module `tools.py`. Tools handles the 
-_optargs_ supplied by the user. It builds from the *graph file*, the NetworkX 
+set of tools encapsulated in the module `tools.py`. `tools.py` handles all the 
+arguments supplied by the user. It builds from the *graph file*, the NetworkX 
 graph object used by the solvers. The graph file lists all the edges in 
 the graph in [CSV](https://en.wikipedia.org/wiki/Comma-separated_values)-style, 
-except without the commas.
+except without the commas. By default `graph-2` is used.
 
-The optargs and their purposes can be displayed by passing the '-h' argument:
+The available arguments and their uses can be displayed by passing the `-h` argument:
 
 	usage: MST.dis [-h] [-v] [-b BACKEND] [graph]
 
@@ -46,16 +46,19 @@ The optargs and their purposes can be displayed by passing the '-h' argument:
 Core Ideas
 ----------
 The following diagram (from Guy Flysher and Amir Rubinshtein's version of the GHS paper) depicts the core idea behing the algorithm:
+
 ![Diagram showing fragment mergers and absorptions](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/img/MST-figure.png)
 
 Pseudocode from the paper
 -------------------------
 The following is pseudocode for the GHS algorithm (taken from Guy Flysher and Amir Rubinshtein's version of the GHS paper):
+
 ![Distributed MST by Gallager, Humblet & Spira](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/img/MST_algorithm.png)
 
 Test Cases
 ----------
 This diagram depicts one of the test cases used to tes the algorithm:
+
 ![Test Case 1](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/img/test_case_1.png)
 
-The blue edges denote the branches of the MST (Minimum Spanning Tree).
+The think blue edges denote the branches of the MST (Minimum Spanning Tree).
