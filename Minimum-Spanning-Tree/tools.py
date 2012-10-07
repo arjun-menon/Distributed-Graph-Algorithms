@@ -21,10 +21,14 @@ Provides services like handling optargs, setting up the graph, solution verifica
         parser.add_argument('-b', '--backend', nargs=1, type=matplotlib.rcsetup.validate_backend, default=['Qt4Agg'], help=
     'Interactive GUI backend to be used by matplotlib for visualization. Potential options are: %s. Default value is Qt4Agg.' % ', '.join(matplotlib.rcsetup.interactive_bk))
 
+        parser.add_argument('-o', '--output', nargs=1, type=argparse.FileType('w'), default=[open('sol', 'w')], help=
+    'File to write the solution (MST edge list) to. By default it written to the file `sol`.')
+
         args = parser.parse_args()
         
         self.backend = args.backend[0]
         self.visualize = args.visualize
+        self.output_file = args.output[0]
         self.graph = args.graph
 
     def construct_graph(self, file):
@@ -76,6 +80,11 @@ Provides services like handling optargs, setting up the graph, solution verifica
         plt.draw()
         plt.show()
 
-    def opt_visualize(self, sol):
+    def present_solution(self, sol):
+        "Save solution to a file, and if necesssary draw it."
+        
+        with self.output_file as f:
+            f.write( self.repr_solution(sol) + '\n' )
+
         if self.visualize:
             self.draw_graph(sol)

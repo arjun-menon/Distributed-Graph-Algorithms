@@ -52,7 +52,7 @@ class Spark(DistProcess):
             send( Finished(), p )
 
         output("Solution: %s" % tools.repr_solution(branches))
-        tools.opt_visualize(branches)
+        tools.present_solution(branches)
 
 
 INFINITY = 999999999

@@ -89,4 +89,4 @@ if __name__ == "__main__":
         raise Exception("Solution to MST is incorrect")
     
     print("Solution:", tools.repr_solution(sol))
-    tools.opt_visualize(sol)
+    tools.present_solution(sol)
