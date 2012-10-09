@@ -14,7 +14,7 @@ A spanning tree is defined as a tree which is a sub-graph of a given graph and c
 
 If a graph has multiple edges *with the same weight*, then the graph could have several MSTs. This situation can be obviated by constructing a graph whose edges have unique weights.
 
-### Algroithms
+### Algorithms
 
 #### Sequential Solvers
 
@@ -22,11 +22,11 @@ There are two commonly used algorithms for finding the MST of a graph _sequentia
 
 #### Distributed Solvers
 
-Here the nodes of the graph are nodes in a distributed system; i.e. a set of computers/processes where each computer represents a node of the graph and the edge between two nodes of the graph respresent a _valid communication interlink_ between two processes.
+Here the nodes of the graph are nodes in a distributed system; i.e. a set of computers/processes where each computer represents a node of the graph and the edge between two nodes of the graph respresent a _communication interlink_ between two processes. Nodes (processes) without edges between are _not_ allowed to communicate with each other.
 
-##### Best algorithm
+The best known algorithm that solves this problem is the GHS algorithm of R. G. Gallager, P. A. Humblet and P. M. Spira. [According to Wikipedia](https://en.wikipedia.org/wiki/Distributed_minimum_spanning_tree), there also is a parallelization of Prim's sequential algorithm by Nobri et al. The GHS algorithm could be considered the ***state of art*** for the distributed MST problem. I have implemented the GHS algorithm using DistAlgo, a seuperset of Python enhanced for distributed programming by Annie Liu, Bo Lin et al. from Stony Brook University.
 
-The best known algorithm that solves this problem is the GHS algorithm of R. G. Gallager, P. A. Humblet and P. M. Spira. [According to Wikipedia](https://en.wikipedia.org/wiki/Distributed_minimum_spanning_tree), there also is a parallelization of Prim's sequential algorithm by Nobri et al. Teh GHS algorithm could be thought of as the **state of art** for distributed MST. I have implemented the GHS algorithm using DistAlgo, a seuperset of Python enhanced for distributed programming by Annie Liu, Bo Lin et al. from Stony Brook University.
+A pre-condition for the GHS aglorithm is that the MST be unique, i.e. that all edges have _unique_ weights.
 
 ##### Papers on GHS
 
@@ -37,8 +37,30 @@ I've posted PDFs of both papers (found online) in this GitHub repo under the `pa
 * The [Original paper by Gallager, Humblet and Spira](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/papers/GHS_original.pdf) from 1983.
 * The one [prepared by Guy Flysher and Amir Rubinshtein](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/papers/GHS_enhanced.pdf). (*I recommend this one*)
 
+High-level Explanation of the GHS Algorithm
+-------------------------------------------
+The algorithm hinges on the idea of a "fragment of the MST". It relies on this property of MSTs:
+- *If F is a fragment of an MST M, then joining the node of the other end of the minimum weight "outgoing" edge will yield yet another fragment of M.* Here, "outgoing" is defined as an edge which connects (any node in) the fragment to a node that is _not_ part of the fragment.
+
+The algorithm initially starts out by assigning *each node to a fragment of its own*. It then proceeds to to follow a set of steps to ***merge the fragments*** *over and over again*, until there is only **one** fragment left. The final fragment is equal to the MST for the graph.
+
+ The following diagram (from Guy Flysher and Amir Rubinshtein's version of the GHS paper) depicts the fragment *absorption* and *merge* processes:
+
+![Diagram showing fragment mergers and absorptions](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/img/MST-figure.png)
+
+### Pseudocode
+The following is the pseudocode for the GHS algorithm (from Guy Flysher and Amir Rubinshtein's version of the GHS paper):
+
+![Distributed MST by Gallager, Humblet & Spira](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/img/MST_algorithm.png)
+
 Implementation
 --------------
+
+I implemented the algorithm in DistAlgo. 
+
+The GHS implementation is contained in the file `MST.dis.py` in this directory. It is pointed to by the symlink `MST.dis`. (The `.py` was added to obtain syntax highlighting in GitHub.)
+
+The program can be run from a POSIX shell by executing the *bash* script `run.py` or by directly running the softlink `MST.dis` (pointing to `MST.dis.py`) using the DistAlgo runtime: `python3 -m distalgo.runtime MST.dis`.
 
 ### Usage
 
@@ -75,26 +97,10 @@ Finds the Minimum Spanning Tree (MST) of a given graph.
 	                        File to write the solution (MST edge list) to. By
 	                        default it written to the file `sol`.
 
-### Detailed High-level Explanation
-
-
-
-Core Ideas
-----------
-The following diagram (from Guy Flysher and Amir Rubinshtein's version of the GHS paper) depicts the core idea behing the algorithm:
-
-![Diagram showing fragment mergers and absorptions](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/img/MST-figure.png)
-
-Pseudocode from the paper
--------------------------
-The following is pseudocode for the GHS algorithm (taken from Guy Flysher and Amir Rubinshtein's version of the GHS paper):
-
-![Distributed MST by Gallager, Humblet & Spira](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/img/MST_algorithm.png)
-
 Test Cases
 ----------
 This diagram depicts one of the test cases used to tes the algorithm:
 
 ![Test Case 1](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/img/test_case_1.png)
 
-The think blue edges denote the branches of the MST (Minimum Spanning Tree).
+The thin blue edges denote the branches of the MST (Minimum Spanning Tree).
