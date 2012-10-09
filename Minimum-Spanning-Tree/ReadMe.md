@@ -1,8 +1,8 @@
 Distributed Minimum Spanning Tree
 =================================
 
-Introduction
-------------
+Overview
+--------
 This is a distributed program that implements a distributed [Minimum Spanning Tree](https://en.wikipedia.org/wiki/Minimum_spanning_tree) solver in DistAlgo.
 
 
@@ -12,19 +12,23 @@ A spanning tree is defined as a tree which is a sub-graph of a given graph and c
 
 #### Same graph, multiple minimum spanning trees
 
-If a graph has multiple edges *with the same weight*, then the graph could have several MSTs. This situation can be obviated by constructing a grpah whose edges have unique weights.
+If a graph has multiple edges *with the same weight*, then the graph could have several MSTs. This situation can be obviated by constructing a graph whose edges have unique weights.
 
 ### Algroithms
 
 #### Sequential Solvers
 
-There are two commonly used for finding the MST of a graph **sequentially**: *Prim's algorithm* and *Kruskal's algorithm*. To better understand the problem and get a feel for it, I wrote a Kruskal's solver which can found at `Kruskal.py`.
+There are two commonly used algorithms for finding the MST of a graph _sequentially_: *Prim's algorithm* and *Kruskal's algorithm*. To better understand the problem and get a feel for it, I wrote a Kruskal's solver which can found at `Kruskal.py`.
 
 #### Distributed Solvers
 
-The problem here is radically different from the previous one -- here the nodes of the graph are nodes in a distributed system; i.e. a set of computers/processes where each computer represents a node of the graph and the edge between two nodes of the graph respresent a _valid communication interlink_ between two computers.
+Here the nodes of the graph are nodes in a distributed system; i.e. a set of computers/processes where each computer represents a node of the graph and the edge between two nodes of the graph respresent a _valid communication interlink_ between two processes.
+
+##### Best algorithm
 
 The best known algorithm that solves this problem is the GHS algorithm of R. G. Gallager, P. A. Humblet and P. M. Spira. [According to Wikipedia](https://en.wikipedia.org/wiki/Distributed_minimum_spanning_tree), there also is a parallelization of Prim's sequential algorithm by Nobri et al. Teh GHS algorithm could be thought of as the **state of art** for distributed MST. I have implemented the GHS algorithm using DistAlgo, a seuperset of Python enhanced for distributed programming by Annie Liu, Bo Lin et al. from Stony Brook University.
+
+##### Papers on GHS
 
 I found two papers online that describe GHS. One is the original from 1983, by Gallager, Humlbet & Spira. The other is an enhanced version of the original (with better graphics, typesetting, explanation, etc.) prepared by Guy Flysher and Amir Rubinshtein. I followed the second one while creating my implementation in DistAlgo.
 
@@ -47,9 +51,9 @@ except without the commas. By default `graph-2` is used.
 
 The available arguments and their uses can be displayed by passing the `-h` argument:
 
-	usage: MST.dis [-h] [-v] [-b BACKEND] [graph]
+usage: MST.dis [-h] [-v] [-b BACKEND] [-o OUTPUT] [graph]
 
-	Finds the Minimum Spanning Tree (MST) of a given graph.
+Finds the Minimum Spanning Tree (MST) of a given graph.
 
 	positional arguments:
 	  graph                 File listing the edges of a graph line-by-line in the
@@ -67,6 +71,13 @@ The available arguments and their uses can be displayed by passing the `-h` argu
 	                        GTKCairo, FltkAgg, MacOSX, QtAgg, Qt4Agg, TkAgg, WX,
 	                        WXAgg, CocoaAgg, GTK3Cairo, GTK3Agg. Default value is
 	                        Qt4Agg.
+	  -o OUTPUT, --output OUTPUT
+	                        File to write the solution (MST edge list) to. By
+	                        default it written to the file `sol`.
+
+### Detailed High-level Explanation
+
+
 
 Core Ideas
 ----------
