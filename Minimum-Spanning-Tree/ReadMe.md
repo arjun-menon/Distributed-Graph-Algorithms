@@ -34,8 +34,8 @@ I found two papers online that describe GHS. One is the original from 1983, by G
 
 I've posted PDFs of both papers (found online) in this GitHub repo under the `papers` directory. Links to them are below:
 
-* The [Original paper by Gallager, Humblet and Spira](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/papers/GHS_original.pdf) from 1983.
-* The one [prepared by Guy Flysher and Amir Rubinshtein](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/papers/GHS_enhanced.pdf). (*I recommend this one*)
+* The [Original paper by Gallager, Humblet and Spira](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/papers/GHS_original.pdf) from 1983.
+* The one [prepared by Guy Flysher and Amir Rubinshtein](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/papers/GHS_enhanced.pdf). (*I recommend this one*)
 
 High-level Explanation of the GHS Algorithm
 -------------------------------------------
@@ -61,14 +61,14 @@ There is a lot more to inner working of the algorithms, such as how exactly merg
 
 The following diagram (from Guy Flysher and Amir Rubinshtein's version of the GHS paper) illustrates the fragment *absorption* and *merge* processes:
 
-![Diagram showing fragment mergers and absorptions](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/img/MST-figure.png)
+![Diagram showing fragment mergers and absorptions](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/MST-figure.png)
 
 ### Pseudocode
-The following is the pseudocode for the GHS algorithm (from Guy Flysher and Amir Rubinshtein's version of the GHS paper). It is quite low-level. I [tried](https://github.com/arjungmenon/DistAlgo/blob/master/Minimum-Spanning-Tree/old/mst_attempt_2.dis) but wasn't able to directly translate it to DistAlgo. The main problem I ran into it was that, DistAlgo does not provide a way (or I don't know of a way) to manipulate the local message queue directly. The pseudocode uses that ability to "delay" processing a message, by putting it back in the end of the queue. My implementation differs in this aspect, and also other aspects.
+The following is the pseudocode for the GHS algorithm (from Guy Flysher and Amir Rubinshtein's version of the GHS paper). It is quite low-level. I [tried](https://github.com/arjungmenon/Distributed-Graph-Algorithms/blob/master/Minimum-Spanning-Tree/old/mst_attempt_2.dis) but wasn't able to directly translate it to DistAlgo. The main problem I ran into it was that, DistAlgo does not provide a way (or I don't know of a way) to manipulate the local message queue directly. The pseudocode uses that ability to "delay" processing a message, by putting it back in the end of the queue. My implementation differs in this aspect, and also other aspects.
 
 I largely followed the pseudocode as a guide, rather than following it directly. For my implementation I tried to the maximal extent possible, to work out the lower level details myself, while simply following the high-level details of the algorithm above. The benefit of following the high-level explanation was that, I was able to keep the **big picture** in my head (all at once.) I found that impossible to do with the pseudocode. I could understand part of it at a time, but to hold the whole thing in my head at once was impossible.
 
-![Distributed MST by Gallager, Humblet & Spira](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/img/MST_algorithm.png)
+![Distributed MST by Gallager, Humblet & Spira](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/MST_algorithm.png)
 
 Implementation
 --------------
@@ -115,6 +115,6 @@ unique weights:
 
 This diagram depicts one of the test cases used to test the algorithm:
 
-![Test Case 1](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/img/test_case_1.png)
+![Test Case 1](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/test_case_1.png)
 
 The thick blue edges denote the branches of the MST (Minimum Spanning Tree).
