@@ -42,7 +42,15 @@ High-level Explanation of the GHS Algorithm
 The algorithm hinges on the idea of a "fragment of the MST". It relies on this property of MSTs:
 - *If F is a fragment of an MST M, then joining the node of the other end of the minimum weight "outgoing" edge will yield yet another fragment of M.* Here, "outgoing" is defined as an edge which connects (any node in) the fragment to a node that is _not_ part of the fragment.
 
-The algorithm initially starts out by assigning *each node to a fragment of its own*. It then proceeds to to follow a set of steps to ***merge the fragments*** *over and over again*, until there is only **one** fragment left. The final fragment is equal to the MST for the graph.
+The algorithm initially starts out by assigning *each node to a fragment of its own*. It then proceeds to to follow a set of steps to ***merge the fragments*** *over and over again*, until there is only **one** fragment left. The final fragment is equal to the MST for the graph. Additionally, each fragment has a property called its *level* which determines what kind of merge process occurs between two fragments. There are two kinds of merges: _absorptions_ and *level-augmenting merges*.
+
+The steps followed by the aglorithm are:
+
+0. Initially, all fragments are at level 0 and contain just the one node. Additionally, all nodes are _sleeping_ at first.
+1. A node has to be woken up before it can do anything. A nicety of the GHS algorithm is that there are no restriction whatsoever on the wakeup process. One may opt, if necessary, to wake up all nodes immediately; or alternatively wake up just one single node. In the course of the algorithm, all nodes will eventually be owken up. Other operations in the algorithm result in other nodes waking up.
+2. Every fragment finds its *minimum weight outgoing edge* and send a **Connect** request over it.
+3. 
+
 
  The following diagram (from Guy Flysher and Amir Rubinshtein's version of the GHS paper) depicts the fragment *absorption* and *merge* processes:
 
@@ -73,9 +81,9 @@ except without the commas. By default `graph-2` is used.
 
 The available arguments and their uses can be displayed by passing the `-h` argument:
 
-usage: MST.dis [-h] [-v] [-b BACKEND] [-o OUTPUT] [graph]
+	usage: MST.dis [-h] [-v] [-b BACKEND] [-o OUTPUT] [graph]
 
-Finds the Minimum Spanning Tree (MST) of a given graph.
+	Finds the Minimum Spanning Tree (MST) of a given graph.
 
 	positional arguments:
 	  graph                 File listing the edges of a graph line-by-line in the
@@ -99,8 +107,11 @@ Finds the Minimum Spanning Tree (MST) of a given graph.
 
 Test Cases
 ----------
-This diagram depicts one of the test cases used to tes the algorithm:
+While testing the algorithm, I wanted to use a graph that was in particular designed to test this algorithm. So I looked online for web pages discussing Minimum Spanning Trees, and I finally came across one that had a graph with all 
+unique weights: 
+
+This diagram depicts one of the test cases used to test the algorithm:
 
 ![Test Case 1](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/img/test_case_1.png)
 
-The thin blue edges denote the branches of the MST (Minimum Spanning Tree).
+The thick blue edges denote the branches of the MST (Minimum Spanning Tree).
