@@ -66,29 +66,19 @@ The following diagram (from Guy Flysher and Amir Rubinshtein's version of the GH
 ### Pseudocode
 The following is the pseudocode for the GHS algorithm (from Guy Flysher and Amir Rubinshtein's version of the GHS paper). It is quite low-level. The main problem I ran into it was that, DistAlgo does not provide a way (or I don't know of a way) to manipulate the local message queue directly. The pseudocode uses that ability to "delay" processing a message, by putting it back in the end of the queue. My implementation differs in this aspect, and also other aspects.
 
-I largely followed the pseudocode as I guide, rather than following it directly. For my implementation I tried to the maximal extent possible, to work out the lower level details myself, while simply following the high-level details of the algorithm above. The benefit of following the high-level explanation was that, I was able to keep the **big picture** in my head (all at once.) I found that impossible to do with the pseudocode. I could understand part of it at a time, but to hold the whole thing in my head at once was impossible.
+I largely followed the pseudocode as a guide, rather than following it directly. For my implementation I tried to the maximal extent possible, to work out the lower level details myself, while simply following the high-level details of the algorithm above. The benefit of following the high-level explanation was that, I was able to keep the **big picture** in my head (all at once.) I found that impossible to do with the pseudocode. I could understand part of it at a time, but to hold the whole thing in my head at once was impossible.
 
 ![Distributed MST by Gallager, Humblet & Spira](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/img/MST_algorithm.png)
 
 Implementation
 --------------
-
-I implemented the algorithm in DistAlgo. 
-
-The GHS implementation is contained in the file `MST.dis.py` in this directory. It is pointed to by the symlink `MST.dis`. (The `.py` was added to obtain syntax highlighting in GitHub.)
-
-The program can be run from a POSIX shell by executing the *bash* script `run.py` or by directly running the softlink `MST.dis` (pointing to `MST.dis.py`) using the DistAlgo runtime: `python3 -m distalgo.runtime MST.dis`.
+The implementation is in DistAlgo 0.2. There are two algorithms: Kruskal's in `Kruskal.py` and GHS in `MST.dis.py`. I wrote Kruskal's just an exercise early on to get a better understanding of MSTs (and in an attempt to come up with my own distirbuted algorithm.) The relevant program in contained in its entirety in the file `MST.dis.py` in this directory. The `.py` was added to obtain syntax highlighting in GitHub. It is pointed to by the symlink `MST.dis`. `MST.dis` can be run using DistAlgo by typing: `python3 -m distalgo.runtime MST.dis`. Alternatively, there's a script `run.py` which does the same thing.
 
 ### Usage
 
-Both the distributed `MST.dis` and the sequential `Kruskal.py` share a common 
-set of tools encapsulated in the module `tools.py`. `tools.py` handles all the 
-arguments supplied by the user. It builds from the *graph file*, the NetworkX 
-graph object used by the solvers. The graph file lists all the edges in 
-the graph in [CSV](https://en.wikipedia.org/wiki/Comma-separated_values)-style, 
-except without the commas. By default `graph-2` is used.
+Both the GHS algorithm (in `MST.dis.py`) and `Kruskal.py` import the module `tools.py` which provides a common set of services like handling optargs, constructing the graph from a _graph file_ and visualizing the solution using `matplotlib`. The graph file is a simple text file which lists all the edges in the graph in [CSV](https://en.wikipedia.org/wiki/Comma-separated_values)-style, except without the commas. If no graph file is passed, then `graph-2` is used by default. `tools.py` builds from the graph file, a NetworkX graph object representing it.
 
-The available arguments and their uses can be displayed by passing the `-h` argument:
+The available arguments and purposes can be displayed by passing the `-h` argument to display the help message:
 
 	usage: MST.dis [-h] [-v] [-b BACKEND] [-o OUTPUT] [graph]
 
@@ -113,6 +103,10 @@ The available arguments and their uses can be displayed by passing the `-h` argu
 	  -o OUTPUT, --output OUTPUT
 	                        File to write the solution (MST edge list) to. By
 	                        default it written to the file `sol`.
+
+### Running
+
+When run, for instance like so: `python3 -m distalgo.runtime MST.dis`, the program produces a long list of output messages, each emenating from the nodes describing an operation that occured at the node. At the end of this long output, 
 
 Test Cases
 ----------
