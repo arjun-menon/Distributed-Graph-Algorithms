@@ -51,8 +51,8 @@ The steps followed by the aglorithm are:
 2. Every fragment finds its *minimum weight outgoing edge* and sends a **Connect** request over it containing the `level` of the fragment it belongs to.
 3. Every time a fragment sends a _Connect_ to another fragment, it enters a "waiting" state (denoted by `FOUND` in the code.) The fragment then, waits _until is either gets *absorbed by* or *merges with* the other fragment_.
 4. When a fragment **receives** a Connect, the conditions that determine whether it should _absorb_ or _merge_ with the requesting fragment are as follows:
-    1. If the fragment it received the *Connect* request from is of a lower level, then that fragment gets _absorbed immediately_.
-    2. If the fragment it received the *Connect* request from is of a level _equal_ to its own or _higher_, two things can happen:
+    * If the fragment it received the *Connect* request from is of a lower level, then that fragment gets _absorbed immediately_.
+    * If the fragment it received the *Connect* request from is of a level _equal_ to its own or _higher_, two things can happen:
         * If the fragment receving the Connect _has also_ sent a Connect to the other fragment, they ***merge***.
         * In any other case, the fragment _simply does not reply_ and _waits for *the situation to change*_. The way the algorithm works, a merge or absorption will occur eventually.
 5. The termination case for the algorithm is, when a fragment is ***unable*** _to find a minimum weight outgoing edge_. This case means that it is the _only fragment left._ Therefore it must be the complete MST.
