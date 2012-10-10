@@ -48,16 +48,25 @@ The steps followed by the aglorithm are:
 
 0. Initially, all fragments are at level 0 and contain just the one node. Additionally, all nodes are _sleeping_ at first.
 1. A node has to be woken up before it can do anything. A nicety of the GHS algorithm is that there are no restriction whatsoever on the wakeup process. One may opt, if necessary, to wake up all nodes immediately; or alternatively wake up just one single node. In the course of the algorithm, all nodes will eventually be owken up. Other operations in the algorithm result in other nodes waking up.
-2. Every fragment finds its *minimum weight outgoing edge* and send a **Connect** request over it.
-3. 
+2. Every fragment finds its *minimum weight outgoing edge* and sends a **Connect** request over it containing the `level` of the fragment it belongs to.
+3. Every time a fragment sends a _Connect_ to another fragment, it enters a "waiting" state (denoted by `FOUND` in the code.) The fragment then, waits _until is either gets *absorbed by* or *merges with* the other fragment_.
+4. When a fragment **receives** a Connect, the conditions that determine whether it should _absorb_ or _merge_ with the requesting fragment are as follows:
+    * If the fragment it received the *Connect* request from is of a lower level, then that fragment gets _absorbed immediately_.
+    * If the fragment it received the *Connect* request from is of a level _equal_ to its own or _higher_, two things can happen:
+        1. If the fragment receving the Connect _has also_ sent a Connect to the other fragment, they ***merge***.
+        2. In any other case, the fragment _simply does not reply_ and _waits for *the situation to change*_. The way the algorithm works, a merge or absorption will occur eventually.
+5. The termination case for the algorithm is, when a fragment is ***unable*** _to find a minimum weight outgoing edge_. This case means that it is the _only fragment left._ Therefore it must be the complete MST.
 
+There is a lot more to inner working of the algorithms, such as how exactly mergers and absorptions occur, how the minimum weight outgoing edge is found, etc. However these details would be too low-level to be discussed in this document.
 
- The following diagram (from Guy Flysher and Amir Rubinshtein's version of the GHS paper) depicts the fragment *absorption* and *merge* processes:
+The following diagram (from Guy Flysher and Amir Rubinshtein's version of the GHS paper) illustrates the fragment *absorption* and *merge* processes:
 
 ![Diagram showing fragment mergers and absorptions](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/img/MST-figure.png)
 
 ### Pseudocode
-The following is the pseudocode for the GHS algorithm (from Guy Flysher and Amir Rubinshtein's version of the GHS paper):
+The following is the pseudocode for the GHS algorithm (from Guy Flysher and Amir Rubinshtein's version of the GHS paper). It is quite low-level. The main problem I ran into it was that, DistAlgo does not provide a way (or I don't know of a way) to manipulate the local message queue directly. The pseudocode uses that ability to "delay" processing a message, by putting it back in the end of the queue. My implementation differs in this aspect, and also other aspects.
+
+I largely followed the pseudocode as I guide, rather than following it directly. For my implementation I tried to the maximal extent possible, to work out the lower level details myself, while simply following the high-level details of the algorithm above. The benefit of following the high-level explanation was that, I was able to keep the **big picture** in my head (all at once.) I found that impossible to do with the pseudocode. I could understand part of it at a time, but to hold the whole thing in my head at once was impossible.
 
 ![Distributed MST by Gallager, Humblet & Spira](https://raw.github.com/arjungmenon/DistAlgo/master/Minimum-Spanning-Tree/img/MST_algorithm.png)
 
