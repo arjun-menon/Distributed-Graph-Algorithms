@@ -8,7 +8,7 @@ nodes in the graph represent a valid communication link between these processes.
 The design of the algorithm largely follows the fundamental idea underpinning the 
 sequential algorithm. The sequential algorithm for finding MST is shown below:
 
-![MIS Sequential](https://raw.github.com/arjungmenon/DistAlgo/master/Maximal-Independent-Set/MIS-sequential.png)
+![MIS Sequential](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Maximal-Independent-Set/MIS-sequential.png)
 
 Conditions and Constraints
 --------------------------
