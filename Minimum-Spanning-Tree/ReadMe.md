@@ -68,6 +68,8 @@ The following is the pseudocode for the GHS algorithm (from Guy Flysher and Amir
 
 I largely followed the pseudocode as a guide, rather than following it directly. For my implementation I tried to the maximal extent possible, to work out the lower level details myself, while simply following the high-level details of the algorithm above. The benefit of following the high-level explanation was that, I was able to keep the **big picture** in my head (all at once.) I found that impossible to do with the pseudocode. I could understand part of it at a time, but to hold the whole thing in my head at once was impossible.
 
+The following is pseudocode of the algorithm from [Guy Flysher and Amir Rubinshtein](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/papers/GHS_enhanced.pdf)'s version of the paper:
+
 ![Distributed MST by Gallager, Humblet & Spira](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/MST_algorithm.png)
 
 Implementation
