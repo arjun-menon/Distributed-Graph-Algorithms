@@ -1,17 +1,25 @@
 Distributed Maximal Independent Set
 ===================================
 
+Problem Description
+-------------------
 This algorithms solves the [Maximal independent set](https://en.wikipedia.org/wiki/Maximal_independent_set "Wikipedia") 
-problem in a distributed system where the nodes are represented by processes in the system and edges between the 
-nodes in the graph represent a valid communication link between these processes.
+problem in a distributed system where the nodes are represented by processes and edges between the 
+nodes in the graph represent a valid communication link between these processes. The maximal independent set problem is described in detail in its [Wikipedia article](https://en.wikipedia.org/wiki/Maximal_independent_set "Wikipedia").
+
+Description of the Algorithm
+----------------------------
+
+### Design
 
 The design of the algorithm largely follows the fundamental idea underpinning the 
 sequential algorithm. The sequential algorithm for finding MST is shown below:
 
 ![MIS Sequential](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Maximal-Independent-Set/MIS-sequential.png)
 
-Conditions and Constraints
---------------------------
+
+### Conditions and Constraints
+
  -  Each node in the graph is represented by a process.
 
  -  A process/node can only communicate with other processes/nodes 
@@ -30,7 +38,7 @@ Conditions and Constraints
 
  -  The control process is not bound by constraint (a), and any process is 
     permitted to communicate to it and it to all other processes. However, 
-    ehe control process isn't absolutely necessary to the algorithm, or a 
+    the control process isn't absolutely necessary to the algorithm, or a 
     crucial component of it. The initation of the algorithm could be moved to 
     top-level main() function, and rather than collect output, each node could 
     produce output declaring itself as a vertex of the MST (it does this already), 
@@ -39,8 +47,8 @@ Conditions and Constraints
     and renders more elegant this particular implementation.
 
 
-High-Level Overview of the Algorithm
-------------------------------------
+### High-Level Overview
+
 Each node/process can have one of 3 states: NORMAL, VERTEX, OUT.
 Initally each node is NORMAL.
 
@@ -54,11 +62,22 @@ does the following:
 5. The base case, is when in step c, no NORMAL node could be found. When this happens, 
     the algorithm terminates.
 
+Implementation
+==============
 
-Some details about the implementation
--------------------------------------
+Usage
+-----
 
-This is an overview of some of the _key_ functions.
+
+
+Running
+-------
+
+
+
+Specific Details
+----------------
+This is an overview of some of the _key_ functions in the implementation.
 
 Overview of mark():
 * Marks a node as VERTEX,
