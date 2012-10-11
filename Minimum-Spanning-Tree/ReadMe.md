@@ -109,6 +109,14 @@ The available arguments and purposes can be displayed by passing the `-h` argume
 	                        File to write the solution (MST edge list) to. By
 	                        default it written to the file `sol`.
 
+### The Spark process
+
+The `Spark` process is another process that is present in my implementation in addition to the node processes. It's job solely bureaucratic: to start the algorithm by waking up atleast one node, and to finish up the algorithm and present the results.
+
+It accomplishes starting the algorithm by simply picking a node at random and sending it a `Wakeup` message. As an interesting side note, the GHS algorithm allows _any number of nodes to be woken up_ ***spontaneously***. This aspect of the GHS algorithm can be easily tested by un-commenting two lines of code in Spark's main() function. The two lines send `Wakeup` messages to all nodes rather one random node.
+
+Finally, output collection starts after `Spark` receives a `Finished` message from one of the two core nodes. Subsequently, it sends a `QueryBranches` message to every node process, and they all reply with the edges they know to be branches. (No single node knows all the branches of the MST, only which of its edges are branches.) The `Spark` processes collects these results and combines them in a set, then `output`s the solution using DistAlgo, and finally passes it on to `toos.py` to write it down to a file and/or visualize it using `matplotlib`.
+
 ### Running
 
 When `MST.dis` is run (by typing `python3 -m distalgo.runtime MST.dis` or using `run.py`), the program produces a long list of output messages, each emenating from the processes representing the nodes describing operations that occured at the node. A truncated example of the output is shown below:
@@ -216,3 +224,4 @@ The solution `graph-2` is depicted below:
 
 ![Test Case 2](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/test_case_2.png)
 
+---
