@@ -56,6 +56,9 @@ The steps followed by the aglorithm are:
         * If the fragment receving the Connect _has also_ sent a Connect to the other fragment, they ***merge***.
         * In any other case, the fragment _simply does not reply_ and _waits for *the situation to change*_. The way the algorithm works, a merge or absorption will occur eventually.
 5. The termination case for the algorithm is, when a fragment is ***unable*** _to find a minimum weight outgoing edge_. This case means that it is the _only fragment left._ Therefore it must be the complete MST.
+6. Finally two important thing to note are:
+    * Fragments of level-1 and above, are controlled by a pair of nodes called the ***core nodes***. These nodes are first formed during the initial level-0 Connect exchanges. Nodes sending _Connect_s to each other form a level-1 fragment.
+    * Fragments are identified by the _weight_ of the edge between the core nodes. Since, all edges have to be unique as pre-requisite for the GHS algorithm, the edge weight can be used to uniquely identify a fragment.
 
 There is a lot more to inner working of the algorithms, such as how exactly mergers and absorptions occur, how the minimum weight outgoing edge is found, etc. However these details would be too low-level to be discussed in this document.
 
@@ -108,7 +111,77 @@ The available arguments and purposes can be displayed by passing the `-h` argume
 
 ### Running
 
-When run, for instance like so: `python3 -m distalgo.runtime MST.dis`, the program produces a long list of output messages, each emenating from the nodes describing an operation that occured at the node. At the end of this long output, 
+When `MST.dis` is run (by typing `python3 -m distalgo.runtime MST.dis` or using `run.py`), the program produces a long list of output messages, each emenating from the processes representing the nodes describing operations that occured at the node. A truncated example of the output is shown below:
+
+	[2012-10-11 17:18:47,434]runtime:INFO: Creating instances of Node..
+	[2012-10-11 17:18:47,458]runtime:INFO: 13 instances of Node created.
+	[2012-10-11 17:18:47,464]runtime:INFO: Creating instances of Spark..
+	[2012-10-11 17:18:47,465]runtime:INFO: 1 instances of Spark created.
+	[2012-10-11 17:18:47,472]runtime:INFO: Starting procs...
+	[2012-10-11 17:18:47,473]runtime:INFO: Starting procs...
+	[2012-10-11 17:18:47,475]Node(F):INFO: Received spontaneous Wakeup from: Spark
+	[2012-10-11 17:18:47,475]Node(F):INFO: F is waking up!
+	[2012-10-11 17:18:47,477]Node(E):INFO: Received Connect(0) from: F
+	[2012-10-11 17:18:47,477]Node(E):INFO: E is waking up!
+	[2012-10-11 17:18:47,478]Node(F):INFO: Received Connect(0) from: E
+	[2012-10-11 17:18:47,478]Node(E):INFO: E merging with F
+	[2012-10-11 17:18:47,479]Node(F):INFO: F merging with E
+	[2012-10-11 17:18:47,480]Node(F):INFO: Received Initiate(1, 1, 'Find') from: E
+	[2012-10-11 17:18:47,480]Node(E):INFO: Received Initiate(1, 1, 'Find') from: F
+	[2012-10-11 17:18:47,481]Node(F):INFO: F has sent Test() to A
+	[2012-10-11 17:18:47,481]Node(E):INFO: E has sent Test() to H
+	[2012-10-11 17:18:47,481]Node(A):INFO: Received Test(1, 1) from: F
+	[2012-10-11 17:18:47,482]Node(A):INFO: A is waking up!
+	[2012-10-11 17:18:47,482]Node(H):INFO: Received Test(1, 1) from: E
+	[2012-10-11 17:18:47,482]Node(H):INFO: H is waking up!
+	...
+	...
+	...
+	[2012-10-11 17:18:47,529]Node(M):INFO: M merging with L
+	[2012-10-11 17:18:47,530]Node(L):INFO: L merging with M
+	....
+	....
+	[2012-10-11 17:18:47,537]Node(K):INFO: K has sent Test() to J
+	[2012-10-11 17:18:47,537]Node(J):INFO: Received Test(1, 20) from: K
+	[2012-10-11 17:18:47,538]Node(J):INFO: J sent Accept() to K
+	[2012-10-11 17:18:47,538]Node(K):INFO: Outgoing Neighbor K -> J @ 23 [find_count = 0]
+	[2012-10-11 17:18:47,538]Node(K):INFO: Least weight(23) outgoing edge from K: K -> J
+	[2012-10-11 17:18:47,539]Node(L):INFO: Received [K, J] @ 23 from K [find_count = 0]
+	[2012-10-11 17:18:47,539]Node(L):INFO: Least weight(23) outgoing edge from L: L -> K -> J
+	[2012-10-11 17:18:47,540]Node(L):INFO: Least weight(23) outgoing edge of fragment(20): L -> K -> J !!!!!!!!!!!!!!!
+	[2012-10-11 17:18:47,540]Node(M):INFO: Received [L, K, J] @ 23 from other core node L
+	[2012-10-11 17:18:47,541]Node(K):INFO: Fragment (20) ------------ Sending Connect(1) to J
+	[2012-10-11 17:18:47,541]Node(J):INFO: Received Connect(1) from: K
+	[2012-10-11 17:18:47,542]Node(J):INFO: J absorbing K
+	[2012-10-11 17:18:47,542]Node(J):INFO: J has sent FIND to branch K
+	[2012-10-11 17:18:47,542]Node(K):INFO: Received Initiate(2, 10, 'Find') from: J
+	[2012-10-11 17:18:47,543]Node(K):INFO: K has sent FIND to branch L
+	[2012-10-11 17:18:47,543]Node(L):INFO: Received Initiate(2, 10, 'Find') from: K
+	[2012-10-11 17:18:47,543]Node(L):INFO: L has sent FIND to branch M
+	[2012-10-11 17:18:47,544]Node(J):INFO: J Received Reject() from: K
+	[2012-10-11 17:18:47,544]Node(M):INFO: Received Initiate(2, 10, 'Find') from: L
+	[2012-10-11 17:18:47,544]Node(M):INFO: Least weight(999999999) outgoing edge from M: No Outgoing edges
+	[2012-10-11 17:18:47,543]Node(K):INFO: K sent Reject() to J
+	[2012-10-11 17:18:47,545]Node(L):INFO: Received None @ 999999999 from M [find_count = 0]
+	[2012-10-11 17:18:47,545]Node(L):INFO: Least weight(999999999) outgoing edge from L: No Outgoing edges
+	[2012-10-11 17:18:47,546]Node(K):INFO: Received None @ 999999999 from L [find_count = 0]
+	[2012-10-11 17:18:47,546]Node(K):INFO: Least weight(999999999) outgoing edge from K: No Outgoing edges
+	[2012-10-11 17:18:47,547]Node(J):INFO: Received None @ 999999999 from K [find_count = 0]
+	[2012-10-11 17:18:47,547]Node(J):INFO: Least weight(999999999) outgoing edge from J: No Outgoing edges
+	[2012-10-11 17:18:47,548]Node(I):INFO: Received None @ 999999999 from J [find_count = 0]
+	[2012-10-11 17:18:47,548]Node(I):INFO: Least weight(999999999) outgoing edge from I: No Outgoing edges
+	[2012-10-11 17:18:47,549]Node(I):INFO: ----- NO MORE OUTGOING EDGES -----
+	[2012-10-11 17:18:47,549]Node(E):INFO: Received None @ 999999999 from other core node I
+	[2012-10-11 17:18:47,549]Node(E):INFO: ----- NO MORE OUTGOING EDGES -----
+	[2012-10-11 17:18:47,575]Spark(Spark):INFO: Solution: (A, B), (A, F), (C, D), (D, I), (E, F), (E, G), (E, H), (E, I), (I, J), (J, K), (K, L), (L, M)
+	[2012-10-11 17:18:47,592]runtime:INFO: ***** Statistics *****
+	* Total procs: 14
+
+	[2012-10-11 17:18:47,593]runtime:INFO: Terminating...
+
+The `999999999` that can be seen conspicuously towards the end is a constant representing _infinity_. The "infinite" weight outgoing edge is used to denote the case where there are no outoging edges. When the two core nodes of the final fragment have received replies from all their branches indicating there are ***no more*** outoging edges, it sends a message to the special process `Spark`.
+
+`Spark` immediately _presents_ out the solution, and sends a message to all the nodes indicating the completion of the algorithm. Then the program terminates. `Spark` presents the solution by first, using DistAlgo's `output` and printing the solution; and secondly, if the user has opted to visualize the solution (using the `-v` option), it draws the graph using NetworkX and matplotlib. The graph denotes the branches of the MST using _thick blue edges_.
 
 Test Cases
 ----------
