@@ -67,7 +67,7 @@ The following diagram (from Guy Flysher and Amir Rubinshtein's version of the GH
 ![Diagram showing fragment mergers and absorptions](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/MST-figure.png)
 
 ### Pseudocode
-The following is the pseudocode for the GHS algorithm (from Guy Flysher and Amir Rubinshtein's version of the GHS paper). It is quite low-level. I [tried](https://github.com/arjungmenon/Distributed-Graph-Algorithms/blob/master/Minimum-Spanning-Tree/old/mst_attempt_2.dis) but wasn't able to directly translate it to DistAlgo. The main problem I ran into it was that, DistAlgo does not provide a way (or I don't know of a way) to manipulate the local message queue directly. The pseudocode uses that ability to "delay" processing a message, by putting it back in the end of the queue. My implementation differs in this aspect, and also other aspects.
+The following is the pseudocode for the GHS algorithm (from Guy Flysher and Amir Rubinshtein's version of the GHS paper). It is quite low-level. I [tried](https://github.com/arjungmenon/Distributed-Graph-Algorithms/blob/master/Minimum-Spanning-Tree/old/mst_attempt_2.dis) but wasn't able to directly translate it to DistAlgo. The main problem I ran into it was that, DistAlgo does not provide a way (or I don't know of a way) to manipulate the local message queue directly. The pseudocode uses that ability to "delay" processing a message, by putting it back in the end of the queue. My implementation differs in this aspect and also other aspects that make it more high-level and easier to understand (but less efficient.)
 
 I largely followed the pseudocode as a guide, rather than following it directly. For my implementation I tried to the maximal extent possible, to work out the lower level details myself, while simply following the high-level details of the algorithm above. The benefit of following the high-level explanation was that, I was able to keep the **big picture** in my head (all at once.) I found that impossible to do with the pseudocode. I could understand part of it at a time, but to hold the whole thing in my head at once was impossible.
 
@@ -220,7 +220,7 @@ I added three more nodes: `L`, `K` and `M` to the previous graph for increased c
 * `L`, `K` and `M` form a  **Level-1** *fragment* of their own with `L` and `M` as the _*core* nodes._
 * The `L`, `K` and `M` fragment gets absorbed by the *Level-2* fragment with core nodes `I` and `E`.
 
-The solution `graph-2` is depicted below:
+The solution to `graph-2` is depicted below:
 
 ![Test Case 2](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/test_case_2.png)
 
