@@ -63,15 +63,13 @@ does the following:
     the algorithm terminates.
 
 Implementation
-==============
+--------------
 
-Usage
------
-
+### Usage
 
 
-Running
--------
+
+### Running
 
 
 
