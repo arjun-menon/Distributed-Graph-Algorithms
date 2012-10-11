@@ -181,15 +181,38 @@ When `MST.dis` is run (by typing `python3 -m distalgo.runtime MST.dis` or using 
 
 The `999999999` that can be seen conspicuously towards the end is a constant representing _infinity_. The "infinite" weight outgoing edge is used to denote the case where there are no outoging edges. When the two core nodes of the final fragment have received replies from all their branches indicating there are ***no more*** outoging edges, it sends a message to the special process `Spark`.
 
-`Spark` immediately _presents_ out the solution, and sends a message to all the nodes indicating the completion of the algorithm. Then the program terminates. `Spark` presents the solution by first, using DistAlgo's `output` and printing the solution; and secondly, if the user has opted to visualize the solution (using the `-v` option), it draws the graph using NetworkX and matplotlib. The graph denotes the branches of the MST using _thick blue edges_.
+`Spark` immediately _presents_ the solution, and sends a message to all the nodes indicating the completion of the algorithm. Then the program terminates. `Spark` presents the solution, by first using DistAlgo's `output` and printing the solution; and second by drawing the graph using NetworkX and `matplotlib` if the user has opted to visualize the solution (using the `-v` option). The visualized graph denotes the branches of the MST using _thick blue edges_.
 
 Test Cases
 ----------
-While testing the algorithm, I wanted to use a graph that was in particular designed to test this algorithm. So I looked online for web pages discussing Minimum Spanning Trees, and I finally came across one that had a graph with all 
-unique weights: 
+The input graphs used as test cases were: `graph-1`, `graph-2`. 
 
-This diagram depicts one of the test cases used to test the algorithm:
+### Graph 1
+
+For my initial test case which I used for much of the developed of my algorithm, I wanted to use a graph that was in particular designed to test this algorithm. So I looked online for web pages discussing Minimum Spanning Trees, and I finally came across one that had a graph with all unique weights: http://cgm.cs.mcgill.ca/~hagha/topic28/topic28.html
+
+The following `matplotlib` diagram was generated representing the solution to `graph-1`:
 
 ![Test Case 1](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/test_case_1.png)
 
 The thick blue edges denote the branches of the MST (Minimum Spanning Tree).
+
+#### What Happens
+Some of the key GHS events that occur while solving `graph-1` are:
+
+* `E` and `F` from a **Level-1** *fragment*.
+* `I` and `J` from a **Level-1** *fragment*.
+* Both *level-1 fragments* proceed to absorb every other node in the graph.
+* In the end, these 2 fragments merge at `I` and `E` forming a _new **Level-2** fragment_ with them as the core nodes.
+
+### Graph 2
+
+I added three more nodes: `L`, `K` and `M` to the previous graph for increased complecity and to test other aspects of the GHS algortithm. The added steps that occur after adding these three new nodes are:
+
+* `L`, `K` and `M` form a  **Level-1** *fragment* of their own with `L` and `M` as the _*core* nodes._
+* The `L`, `K` and `M` fragment gets absorbed by the *Level-2* fragment with core nodes `I` and `E`.
+
+The solution `graph-2` is depicted below:
+
+![Test Case 2](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/test_case_2.png)
+
