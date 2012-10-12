@@ -30,9 +30,7 @@ Description of the Algorithm
 ----------------------------
 ### Design
 
-The design of my algorithm largely follows the fundamental idea underpinning the sequential algorithm.
-
-The sequential algorithm (taken from the [Luby's algorithm lecture notes](http://www.cc.gatech.edu/~vigoda/RandAlgs/MIS.pdf)) for finding MST is shown below:
+The design of my algorithm largely follows the fundamental idea underpinning the sequential algorithm. The sequential algorithm (taken from the [Luby's algorithm lecture notes](http://www.cc.gatech.edu/~vigoda/RandAlgs/MIS.pdf)) for finding MST is shown below:
 
 ![MIS Sequential](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Maximal-Independent-Set/MIS-sequential.png)
 
@@ -183,120 +181,116 @@ These were outputs produced during some trial runs of the algorithm:
 
 #### Run 1 (Solution: A, C, J, E)
 
-[2012-10-12 08:04:37,337]runtime:INFO: Creating instances of P..
-[2012-10-12 08:04:37,359]runtime:INFO: 11 instances of P created.
-[2012-10-12 08:04:37,367]runtime:INFO: Starting procs...
-[2012-10-12 08:04:37,369]P(A):INFO: A marked as VERTEX
-[2012-10-12 08:04:37,371]P(B):INFO: B marked as OUT
-[2012-10-12 08:04:37,372]P(F):INFO: F marked as OUT
-[2012-10-12 08:04:37,392]P(E):INFO: E marked as VERTEX
-[2012-10-12 08:04:37,393]P(I):INFO: I marked as OUT
-[2012-10-12 08:04:37,394]P(H):INFO: H marked as OUT
-[2012-10-12 08:04:37,394]P(G):INFO: G marked as OUT
-[2012-10-12 08:04:37,394]P(D):INFO: D marked as OUT
-[2012-10-12 08:04:37,406]P(C):INFO: C marked as VERTEX
-[2012-10-12 08:04:37,420]P(J):INFO: J marked as VERTEX
-[2012-10-12 08:04:37,455]P(0):INFO: Vertices in the MIS are: A, C, J, E
-[2012-10-12 08:04:37,458]runtime:INFO: ***** Statistics *****
-* Total procs: 11
-
-[2012-10-12 08:04:37,459]runtime:INFO: Terminating...
+    [2012-10-12 08:04:37,337]runtime:INFO: Creating instances of P..
+    [2012-10-12 08:04:37,359]runtime:INFO: 11 instances of P created.
+    [2012-10-12 08:04:37,367]runtime:INFO: Starting procs...
+    [2012-10-12 08:04:37,369]P(A):INFO: A marked as VERTEX
+    [2012-10-12 08:04:37,371]P(B):INFO: B marked as OUT
+    [2012-10-12 08:04:37,372]P(F):INFO: F marked as OUT
+    [2012-10-12 08:04:37,392]P(E):INFO: E marked as VERTEX
+    [2012-10-12 08:04:37,393]P(I):INFO: I marked as OUT
+    [2012-10-12 08:04:37,394]P(H):INFO: H marked as OUT
+    [2012-10-12 08:04:37,394]P(G):INFO: G marked as OUT
+    [2012-10-12 08:04:37,394]P(D):INFO: D marked as OUT
+    [2012-10-12 08:04:37,406]P(C):INFO: C marked as VERTEX
+    [2012-10-12 08:04:37,420]P(J):INFO: J marked as VERTEX
+    [2012-10-12 08:04:37,455]P(0):INFO: Vertices in the MIS are: A, C, J, E
+    [2012-10-12 08:04:37,458]runtime:INFO: ***** Statistics *****
+    * Total procs: 11
 
 #### Run 2 (Solution: C, J, F)
 
-[2012-10-12 08:06:04,921]runtime:INFO: Creating instances of P..
-[2012-10-12 08:06:04,948]runtime:INFO: 11 instances of P created.
-[2012-10-12 08:06:04,957]runtime:INFO: Starting procs...
-[2012-10-12 08:06:04,960]P(C):INFO: C marked as VERTEX
-[2012-10-12 08:06:04,962]P(D):INFO: D marked as OUT
-[2012-10-12 08:06:04,962]P(B):INFO: B marked as OUT
-[2012-10-12 08:06:04,962]P(I):INFO: I marked as OUT
-[2012-10-12 08:06:04,977]P(J):INFO: J marked as VERTEX
-[2012-10-12 08:06:04,978]P(H):INFO: H marked as OUT
-[2012-10-12 08:06:04,988]P(F):INFO: F marked as VERTEX
-[2012-10-12 08:06:04,989]P(E):INFO: E marked as OUT
-[2012-10-12 08:06:04,989]P(A):INFO: A marked as OUT
-[2012-10-12 08:06:04,989]P(G):INFO: G marked as OUT
-[2012-10-12 08:06:05,003]P(0):INFO: Vertices in the MIS are: C, J, F
-[2012-10-12 08:06:05,021]runtime:INFO: ***** Statistics *****
-* Total procs: 11
-
-[2012-10-12 08:06:05,022]runtime:INFO: Terminating...
+    [2012-10-12 08:06:04,921]runtime:INFO: Creating instances of P..
+    [2012-10-12 08:06:04,948]runtime:INFO: 11 instances of P created.
+    [2012-10-12 08:06:04,957]runtime:INFO: Starting procs...
+    [2012-10-12 08:06:04,960]P(C):INFO: C marked as VERTEX
+    [2012-10-12 08:06:04,962]P(D):INFO: D marked as OUT
+    [2012-10-12 08:06:04,962]P(B):INFO: B marked as OUT
+    [2012-10-12 08:06:04,962]P(I):INFO: I marked as OUT
+    [2012-10-12 08:06:04,977]P(J):INFO: J marked as VERTEX
+    [2012-10-12 08:06:04,978]P(H):INFO: H marked as OUT
+    [2012-10-12 08:06:04,988]P(F):INFO: F marked as VERTEX
+    [2012-10-12 08:06:04,989]P(E):INFO: E marked as OUT
+    [2012-10-12 08:06:04,989]P(A):INFO: A marked as OUT
+    [2012-10-12 08:06:04,989]P(G):INFO: G marked as OUT
+    [2012-10-12 08:06:05,003]P(0):INFO: Vertices in the MIS are: C, J, F
+    [2012-10-12 08:06:05,021]runtime:INFO: ***** Statistics *****
+    * Total procs: 11
 
 #### Run 3 (Solution: I, B, G)
 
-[2012-10-12 08:06:29,570]runtime:INFO: Creating instances of P..
-[2012-10-12 08:06:29,585]runtime:INFO: 11 instances of P created.
-[2012-10-12 08:06:29,596]runtime:INFO: Starting procs...
-[2012-10-12 08:06:29,597]P(G):INFO: G marked as VERTEX
-[2012-10-12 08:06:29,600]P(H):INFO: H marked as OUT
-[2012-10-12 08:06:29,600]P(E):INFO: E marked as OUT
-[2012-10-12 08:06:29,601]P(F):INFO: F marked as OUT
-[2012-10-12 08:06:29,619]P(B):INFO: B marked as VERTEX
-[2012-10-12 08:06:29,621]P(C):INFO: C marked as OUT
-[2012-10-12 08:06:29,621]P(A):INFO: A marked as OUT
-[2012-10-12 08:06:29,621]P(D):INFO: D marked as OUT
-[2012-10-12 08:06:29,634]P(I):INFO: I marked as VERTEX
-[2012-10-12 08:06:29,637]P(J):INFO: J marked as OUT
-[2012-10-12 08:06:29,671]P(0):INFO: Vertices in the MIS are: I, B, G
-[2012-10-12 08:06:29,674]runtime:INFO: ***** Statistics *****
-* Total procs: 11
-
-[2012-10-12 08:06:29,674]runtime:INFO: Terminating...
+    [2012-10-12 08:06:29,570]runtime:INFO: Creating instances of P..
+    [2012-10-12 08:06:29,585]runtime:INFO: 11 instances of P created.
+    [2012-10-12 08:06:29,596]runtime:INFO: Starting procs...
+    [2012-10-12 08:06:29,597]P(G):INFO: G marked as VERTEX
+    [2012-10-12 08:06:29,600]P(H):INFO: H marked as OUT
+    [2012-10-12 08:06:29,600]P(E):INFO: E marked as OUT
+    [2012-10-12 08:06:29,601]P(F):INFO: F marked as OUT
+    [2012-10-12 08:06:29,619]P(B):INFO: B marked as VERTEX
+    [2012-10-12 08:06:29,621]P(C):INFO: C marked as OUT
+    [2012-10-12 08:06:29,621]P(A):INFO: A marked as OUT
+    [2012-10-12 08:06:29,621]P(D):INFO: D marked as OUT
+    [2012-10-12 08:06:29,634]P(I):INFO: I marked as VERTEX
+    [2012-10-12 08:06:29,637]P(J):INFO: J marked as OUT
+    [2012-10-12 08:06:29,671]P(0):INFO: Vertices in the MIS are: I, B, G
+    [2012-10-12 08:06:29,674]runtime:INFO: ***** Statistics *****
+    * Total procs: 11
 
 #### Run 4 (Solution: H, B, F)
 
-[2012-10-12 08:06:41,018]runtime:INFO: Creating instances of P..
-[2012-10-12 08:06:41,034]runtime:INFO: 11 instances of P created.
-[2012-10-12 08:06:41,042]runtime:INFO: Starting procs...
-[2012-10-12 08:06:41,044]P(H):INFO: H marked as VERTEX
-[2012-10-12 08:06:41,046]P(E):INFO: E marked as OUT
-[2012-10-12 08:06:41,047]P(J):INFO: J marked as OUT
-[2012-10-12 08:06:41,047]P(I):INFO: I marked as OUT
-[2012-10-12 08:06:41,049]P(G):INFO: G marked as OUT
-[2012-10-12 08:06:41,066]P(B):INFO: B marked as VERTEX
-[2012-10-12 08:06:41,068]P(A):INFO: A marked as OUT
-[2012-10-12 08:06:41,068]P(C):INFO: C marked as OUT
-[2012-10-12 08:06:41,068]P(D):INFO: D marked as OUT
-[2012-10-12 08:06:41,083]P(F):INFO: F marked as VERTEX
-[2012-10-12 08:06:41,118]P(0):INFO: Vertices in the MIS are: H, B, F
-[2012-10-12 08:06:41,125]runtime:INFO: ***** Statistics *****
-* Total procs: 11
+    [2012-10-12 08:06:41,018]runtime:INFO: Creating instances of P..
+    [2012-10-12 08:06:41,034]runtime:INFO: 11 instances of P created.
+    [2012-10-12 08:06:41,042]runtime:INFO: Starting procs...
+    [2012-10-12 08:06:41,044]P(H):INFO: H marked as VERTEX
+    [2012-10-12 08:06:41,046]P(E):INFO: E marked as OUT
+    [2012-10-12 08:06:41,047]P(J):INFO: J marked as OUT
+    [2012-10-12 08:06:41,047]P(I):INFO: I marked as OUT
+    [2012-10-12 08:06:41,049]P(G):INFO: G marked as OUT
+    [2012-10-12 08:06:41,066]P(B):INFO: B marked as VERTEX
+    [2012-10-12 08:06:41,068]P(A):INFO: A marked as OUT
+    [2012-10-12 08:06:41,068]P(C):INFO: C marked as OUT
+    [2012-10-12 08:06:41,068]P(D):INFO: D marked as OUT
+    [2012-10-12 08:06:41,083]P(F):INFO: F marked as VERTEX
+    [2012-10-12 08:06:41,118]P(0):INFO: Vertices in the MIS are: H, B, F
+    [2012-10-12 08:06:41,125]runtime:INFO: ***** Statistics *****
+    * Total procs: 11
 
 #### Run 5 (Solution: J, B, F)
 
-[2012-10-12 08:06:52,984]runtime:INFO: Creating instances of P..
-[2012-10-12 08:06:53,009]runtime:INFO: 11 instances of P created.
-[2012-10-12 08:06:53,016]runtime:INFO: Starting procs...
-[2012-10-12 08:06:53,018]P(B):INFO: B marked as VERTEX
-[2012-10-12 08:06:53,020]P(D):INFO: D marked as OUT
-[2012-10-12 08:06:53,020]P(C):INFO: C marked as OUT
-[2012-10-12 08:06:53,021]P(A):INFO: A marked as OUT
-[2012-10-12 08:06:53,042]P(J):INFO: J marked as VERTEX
-[2012-10-12 08:06:53,044]P(I):INFO: I marked as OUT
-[2012-10-12 08:06:53,044]P(H):INFO: H marked as OUT
-[2012-10-12 08:06:53,057]P(F):INFO: F marked as VERTEX
-[2012-10-12 08:06:53,059]P(G):INFO: G marked as OUT
-[2012-10-12 08:06:53,059]P(E):INFO: E marked as OUT
-[2012-10-12 08:06:53,086]P(0):INFO: Vertices in the MIS are: J, B, F
-[2012-10-12 08:06:53,090]runtime:INFO: ***** Statistics *****
-* Total procs: 11
+    [2012-10-12 08:06:52,984]runtime:INFO: Creating instances of P..
+    [2012-10-12 08:06:53,009]runtime:INFO: 11 instances of P created.
+    [2012-10-12 08:06:53,016]runtime:INFO: Starting procs...
+    [2012-10-12 08:06:53,018]P(B):INFO: B marked as VERTEX
+    [2012-10-12 08:06:53,020]P(D):INFO: D marked as OUT
+    [2012-10-12 08:06:53,020]P(C):INFO: C marked as OUT
+    [2012-10-12 08:06:53,021]P(A):INFO: A marked as OUT
+    [2012-10-12 08:06:53,042]P(J):INFO: J marked as VERTEX
+    [2012-10-12 08:06:53,044]P(I):INFO: I marked as OUT
+    [2012-10-12 08:06:53,044]P(H):INFO: H marked as OUT
+    [2012-10-12 08:06:53,057]P(F):INFO: F marked as VERTEX
+    [2012-10-12 08:06:53,059]P(G):INFO: G marked as OUT
+    [2012-10-12 08:06:53,059]P(E):INFO: E marked as OUT
+    [2012-10-12 08:06:53,086]P(0):INFO: Vertices in the MIS are: J, B, F
+    [2012-10-12 08:06:53,090]runtime:INFO: ***** Statistics *****
+    * Total procs: 11
 
 #### Run 6 (Solution: A, H, C)
 
-[2012-10-12 08:10:02,800]runtime:INFO: Creating instances of P..
-[2012-10-12 08:10:02,816]runtime:INFO: 11 instances of P created.
-[2012-10-12 08:10:02,820]runtime:INFO: Starting procs...
-[2012-10-12 08:10:02,822]P(H):INFO: H marked as VERTEX
-[2012-10-12 08:10:02,823]P(E):INFO: E marked as OUT
-[2012-10-12 08:10:02,823]P(I):INFO: I marked as OUT
-[2012-10-12 08:10:02,823]P(G):INFO: G marked as OUT
-[2012-10-12 08:10:02,823]P(J):INFO: J marked as OUT
-[2012-10-12 08:10:02,832]P(C):INFO: C marked as VERTEX
-[2012-10-12 08:10:02,833]P(B):INFO: B marked as OUT
-[2012-10-12 08:10:02,833]P(D):INFO: D marked as OUT
-[2012-10-12 08:10:02,840]P(A):INFO: A marked as VERTEX
-[2012-10-12 08:10:02,840]P(F):INFO: F marked as OUT
-[2012-10-12 08:10:02,875]P(0):INFO: Vertices in the MIS are: A, H, C
-[2012-10-12 08:10:02,879]runtime:INFO: ***** Statistics *****
+    [2012-10-12 08:10:02,800]runtime:INFO: Creating instances of P..
+    [2012-10-12 08:10:02,816]runtime:INFO: 11 instances of P created.
+    [2012-10-12 08:10:02,820]runtime:INFO: Starting procs...
+    [2012-10-12 08:10:02,822]P(H):INFO: H marked as VERTEX
+    [2012-10-12 08:10:02,823]P(E):INFO: E marked as OUT
+    [2012-10-12 08:10:02,823]P(I):INFO: I marked as OUT
+    [2012-10-12 08:10:02,823]P(G):INFO: G marked as OUT
+    [2012-10-12 08:10:02,823]P(J):INFO: J marked as OUT
+    [2012-10-12 08:10:02,832]P(C):INFO: C marked as VERTEX
+    [2012-10-12 08:10:02,833]P(B):INFO: B marked as OUT
+    [2012-10-12 08:10:02,833]P(D):INFO: D marked as OUT
+    [2012-10-12 08:10:02,840]P(A):INFO: A marked as VERTEX
+    [2012-10-12 08:10:02,840]P(F):INFO: F marked as OUT
+    [2012-10-12 08:10:02,875]P(0):INFO: Vertices in the MIS are: A, H, C
+    [2012-10-12 08:10:02,879]runtime:INFO: ***** Statistics *****
+    * Total procs: 11
 
+#### Run 7 (Solution: )
