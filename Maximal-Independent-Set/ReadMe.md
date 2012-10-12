@@ -73,13 +73,7 @@ Some of the conditions and constraints placed placed on the algorithm and in the
 Implementation
 --------------
 
-### Usage
-
-
-
-### Running
-
-
+### Usage/Running
 
 ### Details
 
@@ -104,7 +98,7 @@ Once crucial aspect is the search for the next NORMAL node. The random factor is
 
 This is an overview of some of the _key_ functions in the implementation.
 
-Overview of mark():
+Overview of **mark**():
 * Marks a node as VERTEX,
 * Sends messages to neighboring nodes telling them to mark themselves as OUT.
 * Initiates a search for the next NORMAL node in the graph.
