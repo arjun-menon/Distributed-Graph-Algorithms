@@ -98,6 +98,8 @@ does the following:
 5. The base case, is when in step c, no NORMAL node could be found. When this happens, 
     the algorithm terminates.
 
+Once crucial aspect is the search for the next NORMAL node. The random factor is present in this search too. The VERTEX initiating a search _randomly_ picks a neighboring node and asks it to search, and the process repeats recursively (with there being random selections at each repitition.) This (essential) random character helps us obtain **different** results for the program each time it is run.
+
 #### Properties of the functions mark(), OnSearch, search, OnSearchReply and the Control Process
 
 This is an overview of some of the _key_ functions in the implementation.
@@ -108,7 +110,7 @@ Overview of mark():
 * Initiates a search for the next NORMAL node in the graph.
 * If none could be found, informs the Control Process that the algorithm is finished.
 
-OnSearch(path), search(path, source), OnSearchReply(path):
+Functions **OnSearch**(path), **search**(path, source), **OnSearchReply**(path):
 
  -  These functions together sweep through the graph in search for a NORMAL node.
 
@@ -151,7 +153,7 @@ OnSearch(path), search(path, source), OnSearchReply(path):
     its own path in case it is a NORMAL node. This reverse cascade will continue until the 
     replies all merge into one, and is handed back to the original marked node.
 
-More on mark() and the Control Process:
+More on **mark**() and the Control Process:
 
  -  The marked node, upon receiving the reply, picks a random path out of the path list, and 
     send it a message `Mark` with the `path` as parameter. This message (handled by `OnMark`) 
@@ -177,7 +179,7 @@ Testing
 
 ### Graph 1
 
-These were outputs produced during some trial runs of the algorithm:
+These were some of the outputs produced during some trial runs of the algorithm:
 
 #### Run 1 (Solution: A, C, J, E)
 
@@ -293,4 +295,23 @@ These were outputs produced during some trial runs of the algorithm:
     [2012-10-12 08:10:02,879]runtime:INFO: ***** Statistics *****
     * Total procs: 11
 
-#### Run 7 (Solution: )
+#### Run 7 (Solution: A, C, J, G)
+
+    [2012-10-12 08:22:27,814]runtime:INFO: Creating instances of P..
+    [2012-10-12 08:22:27,837]runtime:INFO: 11 instances of P created.
+    [2012-10-12 08:22:27,846]runtime:INFO: Starting procs...
+    [2012-10-12 08:22:27,847]P(C):INFO: C marked as VERTEX
+    [2012-10-12 08:22:27,848]P(B):INFO: B marked as OUT
+    [2012-10-12 08:22:27,848]P(D):INFO: D marked as OUT
+    [2012-10-12 08:22:27,849]P(I):INFO: I marked as OUT
+    [2012-10-12 08:22:27,859]P(A):INFO: A marked as VERTEX
+    [2012-10-12 08:22:27,860]P(F):INFO: F marked as OUT
+    [2012-10-12 08:22:27,870]P(J):INFO: J marked as VERTEX
+    [2012-10-12 08:22:27,871]P(H):INFO: H marked as OUT
+    [2012-10-12 08:22:27,878]P(G):INFO: G marked as VERTEX
+    [2012-10-12 08:22:27,879]P(E):INFO: E marked as OUT
+    [2012-10-12 08:22:27,892]P(0):INFO: Vertices in the MIS are: A, C, J, G
+    [2012-10-12 08:22:27,897]runtime:INFO: ***** Statistics *****
+    * Total procs: 11
+
+I performed more runs and got additional solutions `I, B, F` and `J, B, G`.
