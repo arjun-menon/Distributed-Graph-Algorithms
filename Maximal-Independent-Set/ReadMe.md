@@ -1,24 +1,50 @@
 Distributed Maximal Independent Set
 ===================================
 
-Problem Description
--------------------
-This algorithms solves the [Maximal independent set](https://en.wikipedia.org/wiki/Maximal_independent_set "Wikipedia") 
-problem in a distributed system where the nodes are represented by processes and edges between the 
-nodes in the graph represent a valid communication link between these processes. The maximal independent set problem is described in detail in its [Wikipedia article](https://en.wikipedia.org/wiki/Maximal_independent_set "Wikipedia").
+Overview
+--------
+
+### Problem Description
+
+This algorithms solves the [Maximal independent set](https://en.wikipedia.org/wiki/Maximal_independent_set "Wikipedia") problem in a distributed system where the nodes are represented by processes and edges between the nodes in the graph represent a valid communication link between these processes. The maximal independent set problem is described in detail in its [Wikipedia article](https://en.wikipedia.org/wiki/Maximal_independent_set). One of its many applications is [graph coloring](https://en.wikipedia.org/wiki/Graph_coloring).
+
+#### Multiple Maximal Independent Sets for the same graph
+
+For one graph, there can be more than one, and often several maximal independent sets. Most algorithms that solve for maximal independent set *involve some* ***random*** *factor*, so we can expect different solutions to the MIS problem in different runs of the algorithm.
+
+The following diagram from Wikipedia for the graph of a cube shows the 6 different possible MISs for it:
+
+![MISs for Cube](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Cube-maximal-independence.svg/500px-Cube-maximal-independence.svg.png)
+
+#### Related NP-complete problems
+
+There is another problem -- one that tries to find enumerate _all possible MISs_ for a given graph. This problem is much more harder to solve, and is known to be NP-complete. Another similar sounding but different problem is _Maxim***um*** independent set_ which tries to find the largest MIS possible. It does so by using the NP-complete MIS enumeration/listing algorithm, then picking the largest MIS it returns. Obviously it is NP-complete too. Here I solve for the _Maxim***al*** independent set_ problem.
+
+### Best Algorithms
+
+A quick [Google search](https://www.google.com/search?q=parallel+maximal+independent+set) for "distributed maximal independent set" reveals a few algorithms for solving for Maximal Independent Set. The top among these is [A Log-Star Distributed Maximal Independent Set Algorithm](http://disco.ethz.ch/publications/podc08SW.pdf) by Johannes Schneider, Roger Wattenhofer. Another major one that comes up when searching for "parallel maximal independent srt" instead is Luby's algorithm ([the original paper](http://www.dcg.ethz.ch/alumni/pascal/refs/mis_1986_luby.pdf) and [lecture notes on it](http://www.cc.gatech.edu/~vigoda/RandAlgs/MIS.pdf)).
+
+However after looking at these algorithms for a while, I decided to instead design my own solution to the distributed Maximal Independent Set problem. Luby's algorithm for instance, seemed a little more complicated than necessary to me. The complication was probably an optimization for performance. It involves (based on my understanding) picking a random set of vertices, breaking "ties" in the set -- i.e. vertices that formed edges in the random set, and doing something else and repeating the process. In addition the lecture notes and paper of Luby's algorith, weren't very clear on how interprocess communication was to be modeled. It was pretty clear to me however, what the straightforward parallelization (distirbution) of MIS would like, so I decided to design an algorithm of my own.
 
 Description of the Algorithm
 ----------------------------
-
 ### Design
 
-The design of the algorithm largely follows the fundamental idea underpinning the 
-sequential algorithm. The sequential algorithm for finding MST is shown below:
+The design of my algorithm largely follows the fundamental idea underpinning the sequential algorithm.
+
+The sequential algorithm (taken from the [Luby's algorithm lecture notes](http://www.cc.gatech.edu/~vigoda/RandAlgs/MIS.pdf)) for finding MST is shown below:
 
 ![MIS Sequential](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Maximal-Independent-Set/MIS-sequential.png)
 
+The core steps in my algorithm are as follows:
+
+* Initally all nodes are in a "normal" state. My algorithm, like Luby's involves a random factor. Initially, it picks a random node and marks it as a `VERTEX` of the MST.
+* Next, this (randomly-picked) vertex marks _all its neighbors as_ `OUT`. This means they're not vertices.
+* The randomly-picked vertex then performs a search for node in the graph, that is _neither a VERTEX nor OUT_ and when it finds, it marks that node as the next `VERTEX` and repeats the search-and-mark process again.
+* It repeats this process until is able to find no more NORMAL nodes. At this point it knows the algorithm has ended, and it terminates the program.
 
 ### Conditions and Constraints
+Some of the conditions and constraints placed placed on the algorithm and in the implementatin are:
 
  -  Each node in the graph is represented by a process.
 
@@ -46,8 +72,20 @@ sequential algorithm. The sequential algorithm for finding MST is shown below:
     elegant fashion. The control process is overall just a niceity that simplifies 
     and renders more elegant this particular implementation.
 
+Implementation
+--------------
 
-### High-Level Overview
+### Usage
+
+
+
+### Running
+
+
+
+### Details
+
+#### High-Level Overview
 
 Each node/process can have one of 3 states: NORMAL, VERTEX, OUT.
 Initally each node is NORMAL.
@@ -62,19 +100,8 @@ does the following:
 5. The base case, is when in step c, no NORMAL node could be found. When this happens, 
     the algorithm terminates.
 
-Implementation
---------------
+#### Properties of the functions mark(), OnSearch, search, OnSearchReply and the Control Process
 
-### Usage
-
-
-
-### Running
-
-
-
-Specific Details
-----------------
 This is an overview of some of the _key_ functions in the implementation.
 
 Overview of mark():
@@ -146,4 +173,130 @@ More on mark() and the Control Process:
     accomplished by means of a `Marked` message sent by each process/node 
     when it gets marked as VERTEX or OUT. This feature accomplishes 
     purpose (2) of the control process: output collection.
+
+Testing
+-------
+
+### Graph 1
+
+These were outputs produced during some trial runs of the algorithm:
+
+#### Run 1 (Solution: A, C, J, E)
+
+[2012-10-12 08:04:37,337]runtime:INFO: Creating instances of P..
+[2012-10-12 08:04:37,359]runtime:INFO: 11 instances of P created.
+[2012-10-12 08:04:37,367]runtime:INFO: Starting procs...
+[2012-10-12 08:04:37,369]P(A):INFO: A marked as VERTEX
+[2012-10-12 08:04:37,371]P(B):INFO: B marked as OUT
+[2012-10-12 08:04:37,372]P(F):INFO: F marked as OUT
+[2012-10-12 08:04:37,392]P(E):INFO: E marked as VERTEX
+[2012-10-12 08:04:37,393]P(I):INFO: I marked as OUT
+[2012-10-12 08:04:37,394]P(H):INFO: H marked as OUT
+[2012-10-12 08:04:37,394]P(G):INFO: G marked as OUT
+[2012-10-12 08:04:37,394]P(D):INFO: D marked as OUT
+[2012-10-12 08:04:37,406]P(C):INFO: C marked as VERTEX
+[2012-10-12 08:04:37,420]P(J):INFO: J marked as VERTEX
+[2012-10-12 08:04:37,455]P(0):INFO: Vertices in the MIS are: A, C, J, E
+[2012-10-12 08:04:37,458]runtime:INFO: ***** Statistics *****
+* Total procs: 11
+
+[2012-10-12 08:04:37,459]runtime:INFO: Terminating...
+
+#### Run 2 (Solution: C, J, F)
+
+[2012-10-12 08:06:04,921]runtime:INFO: Creating instances of P..
+[2012-10-12 08:06:04,948]runtime:INFO: 11 instances of P created.
+[2012-10-12 08:06:04,957]runtime:INFO: Starting procs...
+[2012-10-12 08:06:04,960]P(C):INFO: C marked as VERTEX
+[2012-10-12 08:06:04,962]P(D):INFO: D marked as OUT
+[2012-10-12 08:06:04,962]P(B):INFO: B marked as OUT
+[2012-10-12 08:06:04,962]P(I):INFO: I marked as OUT
+[2012-10-12 08:06:04,977]P(J):INFO: J marked as VERTEX
+[2012-10-12 08:06:04,978]P(H):INFO: H marked as OUT
+[2012-10-12 08:06:04,988]P(F):INFO: F marked as VERTEX
+[2012-10-12 08:06:04,989]P(E):INFO: E marked as OUT
+[2012-10-12 08:06:04,989]P(A):INFO: A marked as OUT
+[2012-10-12 08:06:04,989]P(G):INFO: G marked as OUT
+[2012-10-12 08:06:05,003]P(0):INFO: Vertices in the MIS are: C, J, F
+[2012-10-12 08:06:05,021]runtime:INFO: ***** Statistics *****
+* Total procs: 11
+
+[2012-10-12 08:06:05,022]runtime:INFO: Terminating...
+
+#### Run 3 (Solution: I, B, G)
+
+[2012-10-12 08:06:29,570]runtime:INFO: Creating instances of P..
+[2012-10-12 08:06:29,585]runtime:INFO: 11 instances of P created.
+[2012-10-12 08:06:29,596]runtime:INFO: Starting procs...
+[2012-10-12 08:06:29,597]P(G):INFO: G marked as VERTEX
+[2012-10-12 08:06:29,600]P(H):INFO: H marked as OUT
+[2012-10-12 08:06:29,600]P(E):INFO: E marked as OUT
+[2012-10-12 08:06:29,601]P(F):INFO: F marked as OUT
+[2012-10-12 08:06:29,619]P(B):INFO: B marked as VERTEX
+[2012-10-12 08:06:29,621]P(C):INFO: C marked as OUT
+[2012-10-12 08:06:29,621]P(A):INFO: A marked as OUT
+[2012-10-12 08:06:29,621]P(D):INFO: D marked as OUT
+[2012-10-12 08:06:29,634]P(I):INFO: I marked as VERTEX
+[2012-10-12 08:06:29,637]P(J):INFO: J marked as OUT
+[2012-10-12 08:06:29,671]P(0):INFO: Vertices in the MIS are: I, B, G
+[2012-10-12 08:06:29,674]runtime:INFO: ***** Statistics *****
+* Total procs: 11
+
+[2012-10-12 08:06:29,674]runtime:INFO: Terminating...
+
+#### Run 4 (Solution: H, B, F)
+
+[2012-10-12 08:06:41,018]runtime:INFO: Creating instances of P..
+[2012-10-12 08:06:41,034]runtime:INFO: 11 instances of P created.
+[2012-10-12 08:06:41,042]runtime:INFO: Starting procs...
+[2012-10-12 08:06:41,044]P(H):INFO: H marked as VERTEX
+[2012-10-12 08:06:41,046]P(E):INFO: E marked as OUT
+[2012-10-12 08:06:41,047]P(J):INFO: J marked as OUT
+[2012-10-12 08:06:41,047]P(I):INFO: I marked as OUT
+[2012-10-12 08:06:41,049]P(G):INFO: G marked as OUT
+[2012-10-12 08:06:41,066]P(B):INFO: B marked as VERTEX
+[2012-10-12 08:06:41,068]P(A):INFO: A marked as OUT
+[2012-10-12 08:06:41,068]P(C):INFO: C marked as OUT
+[2012-10-12 08:06:41,068]P(D):INFO: D marked as OUT
+[2012-10-12 08:06:41,083]P(F):INFO: F marked as VERTEX
+[2012-10-12 08:06:41,118]P(0):INFO: Vertices in the MIS are: H, B, F
+[2012-10-12 08:06:41,125]runtime:INFO: ***** Statistics *****
+* Total procs: 11
+
+#### Run 5 (Solution: J, B, F)
+
+[2012-10-12 08:06:52,984]runtime:INFO: Creating instances of P..
+[2012-10-12 08:06:53,009]runtime:INFO: 11 instances of P created.
+[2012-10-12 08:06:53,016]runtime:INFO: Starting procs...
+[2012-10-12 08:06:53,018]P(B):INFO: B marked as VERTEX
+[2012-10-12 08:06:53,020]P(D):INFO: D marked as OUT
+[2012-10-12 08:06:53,020]P(C):INFO: C marked as OUT
+[2012-10-12 08:06:53,021]P(A):INFO: A marked as OUT
+[2012-10-12 08:06:53,042]P(J):INFO: J marked as VERTEX
+[2012-10-12 08:06:53,044]P(I):INFO: I marked as OUT
+[2012-10-12 08:06:53,044]P(H):INFO: H marked as OUT
+[2012-10-12 08:06:53,057]P(F):INFO: F marked as VERTEX
+[2012-10-12 08:06:53,059]P(G):INFO: G marked as OUT
+[2012-10-12 08:06:53,059]P(E):INFO: E marked as OUT
+[2012-10-12 08:06:53,086]P(0):INFO: Vertices in the MIS are: J, B, F
+[2012-10-12 08:06:53,090]runtime:INFO: ***** Statistics *****
+* Total procs: 11
+
+#### Run 6 (Solution: A, H, C)
+
+[2012-10-12 08:10:02,800]runtime:INFO: Creating instances of P..
+[2012-10-12 08:10:02,816]runtime:INFO: 11 instances of P created.
+[2012-10-12 08:10:02,820]runtime:INFO: Starting procs...
+[2012-10-12 08:10:02,822]P(H):INFO: H marked as VERTEX
+[2012-10-12 08:10:02,823]P(E):INFO: E marked as OUT
+[2012-10-12 08:10:02,823]P(I):INFO: I marked as OUT
+[2012-10-12 08:10:02,823]P(G):INFO: G marked as OUT
+[2012-10-12 08:10:02,823]P(J):INFO: J marked as OUT
+[2012-10-12 08:10:02,832]P(C):INFO: C marked as VERTEX
+[2012-10-12 08:10:02,833]P(B):INFO: B marked as OUT
+[2012-10-12 08:10:02,833]P(D):INFO: D marked as OUT
+[2012-10-12 08:10:02,840]P(A):INFO: A marked as VERTEX
+[2012-10-12 08:10:02,840]P(F):INFO: F marked as OUT
+[2012-10-12 08:10:02,875]P(0):INFO: Vertices in the MIS are: A, H, C
+[2012-10-12 08:10:02,879]runtime:INFO: ***** Statistics *****
 
