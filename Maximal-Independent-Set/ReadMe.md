@@ -70,31 +70,26 @@ Some of the conditions and constraints placed placed on the algorithm and in the
     elegant fashion. The control process is overall just a niceity that simplifies 
     and renders more elegant this particular implementation.
 
-Implementation
---------------
+Implementation Details
+----------------------
 
-### Usage/Running
-
-### Details
-
-#### High-Level Overview
+### High-Level Overview
 
 Each node/process can have one of 3 states: NORMAL, VERTEX, OUT.
 Initally each node is NORMAL.
 
-The algorithm follows the idea behind the sequential algorithm, and 
-does the following:
+The algorithm follows the idea behind the sequential algorithm, and does the following:
 
-1. Picks a random node in the graph.
-2. Marks that node as a VERTEX, and the its neighbors as OUT.
-3. Looks for another node in the graph that is NORMAL (ie. not a VERTEX and not OUT)
-4. It repeats from step a, except instead of a random node, it's the node from step c.
-5. The base case, is when in step c, no NORMAL node could be found. When this happens, 
+ 1. Picks a random node in the graph.
+ 2. Marks that node as a VERTEX, and the its neighbors as OUT.
+ 3. Looks for another node in the graph that is NORMAL (ie. not a VERTEX and not OUT)
+ 4. It repeats from step a, except instead of a random node, it's the node from step c.
+ 5. The base case, is when in step c, no NORMAL node could be found. When this happens, 
     the algorithm terminates.
 
 Once crucial aspect is the search for the next NORMAL node. The random factor is present in this search too. The VERTEX initiating a search _randomly_ picks a neighboring node and asks it to search, and the process repeats recursively (with there being random selections at each repitition.) This (essential) random character helps us obtain **different** results for the program each time it is run.
 
-#### Properties of the functions mark(), OnSearch, search, OnSearchReply and the Control Process
+### Properties of the functions mark(), OnSearch, search, OnSearchReply and the Control Process
 
 This is an overview of some of the _key_ functions in the implementation.
 
@@ -168,8 +163,9 @@ More on **mark**() and the Control Process:
     when it gets marked as VERTEX or OUT. This feature accomplishes 
     purpose (2) of the control process: output collection.
 
-Testing
--------
+Running & Testing
+-----------------
+The algorithm can be run by typing `python3 -m distalgo.runtime MIS.dis` or `run.py` on a *nix console. The former relies on DistAlgo being installed as a library.
 
 ### Graph 1
 
