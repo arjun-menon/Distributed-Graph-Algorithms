@@ -1,4 +1,16 @@
 
+'''
+Distributed Maximal Independent Set (MST) Solver in DistAlgo.
+'''
+
+# Note:
+# This program cannot be run directly using Python.
+# You can use the `run.py` file instead to run this program.
+# Alternatively you can use the symlink pointing to this file, 
+# with the extension `.dis` and run it directly with DistAlgo.
+# The .py extnesion was appended to activate Python syntax
+# highlighting in various editors, GitHub, etc.
+
 import random
 from InputGraph import *
 
