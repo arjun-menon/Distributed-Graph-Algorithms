@@ -7,7 +7,7 @@ The [shortest path problem](https://en.wikipedia.org/wiki/Shortest_path_problem)
 
 ### Algorithm
 
-As the problem was rather simple, so I opted to design my own algorithm for it.
+The problem was pretty straighforward and simple, so I didn't see a need to research it online. So I designed my own algorithm for it. The algorithm is described in the next section.
 
 #### Steps involved in the algorithm
 
