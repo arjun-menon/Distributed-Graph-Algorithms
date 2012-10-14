@@ -1,6 +1,6 @@
-"""
+'''
 Straightforward distributed shortest path finder based on Dijkstra's sequential algorithm
-"""
+'''
 
 from InputGraph import graph_source_target
 
