@@ -399,7 +399,7 @@ Here I re-used `graph-2` from MST. This diagram depicts it (the blue edges can b
     [2012-10-14 05:40:43,753]runtime:INFO: ***** Statistics *****
     * Total procs: 14
 
-#### Run 4 (Solution: )
+#### Run 4 (Solution: C, J, L, F)
 
     [2012-10-14 05:41:55,466]runtime:INFO: Creating instances of P..
     [2012-10-14 05:41:55,487]runtime:INFO: 14 instances of P created.
@@ -421,7 +421,7 @@ Here I re-used `graph-2` from MST. This diagram depicts it (the blue edges can b
     [2012-10-14 05:41:55,584]runtime:INFO: ***** Statistics *****
     * Total procs: 14
 
-#### Run 5 (Solution: )
+#### Run 5 (Solution: M, J, B, E)
 
     [2012-10-14 05:42:42,365]runtime:INFO: Creating instances of P..
     [2012-10-14 05:42:42,386]runtime:INFO: 14 instances of P created.
