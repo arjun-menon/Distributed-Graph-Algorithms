@@ -5,6 +5,6 @@ sys.path.append("..") # if DistAlgo is not installed, use the one in parent dire
 
 from distalgo.runtime import *
 
-sys.argv = [sys.argv[0], "BFS.dis"]
+sys.argv = [sys.argv[0], "BFS.dis"] + sys.argv[1:]
 
 libmain()

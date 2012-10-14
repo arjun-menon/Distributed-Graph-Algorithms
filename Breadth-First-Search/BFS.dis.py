@@ -109,25 +109,25 @@ class P(DistProcess):
 
 def main():
     global tree, element_to_search_for
-    
-    # configuration: number of processes
-    global nprocs
-    if len(sys.argv) > 1:
-        nprocs = int(sys.argv[1])
-    
-    # configuration: element_to_search_for    
-    if len(sys.argv) > 2:
-        element_to_search_for = int(sys.argv[2])
-    
-    # configuration: tree
-    if len(sys.argv) > 4:
-        r, d = int(sys.argv[3]), int(sys.argv[4])
-        print("Replacing default (r=4,depth=4) tree with new tree of (r = %d, depth = %d)..." % (r, d))
-        tree = nx.balanced_tree(r, d)
-    
+
+    import argparse
+    parser = argparse.ArgumentParser(description='Perform breadth-first search in paralell using several workers.')
+    parser.add_argument('-w', '--workers', nargs=1, type=int, default=[4], help='Number of workrrs. [Default 4]')
+    parser.add_argument('-e', '--element', nargs=1, type=int, default=[300], help='The element to search for. [Default 300]')
+    parser.add_argument('-r', '--rfactor', nargs=1, type=int, default=[4], help='r factor in the NetworkX generated perfectly balanced r-tree of height h. [Default 4]')
+    parser.add_argument('-x', '--xheight', nargs=1, type=int, default=[4], help='Height of the Network generated perfectly balanced r-tree of height h. [Default 4]')
+    args = parser.parse_args()
+
+    nprocs = args.workers[0]
+    element_to_search_for = args.element[0]
+    r = args.rfactor[0]
+    d = args.xheight[0]
+
+    tree = nx.balanced_tree(r, d)
     nx.freeze(tree)
-    print("Searching for the element %d using BFS in a tree containing %d nodes." % 
-        ( element_to_search_for, len(tree.nodes())) )
+
+    print("Using %d workers to search for the element %d using BFS in a r-%d height-%d tree containing %d nodes." % 
+        ( nprocs, element_to_search_for, r, d, len(tree.nodes())) )
     
     # create n process
     use_channel("tcp")
