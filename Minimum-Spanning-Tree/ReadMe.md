@@ -224,4 +224,10 @@ The solution to `graph-2` is depicted below:
 
 ![Test Case 2](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/test_case_2.png)
 
+### Graph 3
+
+This is a much more complex test case than the previous ones. I drew a sketch of it on paper:
+
+![Graph 3 Sketch](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/graph-3-sketch.png)
+
 ---
