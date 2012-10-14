@@ -171,7 +171,7 @@ These were some of the outputs produced during some trial runs of the algorithm 
 
 ### Graph 1
 
-This is the same `graph-1` that was used for testing MST. The following diagram depicts it (red edges can be ignored):
+I re-used `graph-1` that I used for testing MST here. The following diagram depicts it (the blue edges can be ignored):
 
 ![Test Case 1](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/test_case_1.png)
 
@@ -329,7 +329,7 @@ This is the same `graph-1` that was used for testing MST. The following diagram 
 
 ### Graph 2
 
-Here I re-used `graph-2` from MST. This diagram depicts it (the red edges can be ignored):
+Here I re-used `graph-2` from MST. This diagram depicts it (the blue edges can be ignored):
 
 ![Test Case 2](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/test_case_2.png)
 
