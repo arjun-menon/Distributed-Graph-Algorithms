@@ -89,7 +89,7 @@ In each run, differences can be seen in the "shortest" paths found priot to the 
 
 ### Graph 2
 
-Here multiple runs have been, some with different start and end nodes.
+Here multiple runs have been made, some with different start and end nodes than the default.
 
 #### Run 1 (G to C)
 
