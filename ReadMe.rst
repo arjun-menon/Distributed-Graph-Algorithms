@@ -1,7 +1,7 @@
 Distributed Graph Algorithms in DistAlgo
 ========================================
 
-This repository contains the implementations of a some *distributed* graph algorithms as well as two token-based mutex algorithms in *DistAlgo*. DistAlgo is a superset of Python that adds special constructs to Python for specifying distributed algorithms in a high-level and succint manner. DistAlgo programs get compiled to portable Python 3 code. DistAlgo was developed at the `Department of Computer Science <http://www.cs.sunysb.edu/>`_ in Stony Brook University. It is used in the instruction of some graduate courses such as `CSE 535 Asynchronous Systems <http://www.cs.stonybrook.edu/~liu/cse535/>`_ by `Annie Liu <http://www.cs.sunysb.edu/~liu/>`_ and `CSE 594 Distributed Systems <http://www.cs.sunysb.edu/~stoller/cse594/>`_ by `Scott Stoller <http://www.cs.sunysb.edu/~stoller/>`_.
+This repository contains the implementations of some *distributed* graph algorithms as well as two token-based mutex algorithms in *DistAlgo*. DistAlgo is a superset of Python that adds special constructs to Python for specifying distributed algorithms in a high-level and succint manner. DistAlgo programs get compiled to portable Python 3 code. DistAlgo was developed at the `Department of Computer Science <http://www.cs.sunysb.edu/>`_ in Stony Brook University. It is used in the instruction of some graduate courses such as `CSE 535 Asynchronous Systems <http://www.cs.stonybrook.edu/~liu/cse535/>`_ by `Annie Liu <http://www.cs.sunysb.edu/~liu/>`_ and `CSE 594 Distributed Systems <http://www.cs.sunysb.edu/~stoller/cse594/>`_ by `Scott Stoller <http://www.cs.sunysb.edu/~stoller/>`_.
 
 The Distributed Graph Algorithms
 --------------------------------

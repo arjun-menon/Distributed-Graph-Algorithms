@@ -211,7 +211,7 @@ Some of the key GHS events that occur while solving `graph-1` are:
 * `E` and `F` from a **Level-1** *fragment*.
 * `I` and `J` from a **Level-1** *fragment*.
 * Both *level-1 fragments* proceed to absorb every other node in the graph.
-* In the end, these 2 fragments merge at `I` and `E` forming a _new **Level-2** fragment_ with them as the core nodes.
+* In the end, these 2 fragments merge across `I` and `E` forming a _new **Level-2** fragment_ with `I` and `E` as the core nodes.
 
 ### Graph 2
 
