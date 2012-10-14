@@ -22,9 +22,11 @@ The problem was pretty straighforward and simple, so I didn't see a need to rese
 Testing
 -------
 
+In each run, differences can be seen in the "shortest" paths found priot to the actual and final shortest paths. This factor is random/non-deterministic.
+
 ### Graph 1
 
-In each run, differences can be seen in the "shortest" paths found priot to the actual and final shortest paths. This factor is random/non-deterministic. The following runs are all for the shortest path from `G` to `C`:
+ The following runs are all for the shortest path from `G` to `C`:
 
 #### Run 1 (G to C)
 
@@ -63,7 +65,7 @@ In each run, differences can be seen in the "shortest" paths found priot to the 
 
 ### Graph 2
 
-More runs for a slightly different.
+Here multiple runs have been, some with different start and end nodes.
 
 #### Run 1 (G to C)
 
@@ -99,3 +101,30 @@ More runs for a slightly different.
 	[2012-10-14 04:30:54,303]runtime:INFO: Received keyboard interrupt.
 	[2012-10-14 04:30:54,304]runtime:INFO: ***** Statistics *****
 	* Total procs: 13
+
+#### Run 4 (A to M)
+
+	[2012-10-14 05:10:16,912]runtime:INFO: Creating instances of P..
+	[2012-10-14 05:10:16,929]runtime:INFO: 13 instances of P created.
+	[2012-10-14 05:10:16,940]runtime:INFO: Starting procs...
+	[2012-10-14 05:10:16,954]P(M):INFO: New shortest path of weight 82: A -> F -> G -> H -> J -> K -> M
+	[2012-10-14 05:10:16,957]P(M):INFO: New shortest path of weight 66: A -> F -> E -> H -> J -> K -> M
+	[2012-10-14 05:10:17,833]runtime:INFO: Received keyboard interrupt.
+	[2012-10-14 05:10:17,834]runtime:INFO: ***** Statistics *****
+	* Total procs: 13
+
+#### Run 5 (A to M)
+
+	[2012-10-14 05:10:18,816]runtime:INFO: Creating instances of P..
+	[2012-10-14 05:10:18,833]runtime:INFO: 13 instances of P created.
+	[2012-10-14 05:10:18,842]runtime:INFO: Starting procs...
+	[2012-10-14 05:10:18,855]P(M):INFO: New shortest path of weight 92: A -> B -> C -> I -> J -> K -> M
+	[2012-10-14 05:10:18,858]P(M):INFO: New shortest path of weight 86: A -> B -> C -> D -> I -> J -> K -> M
+	[2012-10-14 05:10:18,860]P(M):INFO: New shortest path of weight 77: A -> B -> D -> I -> J -> K -> M
+	[2012-10-14 05:10:18,861]P(M):INFO: New shortest path of weight 72: A -> F -> E -> D -> I -> J -> K -> M
+	[2012-10-14 05:10:18,862]P(M):INFO: New shortest path of weight 67: A -> F -> E -> I -> J -> K -> M
+	[2012-10-14 05:10:18,863]P(M):INFO: New shortest path of weight 66: A -> F -> E -> H -> J -> K -> M
+	[2012-10-14 05:10:20,452]runtime:INFO: Received keyboard interrupt.
+	[2012-10-14 05:10:20,453]runtime:INFO: ***** Statistics *****
+	* Total procs: 13
+
