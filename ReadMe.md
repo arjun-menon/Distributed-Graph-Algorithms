@@ -1,12 +1,13 @@
 Distributed Graph Algorithms in DistAlgo
 ----------------------------------------
-This repository contains the implementations of a some _distributed_ graph algorithms as well as two token-based mutex algorithms in ***DistAlgo***. DistAlgo is a superset of Python that adds special constructs to Python for specifying distributed algorithms in a high-level and succint manner. The DistAlgo program files end with extension *.dis and get compiled to portable Python 3 programs. DistAlgo was developed at [Stony Brook University](http://www.cs.sunysb.edu/) by [Annie Liu](http://www.cs.sunysb.edu/~liu/) and her PhD students Bo Lin, Jon Brandvein, etc.
+This repository contains the implementations of a some _distributed_ graph algorithms as well as two token-based mutex algorithms in ***DistAlgo***. DistAlgo is a superset of Python that adds special constructs to Python for specifying distributed algorithms in a high-level and succint manner. DistAlgo programs get compiled to portable Python 3 code. DistAlgo was developed at Stony Brook University [Department of Computer Science](http://www.cs.sunysb.edu/). It is used in the instruction of some graduate courses at Stony Brook University such as [CSE 535 Asynchronous Systems](http://www.cs.stonybrook.edu/~liu/cse535/) by [Annie Liu](http://www.cs.sunysb.edu/~liu/) and [CSE 594 Distributed Systems](http://www.cs.sunysb.edu/~stoller/cse594/) by [Scott Stoller](http://www.cs.sunysb.edu/~stoller/).
 
-The distributed algorithms that have been implemented are:
-* [Minimum Spanning Tree](https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/Minimum-Spanning-Tree)
-* [Maximal Independent Set](https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/Maximal-Independent-Set)
-* [Breadth First Search](https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/Breadth-First-Search)
-* [Single-pair Shortest Path](https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/ShortestPath)
-* Ricart-Agrawala's and Suzuki-Kasami's token-based [distributed mutex algorithms](https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/DistributedMutex)
+#### Distributed Graph Algorithms
+The following distributed graph algorithms that have implemented using **DistAlgo-0.2**:
+1. [Minimum Spanning Tree](https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/Minimum-Spanning-Tree)
+2. [Maximal Independent Set](https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/Maximal-Independent-Set)
+3. [Breadth First Search](https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/Breadth-First-Search)
+4. [Shortest Path](https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/ShortestPath)
 
-Each link contains a relevant ***ReadMe*** file that describes the particular algorithm in detail with specific information about its implementation, limitations, etc.
+### Other
+[Ricart-Agrawala's and Suzuki-Kasami's token-based distributed mutex algorithms](https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/DistributedMutex) have also been been implemented in DistAlgo-0.2. In addition, [Lamport's fast mutual exclusion and bakery algorithms](https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/ConcurrentMutex) have been implemented using the built-in Python library `threading`.
