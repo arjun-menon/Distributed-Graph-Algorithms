@@ -443,7 +443,7 @@ Here I re-used `graph-2` from MST. This diagram depicts it (the blue edges can b
     [2012-10-14 05:42:42,489]runtime:INFO: ***** Statistics *****
     * Total procs: 14
 
-### Final Note
-
+### Note
 Many more solutions different from the ones listed above were found for each graph, but they've been omitted for brevity's sake.
+
 ---
