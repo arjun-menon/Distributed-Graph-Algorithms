@@ -304,4 +304,6 @@ These were some of the outputs produced during some trial runs of the algorithm:
     [2012-10-12 08:22:27,897]runtime:INFO: ***** Statistics *****
     * Total procs: 11
 
-I performed more runs and got additional solutions `I, B, F` and `J, B, G`.
+More runs yielded even more solutions like `I, B, F` and `J, B, G`. They've been omitted for brevity's sake.
+
+---
