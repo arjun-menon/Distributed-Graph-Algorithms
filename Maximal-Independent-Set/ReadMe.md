@@ -70,6 +70,26 @@ Some of the conditions and constraints placed placed on the algorithm and in the
     elegant fashion. The control process is overall just a niceity that simplifies 
     and renders more elegant this particular implementation.
 
+Usage
+-----
+The algorithm can be run by typing `python3 -m distalgo.runtime MIS.dis` or `run.py` at a POSIX terminal. The former relies on DistAlgo being installed as a library.
+
+The following help message is generated when the `-h` option is passed:
+
+    usage: MIS.dis [-h] [graph]
+
+    Finds the vertices of the Maximal Independent Set (MST) of a given graph.
+
+    positional arguments:
+      graph       File listing the edges of a graph line-by-line in the following
+                  style: "A B 2", where "A" and "B" are node names and "2" is the
+                  weight of the edge connecting them.
+
+    optional arguments:
+      -h, --help  show this help message and exit
+
+Thee only optarg is `graph` which is graph file formatted in the manner specified in the help message. By default, if none is specified, `graph-1` is used.
+
 Implementation Details
 ----------------------
 
@@ -165,7 +185,7 @@ More on **mark**() and the Control Process:
 
 Running & Testing
 -----------------
-The algorithm can be run by typing `python3 -m distalgo.runtime MIS.dis` or `run.py` on a *nix console. The former relies on DistAlgo being installed as a library.
+As stated previously, the algorithm can be run by typing `python3 -m distalgo.runtime MIS.dis` or `run.py` on a *nix console.
 
 These were some of the outputs produced during some trial runs of the algorithm using the graphs from MST:
 
