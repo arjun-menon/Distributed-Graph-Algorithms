@@ -18,11 +18,11 @@ As a side note, solving BFS using the processes-as-nodes model would be very tri
 
 I designed this algorithm myself. The algorithm uses a kind-of workload balancing technique; where first one process starts with "all" of the workload, and then n-1 processes ping this one process for work. It then distributes chunks of its work to each of these processes. (The _"chunk"_ of work here is a chunk of a tree -- or rather, a subtree.) Eventually some process finishes working on its chunk, asks for more work, gets it, and keeps on working. This continues until every process runs out of work and is unable to get any from the others. When this happens, the processes terminate. 
 
-One crucial **"feature"** of the system that this algorithm relies on is: _common shared memory._ Common shared memory is not something that is always available in a system. Even if and when it is available there are often serious constraints on how it can be used. Three common situations exist:
+One **crucial feature** that this algorithm relies on is: _common shared memory._ Common shared memory is not something that is always available in a system. Even if and when it is available there are often serious constraints on how it can be used. Three common situations exist:
 
-- On supercomputers, clusters and large-scale servers there is usually some “shared” memory -- generally in the form of a massive RAID array. However the latency to access this RAID system would make any algorithm that primarily hinges on a fast shared read-only memory inefficient and unusable. T
-- On systems like BOINC or Folding@Home, there is absolutely no easily-accessible shared memory. A workload is shipped to the user's computers, and until the user is done working on it; there is no more communication with the server (workload dispenser.)
-- Finally, we have a much more common system: modern multi-core computers. On multi-care, there ***is*** shared memory. It usually exists at multiple levels: Cache memory (L-2 cache and L-3 cache) -> Main memory (RAM) -> Secondary storage (SSD/HDD) -> Tertiary storage (tape backup, etc.) Tertiary is uncommon, but the others are all common.
+1. On supercomputers, clusters and large-scale servers there is usually some “shared” memory -- generally in the form of a massive RAID array. However the latency to access this RAID system would make any algorithm that primarily hinges on a fast shared read-only memory inefficient and unusable.
+2. On systems like BOINC or Folding@Home, there is absolutely no easily-accessible shared memory. A workload is shipped to the user's computers, and until the user is done working on it; there is no more communication with the server (workload dispenser.)
+3. Finally, we have a much more common system: modern multi-core computers. On multi-care, there ***is*** shared memory. It usually exists at multiple levels: Cache memory (L-2 cache and L-3 cache) -> Main memory (RAM) -> Secondary storage (SSD/HDD) -> Tertiary storage (tape backup, etc.) Tertiary is uncommon, but the others are all common.
 
 The processes-as-workers model _with shared memory_ works best in the last situation. Generaly on a multi-core computer, there is local storage *at each* core -- registers and L-1 cahce. Then, there's cache shared between the cores: L-2 and L-3. After that we have RAM, and so on.
 
@@ -215,12 +215,13 @@ In this run, the element `100` was found by process number `3`.
 	[2012-10-14 15:10:15,533]runtime:INFO: ***** Statistics *****
 	* Total procs: 4
 
-This test run, on the sam tree, but with a lookout for the element `300` resulted in no finds. Each process terminated itself after being work-starved.
+This test run is on an identical tree as the previous one, but instead looks out for the (non-existent) element `300`. As each process is work-starved it terminates itself. The result (shown above) means the node does not exist in the tree.
 
-There are many mroe test runs of this algorithm with varying tree sizes, number of processes search targets. These test cases can be found in the files named `BFS_test_run_*.txt` in this directory. _Note:_ the command-line arguments for those test runs differ from the current style, because I had not used `argparse` when I had first implemented it.
+### More Test Runs
+I have conducted more test runs of this algorithm with varying tree sizes, number of processes search targets. Due to the long size of the resulting output they have been stored in separate files. These test cases can be found in the files named `BFS_test_run_*.txt` in this directory. _Note:_ the command-line arguments for those test runs differ from the current style, because I had not used `argparse` when I first implemented the algorithm. However the defaults back then were the same as the ones now.
 
 ### Caveats
 
-Overall, with sane values for these variables; the BFS search works fine and does what it’s supposed to do. However I’ve occasionally  run into a hiccup or two, when handling large tree sizes. This is because currently DistAlgo has a limit on how large the size of a message send between processes can be. The way the algorithm works; in response to a work request, it sends along with a node a list of all nodes it has visited so far. Currently as the tree size grows larger; one can see dropped packets between nodes. Whereas an `r=4, height=4` tree has `341` nodes, an `r=4, height=5` tree has `1365` nodes -- the tree size grows exponentially as the `r` factor and `height` increases. With large tree sizes, more often than not, we see dropped packets. The algorithm was not designed to tolerate packet loss, so in such circumstances its behavior is undefined.
+Overall, with medium-sized trees (about a thousands nodes); this BFS algorithm works fine and does what it’s supposed to do. However when handling large tree sizes, it may or may not run into problems. This is because currently DistAlgo has a limit on how large the size of a message send between processes can be. The way the algorithm is implemented; in response to a work request, it sends a list of all nodes it has visited so far. The tree generated increases in size exponentially as `r` and `height` is increased. Whereas with `r=4, height=4`, the tree has `341` nodes; with `r=4` and `height=5` the tree has `1365` nodes. As such, as the tree size grows larger; one can see dropped packets between nodes randomly. The algorithm does not take packet loss into consideration, so when it occurs the behavior of the algorithm is undefined.
 
 ---
