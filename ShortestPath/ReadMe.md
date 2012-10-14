@@ -79,18 +79,10 @@ I used the `graph-1` from MST to test Shortest Path. This is a diagram of that g
 	[2012-10-14 03:42:22,244]runtime:INFO: ***** Statistics *****
 	* Total procs: 10
 
-### Graph 2
-
-Here I used `graph-2` which has also been used to test both MST and MIS. Here is a diagram of that graph, generated using _NetworkX_ and _matplotlib_:
-
-![Test Case 2](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Maximal-Independent-Set/graph-2b.png)
-
-Here multiple runs have been made with non-default different start and end nodes.
-
-#### Run 1 (G to C)
+#### Run 3 (G to C)
 
 	[2012-10-14 03:59:18,615]runtime:INFO: Creating instances of P..
-	[2012-10-14 03:59:18,632]runtime:INFO: 13 instances of P created.
+	[2012-10-14 03:59:18,632]runtime:INFO: 10 instances of P created.
 	[2012-10-14 03:59:18,640]runtime:INFO: Starting procs...
 	[2012-10-14 03:59:18,644]P(C):INFO: New shortest path of weight 45: G -> H -> I -> C
 	[2012-10-14 03:59:18,650]P(C):INFO: New shortest path of weight 34: G -> E -> I -> C
@@ -98,7 +90,15 @@ Here multiple runs have been made with non-default different start and end nodes
 	[2012-10-14 03:59:18,652]P(C):INFO: New shortest path of weight 25: G -> E -> D -> C
 	[2012-10-14 03:59:24,011]runtime:INFO: Received keyboard interrupt.
 	[2012-10-14 03:59:24,012]runtime:INFO: ***** Statistics *****
-	* Total procs: 13
+	* Total procs: 10
+
+### Graph 2
+
+Here I used `graph-2` which has also been used to test both MST and MIS. Here is a diagram of that graph, generated using _NetworkX_ and _matplotlib_:
+
+![Test Case 2](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Maximal-Independent-Set/graph-2b.png)
+
+Here multiple runs have been made with non-default different start and end nodes.
 
 #### Run 2 (G to C)
 
