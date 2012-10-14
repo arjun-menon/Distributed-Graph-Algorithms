@@ -331,7 +331,7 @@ I re-used `graph-1` that I used for testing MST here. The following diagram depi
 
 Here I re-used `graph-2` from MST. This diagram depicts it (the blue edges can be ignored):
 
-![Test Case 2](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Maximal-Independent-Set/graph-2.png)
+![Test Case 2](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Maximal-Independent-Set/graph-2c.png)
 
 #### Run 1 (Solution: A, J, L, G, D)
 
