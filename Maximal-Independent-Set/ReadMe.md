@@ -12,7 +12,7 @@ This algorithms solves the [Maximal independent set](https://en.wikipedia.org/wi
 
 For one graph, there can be more than one, and often several maximal independent sets. Most algorithms that solve for maximal independent set *involve some* ***random*** *factor*, so we can expect different solutions to the MIS problem in different runs of the algorithm.
 
-The following diagram from Wikipedia for the graph of a cube shows the 6 different possible MISs for it:
+The following diagram [from Wikipedia](http://en.wikipedia.org/w/index.php?title=File:Cube-maximal-independence.svg) for the graph of a cube shows the 6 different possible MISs for it:
 
 ![MISs for Cube](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Cube-maximal-independence.svg/500px-Cube-maximal-independence.svg.png)
 
