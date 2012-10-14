@@ -5,10 +5,10 @@ This repository contains the implementations of a some *distributed* graph algor
 ### The Distributed Graph Algorithms
 The following distributed graph algorithms that have implemented using **DistAlgo-0.2**:
 
-1. `Minimum Spanning Tree`_ (https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/Minimum-Spanning-Tree)
-2. `Maximal Independent Set`_ (https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/Maximal-Independent-Set)
-3. `Breadth First Search`_ (https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/Breadth-First-Search)
-4. `Shortest Path`_ (https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/ShortestPath)
+1. `Minimum Spanning Tree`_
+2. `Maximal Independent Set`_
+3. `Breadth First Search`_
+4. `Shortest Path`_
 
 .. _Minimum Spanning Tree: https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/Minimum-Spanning-Tree
 .. _Maximal Independent Set: https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/Maximal-Independent-Set
