@@ -1,3 +1,6 @@
+''''
+Distributed processes-as-workers breadth-first search.
+'''
 
 import sys
 sys.path.append("..") # in order to import NetworkX
@@ -143,4 +146,3 @@ def main():
     startprocs(ps)
 
     for p in (ps): p.join()
-    
