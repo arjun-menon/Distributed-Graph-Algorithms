@@ -88,7 +88,7 @@ The following help message is generated when the `-h` option is passed:
     optional arguments:
       -h, --help  show this help message and exit
 
-Thee only optarg is `graph` which is graph file formatted in the manner specified in the help message. By default, if none is specified, `graph-1` is used.
+Thee only optarg is `graph` which is a graph file formatted in the manner specified in the help message. By default, if none is specified, `graph-1` is used.
 
 Implementation Details
 ----------------------
