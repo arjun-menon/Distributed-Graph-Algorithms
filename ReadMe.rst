@@ -15,7 +15,7 @@ The following distributed graph algorithms that have implemented using **DistAlg
 .. _Minimum Spanning Tree: https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/Minimum-Spanning-Tree
 .. _Maximal Independent Set: https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/Maximal-Independent-Set
 .. _Breadth First Search: https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/Breadth-First-Search
-.. _Shortest Path: https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/ShortestPath)
+.. _Shortest Path: https://github.com/arjungmenon/Distributed-Graph-Algorithms/tree/master/ShortestPath
 
 The subdirectory of each algorithm contains a relevant **ReadMe** file that describes the algorithm in detail with specific information about its implementation, limitations, etc. The ReadMe should be viewed in GitHub or with a Markdown converter as it contains images, styling, secionts, etc.
 
