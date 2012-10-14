@@ -171,7 +171,7 @@ These were some of the outputs produced during some trial runs of the algorithm 
 
 ### Graph 1
 
-I re-used `graph-1` that I used for testing MST here. The following diagram depicts it (the blue edges can be ignored):
+I re-used `graph-1` that I used for testing MST here. The following diagram depicts it (generated using _NetworkX_ and _matplotlib_):
 
 ![Test Case 1](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Maximal-Independent-Set/graph-1.png)
 
@@ -329,7 +329,7 @@ I re-used `graph-1` that I used for testing MST here. The following diagram depi
 
 ### Graph 2
 
-Here I re-used `graph-2` from MST. This diagram depicts it (the blue edges can be ignored):
+Here I re-used `graph-2` from MST. This diagram depicts it (generated using _NetworkX_ and _matplotlib_):
 
 ![Test Case 2](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Maximal-Independent-Set/graph-2c.png)
 
