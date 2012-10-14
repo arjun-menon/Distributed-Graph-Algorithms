@@ -8,6 +8,10 @@ class Tools(object):
 Provides services like handling optargs, setting up the graph, solution verification, drawing, etc."""
 
     def __init__(self):
+        "Process command-line arguments and build the graph."
+
+        sys.argv = sys.argv[1:]
+
         import argparse
         import matplotlib
 

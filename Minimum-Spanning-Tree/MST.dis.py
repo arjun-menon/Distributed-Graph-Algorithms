@@ -15,7 +15,6 @@ Based on the Gallager, Humblet and Spira algorithm for distributed MST.
 from collections import deque
 from tools import *
 
-sys.argv = sys.argv[1:]
 tools = Tools()
 
 class Spark(DistProcess):
