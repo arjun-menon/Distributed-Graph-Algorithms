@@ -24,7 +24,7 @@ There is another problem -- one that tries to find enumerate _all possible MISs_
 
 A quick [Google search](https://www.google.com/search?q=parallel+maximal+independent+set) for "distributed maximal independent set" reveals a few algorithms for solving for Maximal Independent Set. The top among these is [A Log-Star Distributed Maximal Independent Set Algorithm](http://disco.ethz.ch/publications/podc08SW.pdf) by Johannes Schneider, Roger Wattenhofer. Another major one that comes up when searching for "parallel maximal independent srt" instead is Luby's algorithm ([the original paper](http://www.dcg.ethz.ch/alumni/pascal/refs/mis_1986_luby.pdf) and [lecture notes on it](http://www.cc.gatech.edu/~vigoda/RandAlgs/MIS.pdf)).
 
-However after looking at these algorithms for a while, I decided to instead design my own solution to the distributed Maximal Independent Set problem. Luby's algorithm for instance, seemed a little more complicated than necessary to me. The complication was probably an optimization for performance. It involves (based on my understanding) picking a random set of vertices, breaking "ties" in the set -- i.e. vertices that formed edges in the random set, and doing something else and repeating the process. In addition, the lecture notes and paper on Luby's algorith, weren't very clear on how the interprocess communication was to be modeled. (In contrast, the GHS paper for MST was very clear about this.) It was pretty clear to me however, what the straightforward parallelization (distirbution) of MIS would like, so I decided to design an algorithm of my own.
+However after looking at these algorithms for a while, I decided to instead design my own solution to the distributed Maximal Independent Set problem. Luby's algorithm for instance, seemed a little more complicated than necessary to me. The complication was probably an optimization for performance. It involves (based on my understanding) picking a random set of vertices, breaking "ties" in the set -- i.e. vertices that formed edges in the random set, and doing something else and repeating the process. In addition, the lecture notes and paper on Luby's algorith, weren't very clear on how the interprocess communication was to be modeled. (In contrast, the GHS paper for MST was very clear about this.) However, it was pretty clear to me what the straightforward parallelization (distribution) of the sequential MIS algorithm would look like, so I decided to design my own distributed algorithm based on it.
 
 Description of the Algorithm
 ----------------------------
@@ -167,9 +167,13 @@ Running & Testing
 -----------------
 The algorithm can be run by typing `python3 -m distalgo.runtime MIS.dis` or `run.py` on a *nix console. The former relies on DistAlgo being installed as a library.
 
+These were some of the outputs produced during some trial runs of the algorithm using the graphs from MST:
+
 ### Graph 1
 
-These were some of the outputs produced during some trial runs of the algorithm:
+This is the same `graph-1` that was used for testing MST. The following diagram depicts it (red edges can be ignored):
+
+![Test Case 1](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/test_case_1.png)
 
 #### Run 1 (Solution: A, C, J, E)
 
@@ -304,6 +308,142 @@ These were some of the outputs produced during some trial runs of the algorithm:
     [2012-10-12 08:22:27,897]runtime:INFO: ***** Statistics *****
     * Total procs: 11
 
-More runs yielded even more solutions like `I, B, F` and `J, B, G`. They've been omitted for brevity's sake.
+#### Run 8 (Solution: I, B, F)
 
+    [2012-10-14 05:37:02,765]runtime:INFO: Creating instances of P..
+    [2012-10-14 05:37:02,781]runtime:INFO: 11 instances of P created.
+    [2012-10-14 05:37:02,788]runtime:INFO: Starting procs...
+    [2012-10-14 05:37:02,790]P(I):INFO: I marked as VERTEX
+    [2012-10-14 05:37:02,792]P(J):INFO: J marked as OUT
+    [2012-10-14 05:37:02,793]P(E):INFO: E marked as OUT
+    [2012-10-14 05:37:02,793]P(D):INFO: D marked as OUT
+    [2012-10-14 05:37:02,794]P(H):INFO: H marked as OUT
+    [2012-10-14 05:37:02,796]P(C):INFO: C marked as OUT
+    [2012-10-14 05:37:02,812]P(F):INFO: F marked as VERTEX
+    [2012-10-14 05:37:02,814]P(G):INFO: G marked as OUT
+    [2012-10-14 05:37:02,814]P(A):INFO: A marked as OUT
+    [2012-10-14 05:37:02,827]P(B):INFO: B marked as VERTEX
+    [2012-10-14 05:37:02,857]P(0):INFO: Vertices in the MIS are: I, B, F
+    [2012-10-14 05:37:02,863]runtime:INFO: ***** Statistics *****
+    * Total procs: 11
+
+### Graph 2
+
+Here I re-used `graph-2` from MST. This diagram depicts it (the red edges can be ignored):
+
+![Test Case 2](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/test_case_2.png)
+
+#### Run 1 (Solution: A, J, L, G, D)
+
+    [2012-10-14 05:39:41,343]runtime:INFO: Creating instances of P..
+    [2012-10-14 05:39:41,363]runtime:INFO: 14 instances of P created.
+    [2012-10-14 05:39:41,372]runtime:INFO: Starting procs...
+    [2012-10-14 05:39:41,374]P(J):INFO: J marked as VERTEX
+    [2012-10-14 05:39:41,375]P(I):INFO: I marked as OUT
+    [2012-10-14 05:39:41,375]P(K):INFO: K marked as OUT
+    [2012-10-14 05:39:41,375]P(H):INFO: H marked as OUT
+    [2012-10-14 05:39:41,392]P(G):INFO: G marked as VERTEX
+    [2012-10-14 05:39:41,393]P(E):INFO: E marked as OUT
+    [2012-10-14 05:39:41,393]P(F):INFO: F marked as OUT
+    [2012-10-14 05:39:41,404]P(A):INFO: A marked as VERTEX
+    [2012-10-14 05:39:41,405]P(B):INFO: B marked as OUT
+    [2012-10-14 05:39:41,423]P(L):INFO: L marked as VERTEX
+    [2012-10-14 05:39:41,424]P(M):INFO: M marked as OUT
+    [2012-10-14 05:39:41,439]P(D):INFO: D marked as VERTEX
+    [2012-10-14 05:39:41,440]P(C):INFO: C marked as OUT
+    [2012-10-14 05:39:41,454]P(0):INFO: Vertices in the MIS are: A, J, L, G, D
+    [2012-10-14 05:39:41,468]runtime:INFO: ***** Statistics *****
+    * Total procs: 14
+
+#### Run 2 (Solution: I, K, B, G)
+
+    [2012-10-14 05:40:23,968]runtime:INFO: Creating instances of P..
+    [2012-10-14 05:40:23,989]runtime:INFO: 14 instances of P created.
+    [2012-10-14 05:40:23,995]runtime:INFO: Starting procs...
+    [2012-10-14 05:40:23,996]P(I):INFO: I marked as VERTEX
+    [2012-10-14 05:40:23,997]P(E):INFO: E marked as OUT
+    [2012-10-14 05:40:23,997]P(J):INFO: J marked as OUT
+    [2012-10-14 05:40:23,997]P(H):INFO: H marked as OUT
+    [2012-10-14 05:40:23,998]P(D):INFO: D marked as OUT
+    [2012-10-14 05:40:23,998]P(C):INFO: C marked as OUT
+    [2012-10-14 05:40:24,007]P(B):INFO: B marked as VERTEX
+    [2012-10-14 05:40:24,008]P(A):INFO: A marked as OUT
+    [2012-10-14 05:40:24,019]P(K):INFO: K marked as VERTEX
+    [2012-10-14 05:40:24,020]P(M):INFO: M marked as OUT
+    [2012-10-14 05:40:24,020]P(L):INFO: L marked as OUT
+    [2012-10-14 05:40:24,030]P(G):INFO: G marked as VERTEX
+    [2012-10-14 05:40:24,031]P(F):INFO: F marked as OUT
+    [2012-10-14 05:40:24,063]P(0):INFO: Vertices in the MIS are: I, K, B, G
+    [2012-10-14 05:40:24,069]runtime:INFO: ***** Statistics *****
+    * Total procs: 14
+
+#### Run 3 (Solution: A, J, M, D, G)
+
+    [2012-10-14 05:40:43,620]runtime:INFO: Creating instances of P..
+    [2012-10-14 05:40:43,641]runtime:INFO: 14 instances of P created.
+    [2012-10-14 05:40:43,649]runtime:INFO: Starting procs...
+    [2012-10-14 05:40:43,651]P(D):INFO: D marked as VERTEX
+    [2012-10-14 05:40:43,652]P(I):INFO: I marked as OUT
+    [2012-10-14 05:40:43,653]P(C):INFO: C marked as OUT
+    [2012-10-14 05:40:43,653]P(E):INFO: E marked as OUT
+    [2012-10-14 05:40:43,653]P(B):INFO: B marked as OUT
+    [2012-10-14 05:40:43,671]P(M):INFO: M marked as VERTEX
+    [2012-10-14 05:40:43,672]P(L):INFO: L marked as OUT
+    [2012-10-14 05:40:43,672]P(K):INFO: K marked as OUT
+    [2012-10-14 05:40:43,690]P(G):INFO: G marked as VERTEX
+    [2012-10-14 05:40:43,691]P(H):INFO: H marked as OUT
+    [2012-10-14 05:40:43,692]P(F):INFO: F marked as OUT
+    [2012-10-14 05:40:43,704]P(A):INFO: A marked as VERTEX
+    [2012-10-14 05:40:43,718]P(J):INFO: J marked as VERTEX
+    [2012-10-14 05:40:43,742]P(0):INFO: Vertices in the MIS are: A, J, M, D, G
+    [2012-10-14 05:40:43,753]runtime:INFO: ***** Statistics *****
+    * Total procs: 14
+
+#### Run 4 (Solution: )
+
+    [2012-10-14 05:41:55,466]runtime:INFO: Creating instances of P..
+    [2012-10-14 05:41:55,487]runtime:INFO: 14 instances of P created.
+    [2012-10-14 05:41:55,492]runtime:INFO: Starting procs...
+    [2012-10-14 05:41:55,494]P(J):INFO: J marked as VERTEX
+    [2012-10-14 05:41:55,496]P(K):INFO: K marked as OUT
+    [2012-10-14 05:41:55,496]P(I):INFO: I marked as OUT
+    [2012-10-14 05:41:55,497]P(H):INFO: H marked as OUT
+    [2012-10-14 05:41:55,512]P(F):INFO: F marked as VERTEX
+    [2012-10-14 05:41:55,512]P(E):INFO: E marked as OUT
+    [2012-10-14 05:41:55,512]P(G):INFO: G marked as OUT
+    [2012-10-14 05:41:55,513]P(A):INFO: A marked as OUT
+    [2012-10-14 05:41:55,525]P(L):INFO: L marked as VERTEX
+    [2012-10-14 05:41:55,527]P(M):INFO: M marked as OUT
+    [2012-10-14 05:41:55,541]P(C):INFO: C marked as VERTEX
+    [2012-10-14 05:41:55,543]P(D):INFO: D marked as OUT
+    [2012-10-14 05:41:55,543]P(B):INFO: B marked as OUT
+    [2012-10-14 05:41:55,579]P(0):INFO: Vertices in the MIS are: C, J, L, F
+    [2012-10-14 05:41:55,584]runtime:INFO: ***** Statistics *****
+    * Total procs: 14
+
+#### Run 5 (Solution: )
+
+    [2012-10-14 05:42:42,365]runtime:INFO: Creating instances of P..
+    [2012-10-14 05:42:42,386]runtime:INFO: 14 instances of P created.
+    [2012-10-14 05:42:42,395]runtime:INFO: Starting procs...
+    [2012-10-14 05:42:42,396]P(E):INFO: E marked as VERTEX
+    [2012-10-14 05:42:42,397]P(F):INFO: F marked as OUT
+    [2012-10-14 05:42:42,398]P(I):INFO: I marked as OUT
+    [2012-10-14 05:42:42,398]P(H):INFO: H marked as OUT
+    [2012-10-14 05:42:42,398]P(D):INFO: D marked as OUT
+    [2012-10-14 05:42:42,398]P(G):INFO: G marked as OUT
+    [2012-10-14 05:42:42,416]P(M):INFO: M marked as VERTEX
+    [2012-10-14 05:42:42,418]P(L):INFO: L marked as OUT
+    [2012-10-14 05:42:42,418]P(K):INFO: K marked as OUT
+    [2012-10-14 05:42:42,438]P(B):INFO: B marked as VERTEX
+    [2012-10-14 05:42:42,440]P(C):INFO: C marked as OUT
+    [2012-10-14 05:42:42,440]P(A):INFO: A marked as OUT
+    [2012-10-14 05:42:42,455]P(J):INFO: J marked as VERTEX
+    [2012-10-14 05:42:42,486]P(0):INFO: Vertices in the MIS are: M, J, B, E
+    [2012-10-14 05:42:42,489]runtime:INFO: ***** Statistics *****
+    * Total procs: 14
+
+### Final Note
+
+Many more solutions different from the ones listed above were found for each graph, but they've been omitted for brevity's sake.
 ---
