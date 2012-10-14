@@ -234,4 +234,14 @@ The edge list for it can be found in the file `graph-3`.
 
 The output produced my `MST.dis` and `Kruskal.py` can be found in `graph-3-ouptput.txt` (in this directory.)
 
+While writing the graph file `graph-3`, I ran the MST solver several times and obtained these intermediate results:
+
+#### Intermediate Result 1
+
+#### Intermediate Result 2
+
+#### Final Solution
+
+
+
 ---
