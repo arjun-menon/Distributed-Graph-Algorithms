@@ -1,15 +1,14 @@
 Shortest Path
 -------------
 
-#### Problem Description
-
 The [shortest path problem](https://en.wikipedia.org/wiki/Shortest_path_problem) as we all know is the quest to find the shortest path between two nodes in a connected weighted undirected graph.
 
-### Algorithm
+Algorithm
+---------
 
 The problem was pretty straighforward and simple, so I didn't see a need to research it online. I designed my own algorithm for it. My algorithm is described in the next section.
 
-#### Steps involved in the algorithm
+### Steps involved in the algorithm
 
 1. The inital node, or _source_ node calls a function `newWeight`.
 2. `newWeight` sets the "total weight" of the path to _itself_ as 0.
@@ -18,6 +17,31 @@ The problem was pretty straighforward and simple, so I didn't see a need to rese
 5. The `newWeight` function when being invoked on the target node, prints out the weight and path to it indicated by the message received.
 6. For simplicity, the termination/base case was omitted. The algorithm prints out multiple output messages as new paths are received. The last path printed _is the shortest path_ from the source node to the target nodee. To terminate, the algorithm would have to involve additional stuff such as each node sending back replies to the messages sent by the `propogate` function, as well as keeping track of the number of replies received and waiting for the total replies received to equal messages sent at each node.
 
+Usage
+-----
+
+The program can be run easily from the terminal by typing `python3 -m distalgo.runtime ShortestPath.dis` or by executing `run.py`.
+
+`ShortestPath.dis` offers several command-line options. These can be listed by passing in the `-h` argument:
+
+	usage: ShortestPath.dis [-h] [-s SOURCE] [-t TARGET] [graph]
+
+	Finds the shortest path.
+
+	positional arguments:
+	  graph                 File listing the edges of a graph line-by-line in the
+	                        following style: "A B 2", where "A" and "B" are node
+	                        names and "2" is the weight of the edge connecting
+	                        them.
+
+	optional arguments:
+	  -h, --help            show this help message and exit
+	  -s SOURCE, --source SOURCE
+	                        The source node.
+	  -t TARGET, --target TARGET
+	                        The target node.
+
+The first of these is `graph` which is an input graph. It defaults to `graph-1`. The other two are the **source** and **target** nodes between which to find the shortest path.
 
 Testing
 -------
