@@ -4,7 +4,33 @@ Distributed Breadth First Search
 Overview
 --------
 
-The goal of the algorithm is to distribute the task of checking whether an element exists in a given tree to multiple processes. Unlike the other algorithms in this project, this program follows a _processes as workers_.
+The goal of the algorithm is to distribute the task of checking whether an element exists in a given tree to multiple processes. Unlike the other algorithms in this project, this one follows a _processes as workers_ model.
+
+### The processes-as-workers model
+
+Normally a distributed graph algorithm means an algorithm where each node in the graph represents a process and the key challenge is to execute an otherwise simple sequential algorithm over distributed processes where _communication between nodes is ***restricted*** to nodes that have an edge between them_. This processes-as-nodes model is useful as it models real-world systems of networked computers. Hadoop and DHT are two examples of commonly used systems that fit this model However, at the same time, there is also a lot of application for another model: One where we break down a large workload into smaller chunks and try to get them done faster using multiple computers.
+
+One could guess there is a lot more application for this model. On supercomputers the goal is to solve a problem faster. Applications today try to use more cores on a computer and run into the same challenge: breaking down problems to solve them faster in parallel. BOINC and Folding@Home are two well-known projects that allow home computer users to donate their idle CPU time to solve real-world problems. So this is an area with lots of great applications and is definitely worth exploring.
+
+As a side note, solving BFS using the processes-as-nodes model would be very trivial. Both the Shortest Path algorithm and MIS, already contains a search very similar to BFS in them.
+
+### Context to my algorithm
+
+I designed this algorithm myself. The algorithm uses a kind-of workload balancing technique; where first one process starts with "all" of the workload, and then n-1 processes ping this one process for work. It then distributes chunks of its work to each of these processes. (The _"chunk"_ of work here is a chunk of a tree -- or rather, a subtree.) Eventually some process finishes working on its chunk, asks for more work, gets it, and keeps on working. This continues until every process runs out of work and is unable to get any from the others. When this happens, the processes terminate. 
+
+One crucial **"feature"** of the system that this algorithm relies on is: _common shared memory._ Common shared memory is not something that is always available in a system. Even if and when it is available there are often serious constraints on how it can be used. Three common situations exist:
+
+- On supercomputers, clusters and large-scale servers there is usually some “shared” memory -- generally in the form of a massive RAID array. However the latency to access this RAID system would make any algorithm that primarily hinges on a fast shared read-only memory inefficient and unusable. T
+- On systems like BOINC or Folding@Home, there is absolutely no easily-accessible shared memory. A workload is shipped to the user's computers, and until the user is done working on it; there is no more communication with the server (workload dispenser.)
+- Finally, we have a much more common system: modern multi-core computers. On multi-care, there ***is*** shared memory. It usually exists at multiple levels: Cache memory (L-2 cache and L-3 cache) -> Main memory (RAM) -> Secondary storage (SSD/HDD) -> Tertiary storage (tape backup, etc.) Tertiary is uncommon, but the others are all common.
+
+The processes-as-workers model _with shared memory_ works best in the last situation. Generaly on a multi-core computer, there is local storage *at each* core -- registers and L-1 cahce. Then, there's cache shared between the cores: L-2 and L-3. After that we have RAM, and so on.
+
+Even though the cores share a common memory like L-2 cache, the CPU handles all the trouble of maintatin its integrity, i.e. handling cache conflicts and maintaining cache collisions. THis is usally handled by a marking a segment of a cahce as _dirty_ when its been written to in its L-1 mirror by some core. Then when a different core tries to read it, the CPU updates the value on L-2 to mirror the newer L-1 value.
+
+The result of all this is, it gives programmers the same experience writing programs on multi-core systems as they had writing multi-threaded programs on single-core computers. Needless to say, it's not a very good experience. There is a solution to this however. Forget writing to shared memory -- only read from it. With _shared ***read-only*** memory we can mitigate cache cohesion and related problems. In [Andrew Tanenbaum](https://en.wikipedia.org/wiki/Andrew_Tanenbaum)'s book on [Operating Systems](http://www.amazon.com/Operating-Systems-Design-Implementation-Edition/dp/0136386776), he talks about microkernels, where every little piece of the OS runs in its own little process. They communicate with each other just as in a distributed system.
+
+In DistAlgo, we can model this situation _very well_. When we create new processes in DistAlgo, _all the global context is ***copied***_ into every process (based on my understanding.) Traditionally the variables would not be copied, but rather be _shared read-only_ as it would be more efficient, but our main interest here is to create exemplary/prototypical implementations.
 
 Implementation
 --------------
@@ -32,19 +58,11 @@ The algorithm is contained in one file: `BFS.dis.py`. It can be run using `run.p
 
 The first two command line options allow the user to select the number of worker processes that should be started, and the element that is to be searched for. By default the number of workers is `4` and the element to search for is `300`.
 
-The next two options have to do with the random tree that is constructed. The algorithm initially uses NetworkX to construct a large tree. NetworkX offers a [bunch of graph generating algorithms](http://networkx.lanl.gov/reference/generators.html); some of which generate trees. The type of NewtworkX tree generator that I used was the *“perfectly balanced r-tree of height h” generator*. The factor `r` and the height `h` determine the size of the tree. By default r is `4` and height `4`. The user can construct the NetworkX balanced tree with different ‘r’ and ‘height’ parameters by specifying the last two command line options.
-
-Situation
----------
-
-Searching online for distributed breadth first search algorithms brings up algorithms that are primarily designed for distributed memory systems. These are systems like Blue Gene et al. where we have multiple computers working in cohesion to tackle a problem. The only “shared” memory they have in this case would probably be a massive RAID array. However the latency to access this RAID system would make any algorithm that primarily hinges on a fast shared read-only memory inefficient/unusable.
-
-DistAlgo however allows the processes to access shared global variables read-only. This makes sense on small distributed systems such as the multi-core or multi-processor computer. In such systems, the RAM is shared between the processors so reading shared data is a non-issue. (Issues arise when we write to data shared by CPUs - such as cache cohesion, e.t.c.)
-
-In DistAlgo’s case, the shared read-only memory feature was very suitable to the problem at hand. The algorithm I used is of my own invention. The path to solving this problem in a distributed manner became very obvious to me in a few minutes of thinking. The algorithm makes good use of the fact that the _graph is in a *tree structure*_ along with DistAlgo’s shared read-only memory feature. Instead of passing around chunks of the tree, it simply passes a node, representing a sub-tree to other processes. Processes work in parallel to prune the tree and find the element being looked for. A detailed description of the algorithm can be found below.
+The next two options have to do with the random tree that is constructed. The algorithm initially uses NetworkX to construct a large tree. NetworkX offers a [bunch of graph generating algorithms](http://networkx.lanl.gov/reference/generators.html); some of which generate trees. The type of NewtworkX tree generator that I used was the *“perfectly balanced r-tree of height h” generator*. The factor `r` and the height `h` determine the size of the tree. By default r is `4` and height `4`. The user can construct the NetworkX balanced tree with different `r` and `height` parameters by specifying the last two command line options.
 
 Detailed Algorithm Description
 ------------------------------
+The algorithm makes good use of the fact that the _graph is in a *tree structure*_ along with DistAlgo’s shared read-only memory feature. Instead of passing around chunks of the tree, it simply passes a node, representing a sub-tree to other processes. Processes work in parallel to prune the tree and find the element being looked for. A detailed description of the algorithm can be found below.
 
 The tree itself is a shared data structure. No one writes to the tree or modifies it in anyway. The tree is frozen before the processes are setup. Due to the read-only nature of the tree any type of mediation is unnecessary here.
 
@@ -64,10 +82,11 @@ The other alternate termination state is that, the element was not found in the 
 
 Testing & Caveats
 -----------------
-I’ve tested the BFS algorithm with varying tree sizes, varying number of processes and varying search targets. Sample test cases can be seen named `BFS_test_run_2.txt`, `BFS_test_run_2.txt`, e.t.c.
+When run, each node prints a message for each node it inspects. It also prints messages when it requests work from another process, receives a request for work, gets work, etc.
 
+The following a few sample _truncated_ test runs of the algorithm:
 
-#### Test Run with options: -r 3 -e 100
+#### Sample Test Run (./run.py -r 3 -e 100)
 
 	Using 4 workers to search for the element 100 using BFS in a r-3 height-4 tree containing 121 nodes.
 	[2012-10-14 15:10:41,526]runtime:INFO: Creating instances of P..
@@ -129,5 +148,79 @@ I’ve tested the BFS algorithm with varying tree sizes, varying number of proce
 	[2012-10-14 15:10:41,562]runtime:INFO: ***** Statistics *****
 	* Total procs: 4
 
+In this run, the element `100` was found by process number `3`.
 
-Overall, with sane values for these variables; the BFS search works fine and does what it’s supposed to do. However I’ve occasionally  run into a hiccup or two, when handling large tree sizes. This is because currently DistAlgo has a limit on how large the size of a message send between processes can be. The way the algorithm works; in response to a work request, it sends along with a node a list of all nodes it has visited so far. Currently as the tree size grows larger; one can see dropped packets in communication between nodes. Whereas an `r=4, height=4` tree has `341` nodes, an `r=4, height=5` tree has `1365` nodes -- the tree size grows exponentially with r and height increasing. With large tree sizes, more often than not we see dropped packets. The algorithm was not designed to tolerate packet loss, so in such circumstances the behavior of the algorithm is undefined.
+#### Sample Test Run (./run.py -r 3)
+
+	Using 4 workers to search for the element 300 using BFS in a r-3 height-4 tree containing 121 nodes.
+	[2012-10-14 15:10:15,463]runtime:INFO: Creating instances of P..
+	[2012-10-14 15:10:15,469]runtime:INFO: 4 instances of P created.
+	[2012-10-14 15:10:15,475]runtime:INFO: Starting procs...
+	[2012-10-14 15:10:15,475]P(3):INFO: Empty queue; sending requests for work
+	[2012-10-14 15:10:15,476]P(1):INFO: Empty queue; sending requests for work
+	[2012-10-14 15:10:15,476]P(0):INFO: Inspected 0
+	[2012-10-14 15:10:15,476]P(2):INFO: Empty queue; sending requests for work
+	[2012-10-14 15:10:15,476]P(0):INFO: Inspected 1
+	[2012-10-14 15:10:15,477]P(0):INFO: Inspected 2
+	[2012-10-14 15:10:15,478]P(0):INFO: Inspected 3
+	[2012-10-14 15:10:15,478]P(0):INFO: Inspected 4
+	[2012-10-14 15:10:15,478]P(3):INFO: Received request for work from 2
+	[2012-10-14 15:10:15,479]P(1):INFO: Received request for work from 3
+	[2012-10-14 15:10:15,479]P(0):INFO: Received request for work from 3
+	[2012-10-14 15:10:15,479]P(3):INFO: Received request for work from 1
+	[2012-10-14 15:10:15,479]P(0):INFO: Giving work [5] to 3
+	[2012-10-14 15:10:15,479]P(1):INFO: Received request for work from 2
+	[2012-10-14 15:10:15,479]P(2):INFO: Received request for work from 1
+	[2012-10-14 15:10:15,480]P(2):INFO: Received request for work from 3
+	[2012-10-14 15:10:15,480]P(3):INFO: Got work [5] from 0
+	[2012-10-14 15:10:15,481]P(0):INFO: Received request for work from 2
+	[2012-10-14 15:10:15,481]P(3):INFO: Inspected 5
+	[2012-10-14 15:10:15,481]P(0):INFO: Giving work [6] to 2
+	[2012-10-14 15:10:15,481]P(3):INFO: Inspected 16
+	[2012-10-14 15:10:15,482]P(3):INFO: Inspected 17
+	[2012-10-14 15:10:15,482]P(3):INFO: Inspected 18
+	[2012-10-14 15:10:15,482]P(0):INFO: Received request for work from 1
+	[2012-10-14 15:10:15,482]P(2):INFO: Got work [6] from 0
+	[2012-10-14 15:10:15,482]P(0):INFO: Giving work [8] to 1
+	[2012-10-14 15:10:15,482]P(3):INFO: Inspected 49
+	[2012-10-14 15:10:15,483]P(2):INFO: Inspected 6
+	...
+	[2012-10-14 15:10:15,524]P(0):INFO: Received request for work from 3
+	[2012-10-14 15:10:15,524]P(2):INFO: Inspected 115
+	[2012-10-14 15:10:15,524]P(1):INFO: Got work [117] from 0
+	[2012-10-14 15:10:15,525]P(0):INFO: Giving work [120] to 3
+	[2012-10-14 15:10:15,525]P(2):INFO: Empty queue; sending requests for work
+	[2012-10-14 15:10:15,525]P(1):INFO: Inspected 117
+	[2012-10-14 15:10:15,525]P(1):INFO: Empty queue; sending requests for work
+	[2012-10-14 15:10:15,525]P(0):INFO: Inspected 118
+	[2012-10-14 15:10:15,526]P(3):INFO: Got work [120] from 0
+	[2012-10-14 15:10:15,526]P(0):INFO: Received request for work from 2
+	[2012-10-14 15:10:15,526]P(3):INFO: Received request for work from 2
+	[2012-10-14 15:10:15,526]P(1):INFO: Received request for work from 2
+	[2012-10-14 15:10:15,526]P(0):INFO: Inspected 119
+	[2012-10-14 15:10:15,526]P(0):INFO: Received request for work from 1
+	[2012-10-14 15:10:15,527]P(0):INFO: Empty queue; sending requests for work
+	[2012-10-14 15:10:15,527]P(3):INFO: Received request for work from 1
+	[2012-10-14 15:10:15,527]P(2):INFO: Received request for work from 1
+	[2012-10-14 15:10:15,527]P(3):INFO: Inspected 120
+	[2012-10-14 15:10:15,527]P(2):INFO: Received request for work from 0
+	[2012-10-14 15:10:15,527]P(1):INFO: Received request for work from 0
+	[2012-10-14 15:10:15,527]P(2):INFO: Unable to get work. Assuming element 300 not in tree. Terminating... 
+	[2012-10-14 15:10:15,527]P(3):INFO: Received request for work from 0
+	[2012-10-14 15:10:15,528]P(1):INFO: Unable to get work. Assuming element 300 not in tree. Terminating... 
+	[2012-10-14 15:10:15,528]P(3):INFO: Empty queue; sending requests for work
+	[2012-10-14 15:10:15,528]P(3):INFO: Unable to get work. Assuming element 300 not in tree. Terminating... 
+	[2012-10-14 15:10:15,529]P(0):INFO: Received request for work from 3
+	[2012-10-14 15:10:15,529]P(0):INFO: Unable to get work. Assuming element 300 not in tree. Terminating... 
+	[2012-10-14 15:10:15,533]runtime:INFO: ***** Statistics *****
+	* Total procs: 4
+
+This test run, on the sam tree, but with a lookout for the element `300` resulted in no finds. Each process terminated itself after being work-starved.
+
+There are many mroe test runs of this algorithm with varying tree sizes, number of processes search targets. These test cases can be found in the files named `BFS_test_run_*.txt` in this directory. _Note:_ the command-line arguments for those test runs differ from the current style, because I had not used `argparse` when I had first implemented it.
+
+### Caveats
+
+Overall, with sane values for these variables; the BFS search works fine and does what it’s supposed to do. However I’ve occasionally  run into a hiccup or two, when handling large tree sizes. This is because currently DistAlgo has a limit on how large the size of a message send between processes can be. The way the algorithm works; in response to a work request, it sends along with a node a list of all nodes it has visited so far. Currently as the tree size grows larger; one can see dropped packets between nodes. Whereas an `r=4, height=4` tree has `341` nodes, an `r=4, height=5` tree has `1365` nodes -- the tree size grows exponentially as the `r` factor and `height` increases. With large tree sizes, more often than not, we see dropped packets. The algorithm was not designed to tolerate packet loss, so in such circumstances its behavior is undefined.
+
+---
