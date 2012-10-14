@@ -1,0 +1,43 @@
+
+A B 1
+B C 10
+C D 14
+D E 15
+E F 13
+F A 12
+E B 5
+
+A G 20
+
+G I 3
+I H 17
+H G 16
+
+I J 57
+
+J K 22
+K L 23
+L M 21
+M J 2
+
+M N 54
+
+N O 36
+O P 34
+P U 42
+U V 48
+V S 41
+S R 35
+R N 47
+
+S Q 49
+R Q 53
+N Q 33
+O Q 45
+P Q 43
+
+Q T 50
+P T 38
+U T 44
+V T 37
+S T 52

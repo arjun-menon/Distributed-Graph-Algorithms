@@ -1,0 +1,564 @@
+arjun@arjun-desktop:~/dev/workspace/Distributed-Graph-Algorithms/Minimum-Spanning-Tree$ ./run.py graph-3
+[2012-10-15 01:34:12,796]runtime:INFO: Creating instances of Node..
+[2012-10-15 01:34:12,845]runtime:INFO: 22 instances of Node created.
+[2012-10-15 01:34:12,849]runtime:INFO: Creating instances of Spark..
+[2012-10-15 01:34:12,851]runtime:INFO: 1 instances of Spark created.
+[2012-10-15 01:34:12,856]runtime:INFO: Starting procs...
+[2012-10-15 01:34:12,858]runtime:INFO: Starting procs...
+[2012-10-15 01:34:12,860]Node(A):INFO: Received spontaneous Wakeup from: Spark
+[2012-10-15 01:34:12,860]Node(A):INFO: A is waking up!
+[2012-10-15 01:34:12,862]Node(B):INFO: Received Connect(0) from: A
+[2012-10-15 01:34:12,862]Node(B):INFO: B is waking up!
+[2012-10-15 01:34:12,862]Node(B):INFO: B merging with A
+[2012-10-15 01:34:12,863]Node(A):INFO: Received Connect(0) from: B
+[2012-10-15 01:34:12,863]Node(A):INFO: A merging with B
+[2012-10-15 01:34:12,864]Node(A):INFO: Received Initiate(1, 1, 'Find') from: B
+[2012-10-15 01:34:12,864]Node(B):INFO: Received Initiate(1, 1, 'Find') from: A
+[2012-10-15 01:34:12,864]Node(A):INFO: A has sent Test() to F
+[2012-10-15 01:34:12,865]Node(F):INFO: Received Test(1, 1) from: A
+[2012-10-15 01:34:12,865]Node(B):INFO: B has sent Test() to E
+[2012-10-15 01:34:12,865]Node(F):INFO: F is waking up!
+[2012-10-15 01:34:12,866]Node(E):INFO: Received Test(1, 1) from: B
+[2012-10-15 01:34:12,866]Node(E):INFO: E is waking up!
+[2012-10-15 01:34:12,866]Node(A):INFO: Received Connect(0) from: F
+[2012-10-15 01:34:12,867]Node(A):INFO: A absorbing F
+[2012-10-15 01:34:12,867]Node(B):INFO: Received Connect(0) from: E
+[2012-10-15 01:34:12,867]Node(A):INFO: A has sent FIND to branch F
+[2012-10-15 01:34:12,867]Node(B):INFO: B absorbing E
+[2012-10-15 01:34:12,867]Node(F):INFO: Received Initiate(1, 1, 'Find') from: A
+[2012-10-15 01:34:12,868]Node(B):INFO: B has sent FIND to branch E
+[2012-10-15 01:34:12,868]Node(E):INFO: Received Initiate(1, 1, 'Find') from: B
+[2012-10-15 01:34:12,869]Node(F):INFO: F has sent Test() to E
+[2012-10-15 01:34:12,869]Node(E):INFO: E has sent Test() to F
+[2012-10-15 01:34:12,870]Node(E):INFO: E sent Reject() to B
+[2012-10-15 01:34:12,870]Node(A):INFO: A Received Reject() from: F
+[2012-10-15 01:34:12,870]Node(E):INFO: Received Test(1, 1) from: F
+[2012-10-15 01:34:12,870]Node(F):INFO: F sent Reject() to A
+[2012-10-15 01:34:12,870]Node(B):INFO: B Received Reject() from: E
+[2012-10-15 01:34:12,870]Node(E):INFO: E sent Reject() to F
+[2012-10-15 01:34:12,870]Node(A):INFO: A has sent Test() to G
+[2012-10-15 01:34:12,870]Node(F):INFO: Received Test(1, 1) from: E
+[2012-10-15 01:34:12,871]Node(E):INFO: E Received Reject() from: F
+[2012-10-15 01:34:12,871]Node(F):INFO: F sent Reject() to E
+[2012-10-15 01:34:12,871]Node(G):INFO: Received Test(1, 1) from: A
+[2012-10-15 01:34:12,871]Node(C):INFO: Received Test(1, 1) from: B
+[2012-10-15 01:34:12,872]Node(D):INFO: Received Test(1, 1) from: E
+[2012-10-15 01:34:12,872]Node(G):INFO: G is waking up!
+[2012-10-15 01:34:12,872]Node(F):INFO: F Received Reject() from: E
+[2012-10-15 01:34:12,872]Node(D):INFO: D is waking up!
+[2012-10-15 01:34:12,873]Node(F):INFO: Least weight(999999999) outgoing edge from F: No Outgoing edges
+[2012-10-15 01:34:12,872]Node(E):INFO: E has sent Test() to D
+[2012-10-15 01:34:12,874]Node(A):INFO: Received None @ 999999999 from F [find_count = 0]
+[2012-10-15 01:34:12,874]Node(I):INFO: Received Connect(0) from: G
+[2012-10-15 01:34:12,874]Node(I):INFO: I is waking up!
+[2012-10-15 01:34:12,871]Node(B):INFO: B has sent Test() to C
+[2012-10-15 01:34:12,872]Node(C):INFO: C is waking up!
+[2012-10-15 01:34:12,875]Node(I):INFO: I merging with G
+[2012-10-15 01:34:12,875]Node(G):INFO: Received Connect(0) from: I
+[2012-10-15 01:34:12,876]Node(B):INFO: Received Connect(0) from: C
+[2012-10-15 01:34:12,876]Node(G):INFO: G merging with I
+[2012-10-15 01:34:12,876]Node(B):INFO: B absorbing C
+[2012-10-15 01:34:12,876]Node(C):INFO: Received Connect(0) from: D
+[2012-10-15 01:34:12,876]Node(B):INFO: B has sent FIND to branch C
+[2012-10-15 01:34:12,877]Node(G):INFO: Received Initiate(1, 3, 'Find') from: I
+[2012-10-15 01:34:12,877]Node(I):INFO: Received Initiate(1, 3, 'Find') from: G
+[2012-10-15 01:34:12,877]Node(C):INFO: Received Initiate(1, 1, 'Find') from: B
+[2012-10-15 01:34:12,878]Node(G):INFO: G has sent Test() to H
+[2012-10-15 01:34:12,878]Node(I):INFO: I has sent Test() to H
+[2012-10-15 01:34:12,878]Node(C):INFO: C has sent Test() to D
+[2012-10-15 01:34:12,878]Node(D):INFO: Received Test(1, 1) from: C
+[2012-10-15 01:34:12,878]Node(H):INFO: Received Test(1, 3) from: G
+[2012-10-15 01:34:12,879]Node(H):INFO: H is waking up!
+[2012-10-15 01:34:12,879]Node(A):INFO: Outgoing Neighbor A -> G @ 20 [find_count = 0]
+[2012-10-15 01:34:12,879]Node(G):INFO: G sent Accept() to A
+[2012-10-15 01:34:12,879]Node(C):INFO: C absorbing D
+[2012-10-15 01:34:12,880]Node(A):INFO: Least weight(20) outgoing edge from A: A -> G
+[2012-10-15 01:34:12,880]Node(C):INFO: C has sent FIND to branch D
+[2012-10-15 01:34:12,880]Node(D):INFO: Received Initiate(1, 1, 'Find') from: C
+[2012-10-15 01:34:12,881]Node(C):INFO: C sent Reject() to B
+[2012-10-15 01:34:12,881]Node(B):INFO: Received [A, G] @ 20 from other core node A
+[2012-10-15 01:34:12,881]Node(H):INFO: Received Test(1, 3) from: I
+[2012-10-15 01:34:12,881]Node(B):INFO: B Received Reject() from: C
+[2012-10-15 01:34:12,881]Node(D):INFO: D has sent Test() to E
+[2012-10-15 01:34:12,881]Node(E):INFO: Received Test(1, 1) from: D
+[2012-10-15 01:34:12,882]Node(D):INFO: D sent Reject() to E
+[2012-10-15 01:34:12,882]Node(G):INFO: Received Connect(0) from: H
+[2012-10-15 01:34:12,882]Node(E):INFO: E sent Reject() to D
+[2012-10-15 01:34:12,883]Node(C):INFO: C Received Reject() from: D
+[2012-10-15 01:34:12,883]Node(D):INFO: D sent Reject() to C
+[2012-10-15 01:34:12,884]Node(E):INFO: E Received Reject() from: D
+[2012-10-15 01:34:12,884]Node(G):INFO: G absorbing H
+[2012-10-15 01:34:12,884]Node(E):INFO: Least weight(999999999) outgoing edge from E: No Outgoing edges
+[2012-10-15 01:34:12,884]Node(D):INFO: D Received Reject() from: E
+[2012-10-15 01:34:12,884]Node(G):INFO: G has sent FIND to branch H
+[2012-10-15 01:34:12,884]Node(D):INFO: Least weight(999999999) outgoing edge from D: No Outgoing edges
+[2012-10-15 01:34:12,885]Node(B):INFO: Received None @ 999999999 from E [find_count = 1]
+[2012-10-15 01:34:12,885]Node(H):INFO: Received Initiate(1, 3, 'Find') from: G
+[2012-10-15 01:34:12,886]Node(C):INFO: Received None @ 999999999 from D [find_count = 0]
+[2012-10-15 01:34:12,886]Node(H):INFO: H has sent Test() to I
+[2012-10-15 01:34:12,886]Node(C):INFO: Least weight(999999999) outgoing edge from C: No Outgoing edges
+[2012-10-15 01:34:12,886]Node(I):INFO: Received Test(1, 3) from: H
+[2012-10-15 01:34:12,887]Node(H):INFO: H sent Reject() to I
+[2012-10-15 01:34:12,887]Node(B):INFO: Received None @ 999999999 from C [find_count = 0]
+[2012-10-15 01:34:12,887]Node(I):INFO: I sent Reject() to H
+[2012-10-15 01:34:12,887]Node(B):INFO: Least weight(20) outgoing edge from B: B -> A -> G
+[2012-10-15 01:34:12,888]Node(I):INFO: I Received Reject() from: H
+[2012-10-15 01:34:12,888]Node(G):INFO: G Received Reject() from: H
+[2012-10-15 01:34:12,888]Node(I):INFO: I has sent Test() to J
+[2012-10-15 01:34:12,888]Node(H):INFO: H sent Reject() to G
+[2012-10-15 01:34:12,888]Node(A):INFO: Received [B, A, G] @ 20 from other core node B
+[2012-10-15 01:34:12,889]Node(G):INFO: G has sent Test() to A
+[2012-10-15 01:34:12,889]Node(H):INFO: H Received Reject() from: I
+[2012-10-15 01:34:12,889]Node(A):INFO: Least weight(20) outgoing edge of fragment(1): A -> G !!!!!!!!!!!!!!!
+[2012-10-15 01:34:12,889]Node(J):INFO: Received Test(1, 3) from: I
+[2012-10-15 01:34:12,889]Node(H):INFO: Least weight(999999999) outgoing edge from H: No Outgoing edges
+[2012-10-15 01:34:12,889]Node(J):INFO: J is waking up!
+[2012-10-15 01:34:12,890]Node(G):INFO: Received None @ 999999999 from H [find_count = 0]
+[2012-10-15 01:34:12,890]Node(A):INFO: Received Test(1, 3) from: G
+[2012-10-15 01:34:12,890]Node(M):INFO: Received Connect(0) from: J
+[2012-10-15 01:34:12,891]Node(M):INFO: M is waking up!
+[2012-10-15 01:34:12,891]Node(A):INFO: A sent Accept() to G
+[2012-10-15 01:34:12,891]Node(G):INFO: Outgoing Neighbor G -> A @ 20 [find_count = 0]
+[2012-10-15 01:34:12,891]Node(A):INFO: Fragment (1) ------------ Sending Connect(1) to G
+[2012-10-15 01:34:12,891]Node(M):INFO: M merging with J
+[2012-10-15 01:34:12,891]Node(J):INFO: Received Connect(0) from: M
+[2012-10-15 01:34:12,892]Node(G):INFO: Least weight(20) outgoing edge from G: G -> A
+[2012-10-15 01:34:12,892]Node(J):INFO: J merging with M
+[2012-10-15 01:34:12,893]Node(M):INFO: Received Initiate(1, 2, 'Find') from: J
+[2012-10-15 01:34:12,893]Node(G):INFO: Received Connect(1) from: A
+[2012-10-15 01:34:12,893]Node(I):INFO: Received [G, A] @ 20 from other core node G
+[2012-10-15 01:34:12,893]Node(J):INFO: Received Initiate(1, 2, 'Find') from: M
+[2012-10-15 01:34:12,893]Node(M):INFO: M has sent Test() to L
+[2012-10-15 01:34:12,894]Node(J):INFO: J has sent Test() to K
+[2012-10-15 01:34:12,894]Node(L):INFO: Received Test(1, 2) from: M
+[2012-10-15 01:34:12,894]Node(L):INFO: L is waking up!
+[2012-10-15 01:34:12,894]Node(K):INFO: Received Test(1, 2) from: J
+[2012-10-15 01:34:12,895]Node(K):INFO: K is waking up!
+[2012-10-15 01:34:12,895]Node(J):INFO: J sent Accept() to I
+[2012-10-15 01:34:12,895]Node(I):INFO: Outgoing Neighbor I -> G -> A @ 20 [find_count = 0]
+[2012-10-15 01:34:12,895]Node(M):INFO: Received Connect(0) from: L
+[2012-10-15 01:34:12,895]Node(I):INFO: Least weight(20) outgoing edge from I: I -> G -> A
+[2012-10-15 01:34:12,895]Node(M):INFO: M absorbing L
+[2012-10-15 01:34:12,896]Node(J):INFO: Received Connect(0) from: K
+[2012-10-15 01:34:12,896]Node(M):INFO: M has sent FIND to branch L
+[2012-10-15 01:34:12,896]Node(J):INFO: J absorbing K
+[2012-10-15 01:34:12,896]Node(L):INFO: Received Initiate(1, 2, 'Find') from: M
+[2012-10-15 01:34:12,896]Node(G):INFO: Received [I, G, A] @ 20 from other core node I
+[2012-10-15 01:34:12,897]Node(J):INFO: J has sent FIND to branch K
+[2012-10-15 01:34:12,897]Node(L):INFO: L has sent Test() to K
+[2012-10-15 01:34:12,897]Node(G):INFO: Least weight(20) outgoing edge of fragment(3): G -> A !!!!!!!!!!!!!!!
+[2012-10-15 01:34:12,897]Node(K):INFO: Received Initiate(1, 2, 'Find') from: J
+[2012-10-15 01:34:12,897]Node(L):INFO: L sent Reject() to M
+[2012-10-15 01:34:12,898]Node(K):INFO: K has sent Test() to L
+[2012-10-15 01:34:12,898]Node(L):INFO: Received Test(1, 2) from: K
+[2012-10-15 01:34:12,898]Node(K):INFO: K sent Reject() to J
+[2012-10-15 01:34:12,898]Node(L):INFO: L sent Reject() to K
+[2012-10-15 01:34:12,898]Node(G):INFO: Fragment (3) ------------ Sending Connect(1) to A
+[2012-10-15 01:34:12,898]Node(M):INFO: M Received Reject() from: L
+[2012-10-15 01:34:12,898]Node(J):INFO: J Received Reject() from: K
+[2012-10-15 01:34:12,899]Node(K):INFO: Received Test(1, 2) from: L
+[2012-10-15 01:34:12,899]Node(I):INFO: Received Test(1, 2) from: J
+[2012-10-15 01:34:12,899]Node(J):INFO: J has sent Test() to I
+[2012-10-15 01:34:12,900]Node(K):INFO: K sent Reject() to L
+[2012-10-15 01:34:12,900]Node(I):INFO: I sent Accept() to J
+[2012-10-15 01:34:12,900]Node(N):INFO: Received Test(1, 2) from: M
+[2012-10-15 01:34:12,900]Node(K):INFO: K Received Reject() from: L
+[2012-10-15 01:34:12,900]Node(K):INFO: Least weight(999999999) outgoing edge from K: No Outgoing edges
+[2012-10-15 01:34:12,900]Node(N):INFO: N is waking up!
+[2012-10-15 01:34:12,900]Node(J):INFO: Outgoing Neighbor J -> I @ 57 [find_count = 1]
+[2012-10-15 01:34:12,901]Node(J):INFO: Received None @ 999999999 from K [find_count = 0]
+[2012-10-15 01:34:12,901]Node(J):INFO: Least weight(57) outgoing edge from J: J -> I
+[2012-10-15 01:34:12,902]Node(Q):INFO: Received Connect(0) from: N
+[2012-10-15 01:34:12,902]Node(L):INFO: L Received Reject() from: K
+[2012-10-15 01:34:12,902]Node(L):INFO: Least weight(999999999) outgoing edge from L: No Outgoing edges
+[2012-10-15 01:34:12,902]Node(Q):INFO: Q is waking up!
+[2012-10-15 01:34:12,903]Node(N):INFO: Received Connect(0) from: Q
+[2012-10-15 01:34:12,903]Node(Q):INFO: Q merging with N
+[2012-10-15 01:34:12,904]Node(N):INFO: N merging with Q
+[2012-10-15 01:34:12,899]Node(G):INFO: G merging with A
+[2012-10-15 01:34:12,899]Node(A):INFO: Received Connect(1) from: G
+[2012-10-15 01:34:12,899]Node(M):INFO: M has sent Test() to N
+[2012-10-15 01:34:12,904]Node(Q):INFO: Received Initiate(1, 33, 'Find') from: N
+[2012-10-15 01:34:12,904]Node(M):INFO: Received [J, I] @ 57 from other core node J
+[2012-10-15 01:34:12,904]Node(A):INFO: A merging with G
+[2012-10-15 01:34:12,904]Node(N):INFO: Received Initiate(1, 33, 'Find') from: Q
+[2012-10-15 01:34:12,905]Node(M):INFO: Received None @ 999999999 from L [find_count = 0]
+[2012-10-15 01:34:12,905]Node(P):INFO: Received Test(1, 33) from: Q
+[2012-10-15 01:34:12,905]Node(A):INFO: Received Initiate(2, 20, 'Find') from: G
+[2012-10-15 01:34:12,905]Node(P):INFO: P is waking up!
+[2012-10-15 01:34:12,905]Node(G):INFO: Received Initiate(2, 20, 'Find') from: A
+[2012-10-15 01:34:12,906]Node(A):INFO: A has sent FIND to branch B
+[2012-10-15 01:34:12,906]Node(B):INFO: Received Initiate(2, 20, 'Find') from: A
+[2012-10-15 01:34:12,906]Node(Q):INFO: Q has sent Test() to P
+[2012-10-15 01:34:12,906]Node(A):INFO: A has sent FIND to branch F
+[2012-10-15 01:34:12,906]Node(G):INFO: G has sent FIND to branch I
+[2012-10-15 01:34:12,906]Node(I):INFO: Received Initiate(2, 20, 'Find') from: G
+[2012-10-15 01:34:12,906]Node(O):INFO: Received Connect(0) from: P
+[2012-10-15 01:34:12,907]Node(O):INFO: O is waking up!
+[2012-10-15 01:34:12,907]Node(N):INFO: N has sent Test() to O
+[2012-10-15 01:34:12,907]Node(B):INFO: B has sent FIND to branch E
+[2012-10-15 01:34:12,907]Node(H):INFO: Received Initiate(2, 20, 'Find') from: G
+[2012-10-15 01:34:12,908]Node(O):INFO: O merging with P
+[2012-10-15 01:34:12,907]Node(P):INFO: Received Connect(0) from: O
+[2012-10-15 01:34:12,908]Node(P):INFO: P merging with O
+[2012-10-15 01:34:12,907]Node(F):INFO: Received Initiate(2, 20, 'Find') from: A
+[2012-10-15 01:34:12,908]Node(M):INFO: Outgoing Neighbor M -> N @ 54 [find_count = 0]
+[2012-10-15 01:34:12,908]Node(M):INFO: Least weight(54) outgoing edge from M: M -> N
+[2012-10-15 01:34:12,908]Node(P):INFO: Received Initiate(1, 34, 'Find') from: O
+[2012-10-15 01:34:12,908]Node(N):INFO: N sent Accept() to M
+[2012-10-15 01:34:12,909]Node(M):INFO: Least weight(54) outgoing edge of fragment(2): M -> N !!!!!!!!!!!!!!!
+[2012-10-15 01:34:12,909]Node(P):INFO: P has sent Test() to T
+[2012-10-15 01:34:12,907]Node(E):INFO: Received Initiate(2, 20, 'Find') from: B
+[2012-10-15 01:34:12,907]Node(I):INFO: I has sent Test() to J
+[2012-10-15 01:34:12,909]Node(P):INFO: P sent Accept() to Q
+[2012-10-15 01:34:12,908]Node(H):INFO: Least weight(999999999) outgoing edge from H: No Outgoing edges
+[2012-10-15 01:34:12,908]Node(O):INFO: Received Test(1, 33) from: N
+[2012-10-15 01:34:12,909]Node(T):INFO: Received Test(1, 34) from: P
+[2012-10-15 01:34:12,910]Node(F):INFO: Least weight(999999999) outgoing edge from F: No Outgoing edges
+[2012-10-15 01:34:12,910]Node(O):INFO: Received Initiate(1, 34, 'Find') from: P
+[2012-10-15 01:34:12,910]Node(T):INFO: T is waking up!
+[2012-10-15 01:34:12,910]Node(M):INFO: Fragment (2) ------------ Sending Connect(1) to N
+[2012-10-15 01:34:12,910]Node(O):INFO: O has sent Test() to N
+[2012-10-15 01:34:12,908]Node(G):INFO: G has sent FIND to branch H
+[2012-10-15 01:34:12,908]Node(B):INFO: B has sent FIND to branch C
+[2012-10-15 01:34:12,909]Node(E):INFO: Least weight(999999999) outgoing edge from E: No Outgoing edges
+[2012-10-15 01:34:12,910]Node(Q):INFO: Outgoing Neighbor Q -> P @ 43 [find_count = 0]
+[2012-10-15 01:34:12,911]Node(Q):INFO: Least weight(43) outgoing edge from Q: Q -> P
+[2012-10-15 01:34:12,911]Node(O):INFO: O sent Accept() to N
+[2012-10-15 01:34:12,911]Node(A):INFO: Received None @ 999999999 from F [find_count = 1]
+[2012-10-15 01:34:12,911]Node(N):INFO: Received Test(1, 34) from: O
+[2012-10-15 01:34:12,912]Node(N):INFO: N sent Accept() to O
+[2012-10-15 01:34:12,912]Node(G):INFO: Received None @ 999999999 from H [find_count = 1]
+[2012-10-15 01:34:12,912]Node(O):INFO: Outgoing Neighbor O -> N @ 36 [find_count = 0]
+[2012-10-15 01:34:12,912]Node(B):INFO: Received None @ 999999999 from E [find_count = 1]
+[2012-10-15 01:34:12,912]Node(N):INFO: Received Connect(1) from: M
+[2012-10-15 01:34:12,912]Node(O):INFO: Least weight(36) outgoing edge from O: O -> N
+[2012-10-15 01:34:12,912]Node(J):INFO: Received Test(2, 20) from: I
+[2012-10-15 01:34:12,912]Node(N):INFO: Outgoing Neighbor N -> O @ 36 [find_count = 0]
+[2012-10-15 01:34:12,912]Node(V):INFO: Received Connect(0) from: T
+[2012-10-15 01:34:12,912]Node(N):INFO: Least weight(36) outgoing edge from N: N -> O
+[2012-10-15 01:34:12,912]Node(V):INFO: V is waking up!
+[2012-10-15 01:34:12,913]Node(J):INFO: Received [M, N] @ 54 from other core node M
+[2012-10-15 01:34:12,913]Node(P):INFO: Received [O, N] @ 36 from other core node O
+[2012-10-15 01:34:12,913]Node(N):INFO: Received [Q, P] @ 43 from other core node Q
+[2012-10-15 01:34:12,913]Node(N):INFO: Least weight(36) outgoing edge of fragment(33): N -> O !!!!!!!!!!!!!!!
+[2012-10-15 01:34:12,913]Node(V):INFO: V merging with T
+[2012-10-15 01:34:12,913]Node(T):INFO: Received Connect(0) from: V
+[2012-10-15 01:34:12,913]Node(Q):INFO: Received [N, O] @ 36 from other core node N
+[2012-10-15 01:34:12,914]Node(C):INFO: Received Initiate(2, 20, 'Find') from: B
+[2012-10-15 01:34:12,914]Node(N):INFO: Fragment (33) ------------ Sending Connect(1) to O
+[2012-10-15 01:34:12,914]Node(T):INFO: T merging with V
+[2012-10-15 01:34:12,914]Node(C):INFO: C has sent FIND to branch D
+[2012-10-15 01:34:12,914]Node(O):INFO: Received Connect(1) from: N
+[2012-10-15 01:34:12,914]Node(D):INFO: Received Initiate(2, 20, 'Find') from: C
+[2012-10-15 01:34:12,915]Node(T):INFO: Received Initiate(1, 37, 'Find') from: V
+[2012-10-15 01:34:12,915]Node(D):INFO: Least weight(999999999) outgoing edge from D: No Outgoing edges
+[2012-10-15 01:34:12,915]Node(V):INFO: Received Initiate(1, 37, 'Find') from: T
+[2012-10-15 01:34:12,915]Node(C):INFO: Received None @ 999999999 from D [find_count = 0]
+[2012-10-15 01:34:12,915]Node(C):INFO: Least weight(999999999) outgoing edge from C: No Outgoing edges
+[2012-10-15 01:34:12,916]Node(P):INFO: Received Test(1, 37) from: T
+[2012-10-15 01:34:12,916]Node(T):INFO: T has sent Test() to P
+[2012-10-15 01:34:12,916]Node(P):INFO: P sent Accept() to T
+[2012-10-15 01:34:12,916]Node(B):INFO: Received None @ 999999999 from C [find_count = 0]
+[2012-10-15 01:34:12,916]Node(V):INFO: V has sent Test() to S
+[2012-10-15 01:34:12,916]Node(B):INFO: Least weight(999999999) outgoing edge from B: No Outgoing edges
+[2012-10-15 01:34:12,916]Node(P):INFO: Outgoing Neighbor P -> O -> N @ 36 [find_count = 0]
+[2012-10-15 01:34:12,917]Node(P):INFO: Least weight(36) outgoing edge from P: P -> O -> N
+[2012-10-15 01:34:12,916]Node(T):INFO: T sent Accept() to P
+[2012-10-15 01:34:12,917]Node(S):INFO: Received Test(1, 37) from: V
+[2012-10-15 01:34:12,917]Node(A):INFO: Received None @ 999999999 from B [find_count = 0]
+[2012-10-15 01:34:12,917]Node(S):INFO: S is waking up!
+[2012-10-15 01:34:12,917]Node(A):INFO: Least weight(999999999) outgoing edge from A: No Outgoing edges
+[2012-10-15 01:34:12,917]Node(T):INFO: Outgoing Neighbor T -> P @ 38 [find_count = 0]
+[2012-10-15 01:34:12,917]Node(T):INFO: Least weight(38) outgoing edge from T: T -> P
+[2012-10-15 01:34:12,918]Node(O):INFO: Received [P, O, N] @ 36 from other core node P
+[2012-10-15 01:34:12,918]Node(O):INFO: Least weight(36) outgoing edge of fragment(34): O -> N !!!!!!!!!!!!!!!
+[2012-10-15 01:34:12,918]Node(R):INFO: Received Connect(0) from: S
+[2012-10-15 01:34:12,918]Node(G):INFO: Received None @ 999999999 from other core node A
+[2012-10-15 01:34:12,918]Node(R):INFO: R is waking up!
+[2012-10-15 01:34:12,919]Node(V):INFO: Received [T, P] @ 38 from other core node T
+[2012-10-15 01:34:12,919]Node(R):INFO: R merging with S
+[2012-10-15 01:34:12,919]Node(S):INFO: Received Connect(0) from: R
+[2012-10-15 01:34:12,919]Node(S):INFO: S merging with R
+[2012-10-15 01:34:12,919]Node(O):INFO: Fragment (34) ------------ Sending Connect(1) to N
+[2012-10-15 01:34:12,919]Node(R):INFO: Received Initiate(1, 35, 'Find') from: S
+[2012-10-15 01:34:12,919]Node(N):INFO: Received Connect(1) from: O
+[2012-10-15 01:34:12,920]Node(O):INFO: O merging with N
+[2012-10-15 01:34:12,920]Node(N):INFO: N merging with O
+[2012-10-15 01:34:12,920]Node(S):INFO: Received Initiate(1, 35, 'Find') from: R
+[2012-10-15 01:34:12,920]Node(R):INFO: R has sent Test() to N
+[2012-10-15 01:34:12,920]Node(O):INFO: Received Initiate(2, 36, 'Find') from: N
+[2012-10-15 01:34:12,920]Node(O):INFO: O has sent FIND to branch P
+[2012-10-15 01:34:12,920]Node(N):INFO: Received Test(1, 35) from: R
+[2012-10-15 01:34:12,921]Node(O):INFO: O has sent Test() to Q
+[2012-10-15 01:34:12,921]Node(P):INFO: Received Initiate(2, 36, 'Find') from: O
+[2012-10-15 01:34:12,921]Node(S):INFO: S has sent Test() to V
+[2012-10-15 01:34:12,921]Node(V):INFO: Received Test(1, 35) from: S
+[2012-10-15 01:34:12,921]Node(P):INFO: P has sent Test() to T
+[2012-10-15 01:34:12,921]Node(Q):INFO: Received Test(2, 36) from: O
+[2012-10-15 01:34:12,921]Node(T):INFO: Received Test(2, 36) from: P
+[2012-10-15 01:34:12,921]Node(V):INFO: V sent Accept() to S
+[2012-10-15 01:34:12,921]Node(R):INFO: Outgoing Neighbor R -> N @ 47 [find_count = 0]
+[2012-10-15 01:34:12,921]Node(S):INFO: S sent Accept() to V
+[2012-10-15 01:34:12,922]Node(V):INFO: Outgoing Neighbor V -> T -> P @ 38 [find_count = 0]
+[2012-10-15 01:34:12,922]Node(V):INFO: Least weight(38) outgoing edge from V: V -> T -> P
+[2012-10-15 01:34:12,922]Node(N):INFO: N sent Accept() to R
+[2012-10-15 01:34:12,922]Node(R):INFO: Least weight(47) outgoing edge from R: R -> N
+[2012-10-15 01:34:12,922]Node(S):INFO: Outgoing Neighbor S -> V @ 41 [find_count = 0]
+[2012-10-15 01:34:12,922]Node(N):INFO: Received Initiate(2, 36, 'Find') from: O
+[2012-10-15 01:34:12,922]Node(T):INFO: Received [V, T, P] @ 38 from other core node V
+[2012-10-15 01:34:12,923]Node(N):INFO: N has sent FIND to branch Q
+[2012-10-15 01:34:12,923]Node(Q):INFO: Received Initiate(2, 36, 'Find') from: N
+[2012-10-15 01:34:12,923]Node(T):INFO: Least weight(38) outgoing edge of fragment(37): T -> P !!!!!!!!!!!!!!!
+[2012-10-15 01:34:12,923]Node(S):INFO: Least weight(41) outgoing edge from S: S -> V
+[2012-10-15 01:34:12,923]Node(N):INFO: N has sent Test() to R
+[2012-10-15 01:34:12,923]Node(Q):INFO: Q has sent Test() to P
+[2012-10-15 01:34:12,923]Node(N):INFO: N absorbing M
+[2012-10-15 01:34:12,923]Node(R):INFO: Received Test(2, 36) from: N
+[2012-10-15 01:34:12,924]Node(Q):INFO: Q sent Reject() to O
+[2012-10-15 01:34:12,924]Node(P):INFO: Received Test(2, 36) from: Q
+[2012-10-15 01:34:12,924]Node(M):INFO: Received Initiate(2, 36, 'Find') from: N
+[2012-10-15 01:34:12,924]Node(P):INFO: P sent Reject() to Q
+[2012-10-15 01:34:12,924]Node(Q):INFO: Q Received Reject() from: P
+[2012-10-15 01:34:12,923]Node(S):INFO: Received [R, N] @ 47 from other core node R
+[2012-10-15 01:34:12,924]Node(Q):INFO: Q has sent Test() to O
+[2012-10-15 01:34:12,924]Node(R):INFO: Received [S, V] @ 41 from other core node S
+[2012-10-15 01:34:12,924]Node(O):INFO: O Received Reject() from: Q
+[2012-10-15 01:34:12,924]Node(S):INFO: Least weight(41) outgoing edge of fragment(35): S -> V !!!!!!!!!!!!!!!
+[2012-10-15 01:34:12,924]Node(T):INFO: Fragment (37) ------------ Sending Connect(1) to P
+[2012-10-15 01:34:12,924]Node(O):INFO: Received Test(2, 36) from: Q
+[2012-10-15 01:34:12,924]Node(L):INFO: Received Initiate(2, 36, 'Find') from: M
+[2012-10-15 01:34:12,925]Node(M):INFO: M has sent FIND to branch L
+[2012-10-15 01:34:12,925]Node(P):INFO: Received Connect(1) from: T
+[2012-10-15 01:34:12,925]Node(P):INFO: P absorbing T
+[2012-10-15 01:34:12,925]Node(L):INFO: Least weight(999999999) outgoing edge from L: No Outgoing edges
+[2012-10-15 01:34:12,925]Node(M):INFO: M has sent FIND to branch J
+[2012-10-15 01:34:12,925]Node(O):INFO: O sent Reject() to Q
+[2012-10-15 01:34:12,925]Node(P):INFO: P has sent FIND to branch T
+[2012-10-15 01:34:12,925]Node(J):INFO: Received Initiate(2, 36, 'Find') from: M
+[2012-10-15 01:34:12,925]Node(M):INFO: Received None @ 999999999 from L [find_count = 1]
+[2012-10-15 01:34:12,925]Node(Q):INFO: Q Received Reject() from: O
+[2012-10-15 01:34:12,926]Node(T):INFO: Received Initiate(2, 36, 'Find') from: P
+[2012-10-15 01:34:12,925]Node(S):INFO: Fragment (35) ------------ Sending Connect(1) to V
+[2012-10-15 01:34:12,925]Node(N):INFO: N has sent FIND to branch M
+[2012-10-15 01:34:12,926]Node(T):INFO: T has sent FIND to branch V
+[2012-10-15 01:34:12,926]Node(T):INFO: T has sent Test() to U
+[2012-10-15 01:34:12,926]Node(K):INFO: Received Initiate(2, 36, 'Find') from: J
+[2012-10-15 01:34:12,927]Node(P):INFO: P Received Reject() from: T
+[2012-10-15 01:34:12,927]Node(U):INFO: Received Test(2, 36) from: T
+[2012-10-15 01:34:12,927]Node(U):INFO: U is waking up!
+[2012-10-15 01:34:12,927]Node(P):INFO: P has sent Test() to U
+[2012-10-15 01:34:12,927]Node(Q):INFO: Q has sent Test() to S
+[2012-10-15 01:34:12,927]Node(S):INFO: Received Test(2, 36) from: Q
+[2012-10-15 01:34:12,926]Node(J):INFO: J has sent FIND to branch K
+[2012-10-15 01:34:12,926]Node(V):INFO: Received Connect(1) from: S
+[2012-10-15 01:34:12,927]Node(T):INFO: T sent Reject() to P
+[2012-10-15 01:34:12,928]Node(P):INFO: Received Connect(0) from: U
+[2012-10-15 01:34:12,928]Node(V):INFO: Received Initiate(2, 36, 'Find') from: T
+[2012-10-15 01:34:12,928]Node(P):INFO: P absorbing U
+[2012-10-15 01:34:12,928]Node(U):INFO: Received Test(2, 36) from: P
+[2012-10-15 01:34:12,927]Node(K):INFO: Least weight(999999999) outgoing edge from K: No Outgoing edges
+[2012-10-15 01:34:12,928]Node(V):INFO: V has sent Test() to S
+[2012-10-15 01:34:12,928]Node(I):INFO: Received Test(2, 36) from: J
+[2012-10-15 01:34:12,928]Node(V):INFO: V absorbing S
+[2012-10-15 01:34:12,928]Node(S):INFO: Received Test(2, 36) from: V
+[2012-10-15 01:34:12,928]Node(U):INFO: Received Initiate(2, 36, 'Find') from: P
+[2012-10-15 01:34:12,928]Node(P):INFO: P has sent FIND to branch U
+[2012-10-15 01:34:12,928]Node(V):INFO: V has sent FIND to branch S
+[2012-10-15 01:34:12,928]Node(I):INFO: I sent Accept() to J
+[2012-10-15 01:34:12,929]Node(S):INFO: Received Initiate(2, 36, 'Find') from: V
+[2012-10-15 01:34:12,929]Node(T):INFO: Received Test(2, 36) from: U
+[2012-10-15 01:34:12,929]Node(U):INFO: U has sent Test() to T
+[2012-10-15 01:34:12,929]Node(J):INFO: J has sent Test() to I
+[2012-10-15 01:34:12,929]Node(S):INFO: S has sent FIND to branch R
+[2012-10-15 01:34:12,929]Node(T):INFO: T sent Reject() to U
+[2012-10-15 01:34:12,929]Node(T):INFO: T Received Reject() from: U
+[2012-10-15 01:34:12,929]Node(S):INFO: S has sent Test() to Q
+[2012-10-15 01:34:12,929]Node(U):INFO: U sent Reject() to T
+[2012-10-15 01:34:12,930]Node(S):INFO: S sent Reject() to Q
+[2012-10-15 01:34:12,930]Node(T):INFO: T has sent Test() to Q
+[2012-10-15 01:34:12,930]Node(S):INFO: S sent Reject() to V
+[2012-10-15 01:34:12,930]Node(U):INFO: U sent Reject() to P
+[2012-10-15 01:34:12,929]Node(Q):INFO: Received Test(2, 36) from: S
+[2012-10-15 01:34:12,930]Node(R):INFO: Received Initiate(2, 36, 'Find') from: S
+[2012-10-15 01:34:12,930]Node(I):INFO: Outgoing Neighbor I -> J @ 57 [find_count = 0]
+[2012-10-15 01:34:12,930]Node(P):INFO: P Received Reject() from: U
+[2012-10-15 01:34:12,930]Node(U):INFO: U Received Reject() from: T
+[2012-10-15 01:34:12,930]Node(I):INFO: Least weight(57) outgoing edge from I: I -> J
+[2012-10-15 01:34:12,931]Node(Q):INFO: Q sent Reject() to S
+[2012-10-15 01:34:12,931]Node(P):INFO: P has sent Test() to Q
+[2012-10-15 01:34:12,931]Node(Q):INFO: Q Received Reject() from: S
+[2012-10-15 01:34:12,930]Node(J):INFO: J sent Accept() to I
+[2012-10-15 01:34:12,931]Node(S):INFO: S Received Reject() from: Q
+[2012-10-15 01:34:12,931]Node(U):INFO: U has sent Test() to V
+[2012-10-15 01:34:12,931]Node(J):INFO: Received None @ 999999999 from K [find_count = 0]
+[2012-10-15 01:34:12,931]Node(S):INFO: S has sent Test() to T
+[2012-10-15 01:34:12,931]Node(R):INFO: R has sent Test() to N
+[2012-10-15 01:34:12,931]Node(N):INFO: Received Test(2, 36) from: R
+[2012-10-15 01:34:12,931]Node(Q):INFO: Q has sent Test() to T
+[2012-10-15 01:34:12,931]Node(J):INFO: Outgoing Neighbor J -> I @ 57 [find_count = 0]
+[2012-10-15 01:34:12,931]Node(Q):INFO: Received Test(2, 36) from: T
+[2012-10-15 01:34:12,931]Node(J):INFO: Least weight(57) outgoing edge from J: J -> I
+[2012-10-15 01:34:12,932]Node(Q):INFO: Q sent Reject() to T
+[2012-10-15 01:34:12,932]Node(Q):INFO: Received Test(2, 36) from: P
+[2012-10-15 01:34:12,932]Node(M):INFO: Received [J, I] @ 57 from J [find_count = 0]
+[2012-10-15 01:34:12,932]Node(M):INFO: Least weight(57) outgoing edge from M: M -> J -> I
+[2012-10-15 01:34:12,932]Node(G):INFO: Received [I, J] @ 57 from I [find_count = 0]
+[2012-10-15 01:34:12,932]Node(P):INFO: P Received Reject() from: Q
+[2012-10-15 01:34:12,932]Node(R):INFO: R sent Reject() to N
+[2012-10-15 01:34:12,932]Node(Q):INFO: Q sent Reject() to P
+[2012-10-15 01:34:12,932]Node(G):INFO: Least weight(57) outgoing edge from G: G -> I -> J
+[2012-10-15 01:34:12,932]Node(T):INFO: Received Test(2, 36) from: Q
+[2012-10-15 01:34:12,932]Node(R):INFO: R Received Reject() from: N
+[2012-10-15 01:34:12,933]Node(T):INFO: T sent Reject() to Q
+[2012-10-15 01:34:12,933]Node(T):INFO: Received Test(2, 36) from: S
+[2012-10-15 01:34:12,933]Node(Q):INFO: Q Received Reject() from: T
+[2012-10-15 01:34:12,933]Node(G):INFO: Least weight(57) outgoing edge of fragment(20): G -> I -> J !!!!!!!!!!!!!!!
+[2012-10-15 01:34:12,933]Node(T):INFO: T sent Reject() to S
+[2012-10-15 01:34:12,933]Node(R):INFO: R has sent Test() to Q
+[2012-10-15 01:34:12,933]Node(S):INFO: S Received Reject() from: T
+[2012-10-15 01:34:12,933]Node(N):INFO: N sent Reject() to R
+[2012-10-15 01:34:12,934]Node(Q):INFO: Q has sent Test() to R
+[2012-10-15 01:34:12,930]Node(V):INFO: V Received Reject() from: S
+[2012-10-15 01:34:12,934]Node(N):INFO: N Received Reject() from: R
+[2012-10-15 01:34:12,934]Node(R):INFO: Received Test(2, 36) from: Q
+[2012-10-15 01:34:12,934]Node(Q):INFO: Received Test(2, 36) from: R
+[2012-10-15 01:34:12,933]Node(A):INFO: Received [G, I, J] @ 57 from other core node G
+[2012-10-15 01:34:12,934]Node(N):INFO: Received [M, J, I] @ 57 from M [find_count = 1]
+[2012-10-15 01:34:12,935]Node(Q):INFO: Q sent Reject() to R
+[2012-10-15 01:34:12,933]Node(T):INFO: T Received Reject() from: Q
+[2012-10-15 01:34:12,934]Node(R):INFO: R sent Reject() to Q
+[2012-10-15 01:34:12,935]Node(U):INFO: Received Test(2, 36) from: V
+[2012-10-15 01:34:12,935]Node(Q):INFO: Q Received Reject() from: R
+[2012-10-15 01:34:12,935]Node(V):INFO: V has sent Test() to U
+[2012-10-15 01:34:12,935]Node(R):INFO: R Received Reject() from: Q
+[2012-10-15 01:34:12,935]Node(S):INFO: Received Test(2, 36) from: T
+[2012-10-15 01:34:12,935]Node(Q):INFO: Least weight(999999999) outgoing edge from Q: No Outgoing edges
+[2012-10-15 01:34:12,935]Node(U):INFO: U sent Reject() to V
+[2012-10-15 01:34:12,936]Node(S):INFO: S sent Reject() to T
+[2012-10-15 01:34:12,936]Node(R):INFO: Least weight(999999999) outgoing edge from R: No Outgoing edges
+[2012-10-15 01:34:12,935]Node(T):INFO: T has sent Test() to S
+[2012-10-15 01:34:12,935]Node(I):INFO: Fragment (20) ------------ Sending Connect(2) to J
+[2012-10-15 01:34:12,936]Node(V):INFO: Received Test(2, 36) from: U
+[2012-10-15 01:34:12,936]Node(S):INFO: Received None @ 999999999 from R [find_count = 0]
+[2012-10-15 01:34:12,936]Node(T):INFO: T Received Reject() from: S
+[2012-10-15 01:34:12,936]Node(N):INFO: Received None @ 999999999 from Q [find_count = 0]
+[2012-10-15 01:34:12,936]Node(J):INFO: Received Connect(2) from: I
+[2012-10-15 01:34:12,937]Node(S):INFO: Least weight(999999999) outgoing edge from S: No Outgoing edges
+[2012-10-15 01:34:12,937]Node(N):INFO: Least weight(57) outgoing edge from N: N -> M -> J -> I
+[2012-10-15 01:34:12,937]Node(V):INFO: V sent Reject() to U
+[2012-10-15 01:34:12,937]Node(U):INFO: U Received Reject() from: V
+[2012-10-15 01:34:12,937]Node(U):INFO: Least weight(999999999) outgoing edge from U: No Outgoing edges
+[2012-10-15 01:34:12,937]Node(O):INFO: Received [N, M, J, I] @ 57 from other core node N
+[2012-10-15 01:34:12,938]Node(P):INFO: Received None @ 999999999 from U [find_count = 1]
+[2012-10-15 01:34:12,938]Node(V):INFO: V Received Reject() from: U
+[2012-10-15 01:34:12,938]Node(V):INFO: Received None @ 999999999 from S [find_count = 0]
+[2012-10-15 01:34:12,939]Node(V):INFO: Least weight(999999999) outgoing edge from V: No Outgoing edges
+[2012-10-15 01:34:12,940]Node(T):INFO: Received None @ 999999999 from V [find_count = 0]
+[2012-10-15 01:34:12,940]Node(T):INFO: Least weight(999999999) outgoing edge from T: No Outgoing edges
+[2012-10-15 01:34:12,940]Node(P):INFO: Received None @ 999999999 from T [find_count = 0]
+[2012-10-15 01:34:12,940]Node(P):INFO: Least weight(999999999) outgoing edge from P: No Outgoing edges
+[2012-10-15 01:34:12,941]Node(O):INFO: Received None @ 999999999 from P [find_count = 0]
+[2012-10-15 01:34:12,941]Node(O):INFO: Least weight(57) outgoing edge from O: O -> N -> M -> J -> I
+[2012-10-15 01:34:12,942]Node(N):INFO: Received [O, N, M, J, I] @ 57 from other core node O
+[2012-10-15 01:34:12,942]Node(N):INFO: Least weight(57) outgoing edge of fragment(36): N -> M -> J -> I !!!!!!!!!!!!!!!
+[2012-10-15 01:34:12,944]Node(J):INFO: Fragment (36) ------------ Sending Connect(2) to I
+[2012-10-15 01:34:12,944]Node(J):INFO: J merging with I
+[2012-10-15 01:34:12,944]Node(I):INFO: Received Connect(2) from: J
+[2012-10-15 01:34:12,944]Node(I):INFO: I merging with J
+[2012-10-15 01:34:12,945]Node(I):INFO: Received Initiate(3, 57, 'Find') from: J
+[2012-10-15 01:34:12,945]Node(I):INFO: I has sent FIND to branch G
+[2012-10-15 01:34:12,945]Node(J):INFO: Received Initiate(3, 57, 'Find') from: I
+[2012-10-15 01:34:12,945]Node(G):INFO: Received Initiate(3, 57, 'Find') from: I
+[2012-10-15 01:34:12,945]Node(G):INFO: G has sent FIND to branch A
+[2012-10-15 01:34:12,945]Node(J):INFO: J has sent FIND to branch M
+[2012-10-15 01:34:12,946]Node(G):INFO: G has sent FIND to branch H
+[2012-10-15 01:34:12,946]Node(H):INFO: Received Initiate(3, 57, 'Find') from: G
+[2012-10-15 01:34:12,946]Node(M):INFO: Received Initiate(3, 57, 'Find') from: J
+[2012-10-15 01:34:12,946]Node(H):INFO: Least weight(999999999) outgoing edge from H: No Outgoing edges
+[2012-10-15 01:34:12,946]Node(M):INFO: M has sent FIND to branch L
+[2012-10-15 01:34:12,946]Node(K):INFO: Received Initiate(3, 57, 'Find') from: J
+[2012-10-15 01:34:12,947]Node(J):INFO: J has sent FIND to branch K
+[2012-10-15 01:34:12,946]Node(A):INFO: Received Initiate(3, 57, 'Find') from: G
+[2012-10-15 01:34:12,946]Node(G):INFO: Received None @ 999999999 from H [find_count = 1]
+[2012-10-15 01:34:12,946]Node(M):INFO: M has sent FIND to branch N
+[2012-10-15 01:34:12,946]Node(N):INFO: Received Initiate(3, 57, 'Find') from: M
+[2012-10-15 01:34:12,947]Node(A):INFO: A has sent FIND to branch B
+[2012-10-15 01:34:12,947]Node(K):INFO: Least weight(999999999) outgoing edge from K: No Outgoing edges
+[2012-10-15 01:34:12,946]Node(L):INFO: Received Initiate(3, 57, 'Find') from: M
+[2012-10-15 01:34:12,947]Node(N):INFO: N has sent FIND to branch Q
+[2012-10-15 01:34:12,947]Node(A):INFO: A has sent FIND to branch F
+[2012-10-15 01:34:12,947]Node(B):INFO: Received Initiate(3, 57, 'Find') from: A
+[2012-10-15 01:34:12,947]Node(N):INFO: N has sent FIND to branch O
+[2012-10-15 01:34:12,947]Node(L):INFO: Least weight(999999999) outgoing edge from L: No Outgoing edges
+[2012-10-15 01:34:12,947]Node(F):INFO: Received Initiate(3, 57, 'Find') from: A
+[2012-10-15 01:34:12,947]Node(O):INFO: Received Initiate(3, 57, 'Find') from: N
+[2012-10-15 01:34:12,948]Node(F):INFO: Least weight(999999999) outgoing edge from F: No Outgoing edges
+[2012-10-15 01:34:12,948]Node(O):INFO: O has sent FIND to branch P
+[2012-10-15 01:34:12,948]Node(P):INFO: Received Initiate(3, 57, 'Find') from: O
+[2012-10-15 01:34:12,948]Node(B):INFO: B has sent FIND to branch E
+[2012-10-15 01:34:12,948]Node(P):INFO: P has sent FIND to branch U
+[2012-10-15 01:34:12,948]Node(Q):INFO: Received Initiate(3, 57, 'Find') from: N
+[2012-10-15 01:34:12,948]Node(E):INFO: Received Initiate(3, 57, 'Find') from: B
+[2012-10-15 01:34:12,948]Node(Q):INFO: Least weight(999999999) outgoing edge from Q: No Outgoing edges
+[2012-10-15 01:34:12,949]Node(E):INFO: Least weight(999999999) outgoing edge from E: No Outgoing edges
+[2012-10-15 01:34:12,949]Node(C):INFO: Received Initiate(3, 57, 'Find') from: B
+[2012-10-15 01:34:12,949]Node(B):INFO: B has sent FIND to branch C
+[2012-10-15 01:34:12,949]Node(C):INFO: C has sent FIND to branch D
+[2012-10-15 01:34:12,948]Node(P):INFO: P has sent FIND to branch T
+[2012-10-15 01:34:12,949]Node(T):INFO: Received Initiate(3, 57, 'Find') from: P
+[2012-10-15 01:34:12,948]Node(A):INFO: Received None @ 999999999 from F [find_count = 1]
+[2012-10-15 01:34:12,948]Node(M):INFO: Received None @ 999999999 from L [find_count = 1]
+[2012-10-15 01:34:12,949]Node(B):INFO: Received None @ 999999999 from E [find_count = 1]
+[2012-10-15 01:34:12,949]Node(U):INFO: Received Initiate(3, 57, 'Find') from: P
+[2012-10-15 01:34:12,949]Node(D):INFO: Received Initiate(3, 57, 'Find') from: C
+[2012-10-15 01:34:12,950]Node(D):INFO: Least weight(999999999) outgoing edge from D: No Outgoing edges
+[2012-10-15 01:34:12,949]Node(N):INFO: Received None @ 999999999 from Q [find_count = 1]
+[2012-10-15 01:34:12,949]Node(J):INFO: Received None @ 999999999 from K [find_count = 1]
+[2012-10-15 01:34:12,950]Node(U):INFO: Least weight(999999999) outgoing edge from U: No Outgoing edges
+[2012-10-15 01:34:12,950]Node(T):INFO: T has sent FIND to branch V
+[2012-10-15 01:34:12,950]Node(C):INFO: Received None @ 999999999 from D [find_count = 0]
+[2012-10-15 01:34:12,950]Node(V):INFO: Received Initiate(3, 57, 'Find') from: T
+[2012-10-15 01:34:12,950]Node(C):INFO: Least weight(999999999) outgoing edge from C: No Outgoing edges
+[2012-10-15 01:34:12,951]Node(P):INFO: Received None @ 999999999 from U [find_count = 1]
+[2012-10-15 01:34:12,951]Node(B):INFO: Received None @ 999999999 from C [find_count = 0]
+[2012-10-15 01:34:12,951]Node(V):INFO: V has sent FIND to branch S
+[2012-10-15 01:34:12,951]Node(B):INFO: Least weight(999999999) outgoing edge from B: No Outgoing edges
+[2012-10-15 01:34:12,951]Node(S):INFO: Received Initiate(3, 57, 'Find') from: V
+[2012-10-15 01:34:12,951]Node(S):INFO: S has sent FIND to branch R
+[2012-10-15 01:34:12,951]Node(A):INFO: Received None @ 999999999 from B [find_count = 0]
+[2012-10-15 01:34:12,952]Node(A):INFO: Least weight(999999999) outgoing edge from A: No Outgoing edges
+[2012-10-15 01:34:12,952]Node(R):INFO: Received Initiate(3, 57, 'Find') from: S
+[2012-10-15 01:34:12,952]Node(R):INFO: Least weight(999999999) outgoing edge from R: No Outgoing edges
+[2012-10-15 01:34:12,952]Node(G):INFO: Received None @ 999999999 from A [find_count = 0]
+[2012-10-15 01:34:12,952]Node(G):INFO: Least weight(999999999) outgoing edge from G: No Outgoing edges
+[2012-10-15 01:34:12,952]Node(S):INFO: Received None @ 999999999 from R [find_count = 0]
+[2012-10-15 01:34:12,953]Node(S):INFO: Least weight(999999999) outgoing edge from S: No Outgoing edges
+[2012-10-15 01:34:12,953]Node(I):INFO: Received None @ 999999999 from G [find_count = 0]
+[2012-10-15 01:34:12,953]Node(I):INFO: Least weight(999999999) outgoing edge from I: No Outgoing edges
+[2012-10-15 01:34:12,953]Node(V):INFO: Received None @ 999999999 from S [find_count = 0]
+[2012-10-15 01:34:12,953]Node(V):INFO: Least weight(999999999) outgoing edge from V: No Outgoing edges
+[2012-10-15 01:34:12,953]Node(J):INFO: Received None @ 999999999 from other core node I
+[2012-10-15 01:34:12,954]Node(T):INFO: Received None @ 999999999 from V [find_count = 0]
+[2012-10-15 01:34:12,954]Node(T):INFO: Least weight(999999999) outgoing edge from T: No Outgoing edges
+[2012-10-15 01:34:12,955]Node(P):INFO: Received None @ 999999999 from T [find_count = 0]
+[2012-10-15 01:34:12,955]Node(P):INFO: Least weight(999999999) outgoing edge from P: No Outgoing edges
+[2012-10-15 01:34:12,955]Node(O):INFO: Received None @ 999999999 from P [find_count = 0]
+[2012-10-15 01:34:12,956]Node(O):INFO: Least weight(999999999) outgoing edge from O: No Outgoing edges
+[2012-10-15 01:34:12,956]Node(N):INFO: Received None @ 999999999 from O [find_count = 0]
+[2012-10-15 01:34:12,956]Node(N):INFO: Least weight(999999999) outgoing edge from N: No Outgoing edges
+[2012-10-15 01:34:12,957]Node(M):INFO: Received None @ 999999999 from N [find_count = 0]
+[2012-10-15 01:34:12,957]Node(M):INFO: Least weight(999999999) outgoing edge from M: No Outgoing edges
+[2012-10-15 01:34:12,958]Node(J):INFO: Received None @ 999999999 from M [find_count = 0]
+[2012-10-15 01:34:12,958]Node(J):INFO: Least weight(999999999) outgoing edge from J: No Outgoing edges
+[2012-10-15 01:34:12,958]Node(J):INFO: ----- NO MORE OUTGOING EDGES -----
+[2012-10-15 01:34:12,959]Node(I):INFO: Received None @ 999999999 from other core node J
+[2012-10-15 01:34:12,959]Node(I):INFO: ----- NO MORE OUTGOING EDGES -----
+[2012-10-15 01:34:13,011]Spark(Spark):INFO: Solution: (A, B), (A, F), (A, G), (B, C), (B, E), (C, D), (G, H), (G, I), (I, J), (J, K), (J, M), (L, M), (M, N), (N, O), (N, Q), (O, P), (P, T), (P, U), (R, S), (S, V), (T, V)
+[2012-10-15 01:34:13,031]runtime:INFO: ***** Statistics *****
+* Total procs: 23
+
+[2012-10-15 01:34:13,031]runtime:INFO: Terminating...
+arjun@arjun-desktop:~/dev/workspace/Distributed-Graph-Algorithms/Minimum-Spanning-Tree$ ./Kruskal.py graph-3
+Solution: (A, B), (A, F), (A, G), (B, C), (B, E), (C, D), (G, H), (G, I), (I, J), (J, K), (J, M), (L, M), (M, N), (N, O), (N, Q), (O, P), (P, T), (P, U), (R, S), (S, V), (T, V)
+arjun@arjun-desktop:~/dev/workspace/Distributed-Graph-Algorithms/Minimum-Spanning-Tree$ 
