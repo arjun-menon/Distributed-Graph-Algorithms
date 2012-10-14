@@ -4,15 +4,35 @@ Distributed Breadth First Search
 Overview
 --------
 
-The goal of the algorithm is to distribute the task of checking whether an element exists in a given tree to multiple processes. The entire program is contained in one file: `BFS.dis`. This is how you would run the program, and these are the command-line options offered by the program:
+The goal of the algorithm is to distribute the task of checking whether an element exists in a given tree to multiple processes. Unlike the other algorithms in this project, this program follows a _processes as workers_.
 
-`python3 -m distalgo.runtime BFS.dis [num_procs] [elem_to_search] [r height]`
+Implementation
+--------------
 
-The first two command line options allow the user to select the number of worker processes that should be started, and the element that is to be searched for. By `default num_procs = 4` and `elem_to_search = 300`.
+### Usage
 
-A graph library [1] known as NetworkX was used in this project. It is a well-renown pure Python library that provides several useful features pertaining to graphs. Granted, it was a bit unnecessary for this project, but I was anticipating more use for it than was needed.
+The algorithm is contained in one file: `BFS.dis.py`. It can be run using `run.py` or using DistAlgo directly like this: `python3 -m distalgo.runtime BFS.dis`. The program offers the following options (disaplyed using the `-h` optarg):
 
-Initially the algorithm uses NetworkX to construct a large tree. NetworkX offers a bunch of graph generating algorithms [2], few of which generate trees. The particular type of tree generator used was a *“perfectly balanced r-tree of height h”*. By default the tree constructed is of `r = 4` and `height = 4`. The user can opt to re-construct the NetworkX balanced tree with a different ‘r’ and ‘height’ parameters by specifying the last two command line options. It is necessary to specify all four command line options to reconfigure the tree.
+	usage: BFS.dis [-h] [-w WORKERS] [-e ELEMENT] [-r RFACTOR] [-x XHEIGHT]
+
+	Perform breadth-first search in paralell using several workers.
+
+	optional arguments:
+	  -h, --help            show this help message and exit
+	  -w WORKERS, --workers WORKERS
+	                        Number of workrrs. [Default 4]
+	  -e ELEMENT, --element ELEMENT
+	                        The element to search for. [Default 300]
+	  -r RFACTOR, --rfactor RFACTOR
+	                        r factor in the NetworkX generated perfectly balanced
+	                        r-tree of height h. [Default 4]
+	  -x XHEIGHT, --xheight XHEIGHT
+	                        Height of the Network generated perfectly balanced
+	                        r-tree of height h. [Default 4]
+
+The first two command line options allow the user to select the number of worker processes that should be started, and the element that is to be searched for. By default the number of workers is `4` and the element to search for is `300`.
+
+The next two options have to do with the random tree that is constructed. The algorithm initially uses NetworkX to construct a large tree. NetworkX offers a [bunch of graph generating algorithms](http://networkx.lanl.gov/reference/generators.html); some of which generate trees. The type of NewtworkX tree generator that I used was the *“perfectly balanced r-tree of height h” generator*. The factor `r` and the height `h` determine the size of the tree. By default r is `4` and height `4`. The user can construct the NetworkX balanced tree with different ‘r’ and ‘height’ parameters by specifying the last two command line options.
 
 Situation
 ---------
@@ -47,7 +67,7 @@ Testing & Caveats
 I’ve tested the BFS algorithm with varying tree sizes, varying number of processes and varying search targets. Sample test cases can be seen named `BFS_test_run_2.txt`, `BFS_test_run_2.txt`, e.t.c.
 
 
-#### Test Run with option -r 3 -e 100
+#### Test Run with options: -r 3 -e 100
 
 	Using 4 workers to search for the element 100 using BFS in a r-3 height-4 tree containing 121 nodes.
 	[2012-10-14 15:10:41,526]runtime:INFO: Creating instances of P..
