@@ -30,7 +30,7 @@ Even though the cores share a common memory like L-2 cache, the CPU handles all 
 
 The result of all this is, it gives programmers the same experience writing programs on multi-core systems as they had writing multi-threaded programs on single-core computers. Needless to say, it's not a very good experience. There is a solution to this however. Forget writing to shared memory -- only read from it. With _shared ***read-only*** memory we can mitigate cache cohesion and related problems. In [Andrew Tanenbaum](https://en.wikipedia.org/wiki/Andrew_Tanenbaum)'s book on [Operating Systems](http://www.amazon.com/Operating-Systems-Design-Implementation-Edition/dp/0136386776), he talks about microkernels, where every little piece of the OS runs in its own little process. They communicate with each other just as in a distributed system.
 
-In DistAlgo, we can model this situation _very well_. When we create new processes in DistAlgo, _all the global context is ***copied***_ into every process (based on my understanding.) Traditionally the variables would not be copied, but rather be _shared read-only_ as it would be more efficient, but our main interest here is to create exemplary/prototypical implementations.
+In DistAlgo, we can model this situation _very well_. When we create new processes in DistAlgo, _all the global context is ***copied***_ into every process (based on my understanding.) In a more efficient the variables would not be copied, but rather be _shared read-only_ at the OS-level, but our main interest here is to create an exemplary prototype rather than a deployable implementation.
 
 Implementation
 --------------
