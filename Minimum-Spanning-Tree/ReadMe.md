@@ -149,6 +149,7 @@ When `MST.dis` is run (by typing `python3 -m distalgo.runtime MST.dis` or using 
 	[2012-10-11 17:18:47,530]Node(L):INFO: L merging with M
 	....
 	....
+	....
 	[2012-10-11 17:18:47,537]Node(K):INFO: K has sent Test() to J
 	[2012-10-11 17:18:47,537]Node(J):INFO: Received Test(1, 20) from: K
 	[2012-10-11 17:18:47,538]Node(J):INFO: J sent Accept() to K
@@ -223,6 +224,8 @@ I added three more nodes: `L`, `K` and `M` to the previous graph for increased c
 The solution to `graph-2` is depicted below:
 
 ![Test Case 2](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/test_case_2.png)
+
+As always, *the thick blue edges* denote the **branches** of the MST.
 
 ### Graph 3
 
