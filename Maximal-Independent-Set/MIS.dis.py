@@ -12,9 +12,9 @@ Distributed Maximal Independent Set (MST) Solver in DistAlgo.
 # highlighting in various editors, GitHub, etc.
 
 import random
-from InputGraph import *
+from InputGraph import get_graph
 
-G = construct_graph()
+G = get_graph()
 
 class P(DistProcess):
     def setup(ps, edges):
