@@ -100,17 +100,6 @@ Here I used `graph-2` which has also been used to test both MST and MIS. Here is
 
 Here multiple runs have been made with non-default different start and end nodes.
 
-#### Run 2 (G to C)
-
-	[2012-10-14 04:21:59,424]runtime:INFO: Creating instances of P..
-	[2012-10-14 04:21:59,442]runtime:INFO: 13 instances of P created.
-	[2012-10-14 04:21:59,449]runtime:INFO: Starting procs...
-	[2012-10-14 04:21:59,454]P(C):INFO: New shortest path of weight 29: G -> F -> A -> B -> C
-	[2012-10-14 04:21:59,459]P(C):INFO: New shortest path of weight 25: G -> E -> D -> C
-	[2012-10-14 04:22:02,182]runtime:INFO: Received keyboard interrupt.
-	[2012-10-14 04:22:02,182]runtime:INFO: ***** Statistics *****
-	* Total procs: 13
-
 #### Run 3 (G to L)
 
 	[2012-10-14 04:30:48,914]runtime:INFO: Creating instances of P..
