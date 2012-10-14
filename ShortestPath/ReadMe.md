@@ -31,8 +31,9 @@ Testing
 	[2012-10-14 03:07:17,369]runtime:INFO: Starting procs...
 	[2012-10-14 03:07:17,374]P(C):INFO: New shortest path of weight 45: G -> H -> I -> C
 	[2012-10-14 03:07:17,376]P(C):INFO: New shortest path of weight 25: G -> E -> D -> C
-	^C[2012-10-14 03:07:19,245]runtime:INFO: Received keyboard interrupt.
+	[2012-10-14 03:07:19,245]runtime:INFO: Received keyboard interrupt.
 	[2012-10-14 03:07:19,246]runtime:INFO: ***** Statistics *****
+	* Total procs: 10
 
 
 #### Run 2 (G to C)
@@ -42,8 +43,9 @@ Testing
 	[2012-10-14 03:07:20,434]runtime:INFO: Starting procs...
 	[2012-10-14 03:07:20,438]P(C):INFO: New shortest path of weight 34: G -> E -> I -> C
 	[2012-10-14 03:07:20,439]P(C):INFO: New shortest path of weight 25: G -> E -> D -> C
-	^C[2012-10-14 03:07:22,138]runtime:INFO: Received keyboard interrupt.
+	[2012-10-14 03:07:22,138]runtime:INFO: Received keyboard interrupt.
 	[2012-10-14 03:07:22,138]runtime:INFO: ***** Statistics *****
+	* Total procs: 10
 
 #### Run 3 (G to C)
 
@@ -53,8 +55,9 @@ Testing
 	[2012-10-14 03:42:20,474]P(C):INFO: New shortest path of weight 45: G -> H -> I -> C
 	[2012-10-14 03:42:20,476]P(C):INFO: New shortest path of weight 29: G -> F -> A -> B -> C
 	[2012-10-14 03:42:20,480]P(C):INFO: New shortest path of weight 25: G -> E -> D -> C
-	^C[2012-10-14 03:42:22,243]runtime:INFO: Received keyboard interrupt.
+	[2012-10-14 03:42:22,243]runtime:INFO: Received keyboard interrupt.
 	[2012-10-14 03:42:22,244]runtime:INFO: ***** Statistics *****
+	* Total procs: 10
 
 ### Graph 2
 
@@ -67,8 +70,9 @@ Testing
 	[2012-10-14 03:59:18,650]P(C):INFO: New shortest path of weight 34: G -> E -> I -> C
 	[2012-10-14 03:59:18,651]P(C):INFO: New shortest path of weight 29: G -> F -> A -> B -> C
 	[2012-10-14 03:59:18,652]P(C):INFO: New shortest path of weight 25: G -> E -> D -> C
-	^C[2012-10-14 03:59:24,011]runtime:INFO: Received keyboard interrupt.
+	[2012-10-14 03:59:24,011]runtime:INFO: Received keyboard interrupt.
 	[2012-10-14 03:59:24,012]runtime:INFO: ***** Statistics *****
+	* Total procs: 13
 
 #### Run 2 (G to C)
 
@@ -77,7 +81,7 @@ Testing
 	[2012-10-14 04:21:59,449]runtime:INFO: Starting procs...
 	[2012-10-14 04:21:59,454]P(C):INFO: New shortest path of weight 29: G -> F -> A -> B -> C
 	[2012-10-14 04:21:59,459]P(C):INFO: New shortest path of weight 25: G -> E -> D -> C
-	^C[2012-10-14 04:22:02,182]runtime:INFO: Received keyboard interrupt.
+	[2012-10-14 04:22:02,182]runtime:INFO: Received keyboard interrupt.
 	[2012-10-14 04:22:02,182]runtime:INFO: ***** Statistics *****
 	* Total procs: 13
 
@@ -88,5 +92,6 @@ Testing
 	[2012-10-14 04:30:48,936]runtime:INFO: Starting procs...
 	[2012-10-14 04:30:48,943]P(L):INFO: New shortest path of weight 72: G -> H -> J -> K -> L
 	[2012-10-14 04:30:48,944]P(L):INFO: New shortest path of weight 68: G -> E -> H -> J -> K -> L
-	^C[2012-10-14 04:30:54,303]runtime:INFO: Received keyboard interrupt.
+	[2012-10-14 04:30:54,303]runtime:INFO: Received keyboard interrupt.
 	[2012-10-14 04:30:54,304]runtime:INFO: ***** Statistics *****
+	* Total procs: 13
