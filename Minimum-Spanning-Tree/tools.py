@@ -34,7 +34,12 @@ Provides services like handling optargs, setting up the graph, solution verifica
         self.graph = args.graph
 
     def construct_graph(self, file):
+        seen_w = set()
+
         def edge(n1, n2, w):
+            if w in seen_w:
+                raise Exception("Duplicate edge weights in graph. For a unique MST, all edge weights have to be uniqe as well.")
+            seen_w.update({ w })
             return (n1, n2, {'weight':w})
 
         edge_list = list()
