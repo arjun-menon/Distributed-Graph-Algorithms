@@ -1,5 +1,5 @@
 Shortest Path
--------------
+=============
 
 The [shortest path problem](https://en.wikipedia.org/wiki/Shortest_path_problem) as we all know is the quest to find the shortest path between two nodes in a connected weighted undirected graph.
 
@@ -67,19 +67,7 @@ I used the `graph-1` from MST to test Shortest Path. This is a diagram of that g
 	[2012-10-14 03:07:19,246]runtime:INFO: ***** Statistics *****
 	* Total procs: 10
 
-
 #### Run 2 (G to C)
-
-	[2012-10-14 03:07:20,411]runtime:INFO: Creating instances of P..
-	[2012-10-14 03:07:20,424]runtime:INFO: 10 instances of P created.
-	[2012-10-14 03:07:20,434]runtime:INFO: Starting procs...
-	[2012-10-14 03:07:20,438]P(C):INFO: New shortest path of weight 34: G -> E -> I -> C
-	[2012-10-14 03:07:20,439]P(C):INFO: New shortest path of weight 25: G -> E -> D -> C
-	[2012-10-14 03:07:22,138]runtime:INFO: Received keyboard interrupt.
-	[2012-10-14 03:07:22,138]runtime:INFO: ***** Statistics *****
-	* Total procs: 10
-
-#### Run 3 (G to C)
 
 	[2012-10-14 03:42:20,441]runtime:INFO: Creating instances of P..
 	[2012-10-14 03:42:20,455]runtime:INFO: 10 instances of P created.
@@ -97,7 +85,7 @@ Here I used `graph-2` which has also been used to test both MST and MIS. Here is
 
 ![Test Case 2](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Maximal-Independent-Set/graph-2b.png)
 
-Here too multiple runs have been made, but some with non-default different start and end nodes.
+Here multiple runs have been made with non-default different start and end nodes.
 
 #### Run 1 (G to C)
 
