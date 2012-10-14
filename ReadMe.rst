@@ -25,7 +25,7 @@ All references have been hyperlinked **in-place** using `Markdown's link syntax 
 
 Code Length
 -----------
-Lines of Code have never really been a good statistic on how long it took to write a piece of code. In addition, certain languages are more dense than others. For example this single statement turns a graph file into a list of NetworkX edges: ``( edge(ed.split()[0], ed.split()[1], int(ed.split()[2])) for ed in (e.strip() for e in f.readlines() if e.strip() != "") if len(ed.split()) == 3 )``. It would however taken a lot more code in an arcance language like Java. `Andrew Tanenbaum <http://en.wikipedia.org/wiki/Andrew_S._Tanenbaum>`_ mentions in one his awesome books (quoting Fred Brooke's `mythical man-moth <http://en.wikipedia.org/wiki/The_Mythical_Man-Month>`_ I believe) how IBM measured the performance of their programmers based on how many lines of code they wrote -- in assembly. Needless to say, the project (`OS/360 <http://en.wikipedia.org/wiki/OS/360>`_) wasn't very successful.
+Lines of Code have never really been a good statistic on how long it took to write a piece of code. In addition, certain languages are more dense than others. For example this single statement turns a graph file into a list of NetworkX edges: ``( edge(ed.split()[0], ed.split()[1], int(ed.split()[2])) for ed in (e.strip() for e in f.readlines() if e.strip() != "") if len(ed.split()) == 3 )``. It would however taken a lot more code in an arcance language like Java. `Andrew Tanenbaum <http://en.wikipedia.org/wiki/Andrew_S._Tanenbaum>`_ mentions in one his awesome books (quoting `Fred Brooke <http://en.wikipedia.org/wiki/Fred_Brooks>`'s `mythical man-moth <http://en.wikipedia.org/wiki/The_Mythical_Man-Month>`_ I believe) how IBM measured the performance of their programmers based on how many lines of code they wrote -- in assembly. Needless to say, the project (`OS/360 <http://en.wikipedia.org/wiki/OS/360>`_) wasn't very successful.
 
 However, I still think the *lines of code* would be an interesting statistic, so I'm providing it below:
 
@@ -61,7 +61,7 @@ Notes on the line count
 - Other files such as ``run.py`` and ``sequential_messaging_test.dis``, that were not directly relevant to project have not been listed above.
 - **TOTAL (proper)** is the line count for all the active project code. ``Kruskal.py`` and ``mst_attempt_*`` were experimental files written while developing MST and are no longer used.
 - Two slightly different versions of ``InputGraph.py`` is used by BFS and Shortest Path to process the graph; the count is for the longer one.
-- `tools.py`` is used by MST for non-core functionalities (like building the graph, visualizing, etc.)
+- ``tools.py`` is used by MST for non-core functionalities (like building the graph, visualizing, etc.)
 
 Other
 -----
