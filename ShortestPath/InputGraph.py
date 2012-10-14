@@ -43,7 +43,7 @@ def graph_source_target():
         sys.exit(1)
 
     if t not in n:
-        raise Exception("%s not in %r" % (t, n))
+        print("%s not in %r" % (s, n))
         sys.exit(1)
 
     return g, s, t
