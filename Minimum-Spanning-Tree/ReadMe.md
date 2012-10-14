@@ -193,7 +193,7 @@ The `999999999` that can be seen conspicuously towards the end is a constant rep
 
 Test Cases
 ----------
-The input graphs used as test cases were: `graph-1`, `graph-2`. 
+The following are a series of test cases run on the algorithm. The main test cases are enclosed in the files: `graph-1`, `graph-2` and `graph-3`. There is an easy way to verify the solution: Run `Kruskal.py` against the same graph. Kruskal is quite clever; it verifies its _own_ solution against NetworkX's MST solver so there's no way it could be wrong.
 
 ### Graph 1
 
@@ -215,7 +215,7 @@ Some of the key GHS events that occur while solving `graph-1` are:
 
 ### Graph 2
 
-I added three more nodes: `L`, `K` and `M` to the previous graph for increased complecity and to test other aspects of the GHS algortithm. The added steps that occur after adding these three new nodes are:
+I added three more nodes: `L`, `K` and `M` to the previous graph for increased complexity and to test other aspects of the GHS algortithm. The added steps that occur after adding these three new nodes are:
 
 * `L`, `K` and `M` form a  **Level-1** *fragment* of their own with `L` and `M` as the _*core* nodes._
 * The `L`, `K` and `M` fragment gets absorbed by the *Level-2* fragment with core nodes `I` and `E`.
