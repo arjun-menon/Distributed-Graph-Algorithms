@@ -173,7 +173,7 @@ These were some of the outputs produced during some trial runs of the algorithm 
 
 I re-used `graph-1` that I used for testing MST here. The following diagram depicts it (the blue edges can be ignored):
 
-![Test Case 1](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/test_case_1.png)
+![Test Case 1](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Maximal-Independent-Set/graph-1.png)
 
 #### Run 1 (Solution: A, C, J, E)
 
@@ -331,7 +331,7 @@ I re-used `graph-1` that I used for testing MST here. The following diagram depi
 
 Here I re-used `graph-2` from MST. This diagram depicts it (the blue edges can be ignored):
 
-![Test Case 2](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/test_case_2.png)
+![Test Case 2](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Maximal-Independent-Set/graph-2.png)
 
 #### Run 1 (Solution: A, J, L, G, D)
 
