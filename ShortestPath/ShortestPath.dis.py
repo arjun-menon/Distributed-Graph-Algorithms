@@ -4,12 +4,12 @@ Straightforward distributed shortest path finder based on Dijkstra's sequential 
 
 from InputGraph import *
 
-G = construct_graph()
-S, T = 'G', 'C'
+G, S, T = graph_source_target()
+
 INFINITY = 999999999
 
 class P(DistProcess):
-       
+    
     def setup(ps, edges):
         edges = edges
         weight = INFINITY
