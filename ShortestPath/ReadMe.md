@@ -7,7 +7,7 @@ The [shortest path problem](https://en.wikipedia.org/wiki/Shortest_path_problem)
 
 ### Algorithm
 
-The problem was pretty straighforward and simple, so I didn't see a need to research it online. So I designed my own algorithm for it. The algorithm is described in the next section.
+The problem was pretty straighforward and simple, so I didn't see a need to research it online. I designed my own algorithm for it. My algorithm is described in the next section.
 
 #### Steps involved in the algorithm
 
@@ -23,6 +23,8 @@ Testing
 -------
 
 ### Graph 1
+
+In each run, differences can be seen in the "shortest" paths found priot to the actual and final shortest paths. This factor is random/non-deterministic. The following runs are all for the shortest path from `G` to `C`:
 
 #### Run 1 (G to C)
 
@@ -60,6 +62,8 @@ Testing
 	* Total procs: 10
 
 ### Graph 2
+
+More runs for a slightly different.
 
 #### Run 1 (G to C)
 
