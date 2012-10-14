@@ -230,18 +230,20 @@ This is a much more complex test case than the previous ones. I drew a sketch of
 
 ![Graph 3 Sketch](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/graph-3-sketch.png)
 
-The edge list for it can be found in the file `graph-3`.
-
-The output produced my `MST.dis` and `Kruskal.py` can be found in `graph-3-ouptput.txt` (in this directory.)
+The edge list for it can be found in the file `graph-3`. The output produced by `MST.dis` and `Kruskal.py` can be found in `graph-3-ouptput.txt` (in this directory.)
 
 While writing the graph file `graph-3`, I ran the MST solver several times and obtained these intermediate results:
 
 #### Intermediate Result 1
 
+![Graph 3 Intermediate Result 1](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/graph-3-segment1sol.png)
+
 #### Intermediate Result 2
+
+![Graph 3 Intermediate Result 1](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/graph-3-segment2sol.png)
 
 #### Final Solution
 
-
+![Graph 3 Final Solution](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/img/graph-3-sol.png)
 
 ---
