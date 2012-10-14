@@ -13,15 +13,25 @@ The following distributed graph algorithms that have implemented using **DistAlg
 The subdirectory of each algorithm contains a relevant ***ReadMe*** file that describes the algorithm in detail with specific information about its implementation, limitations, etc.
 
 #### Code Length
-Lines of Code have never really been a good statistic on how long it took to write a piece of code. In addition, certain languages are more dense than others. For example this single statement turns a graph file into a list of NetworkX edges: `( edge(ed.split()[0], ed.split()[1], int(ed.split()[2])) for ed in (e.strip() for e in f.readlines() if e.strip() != "") if len(ed.split()) == 3 )`. It would however taken a lot more code in an arcance language like Java.
+Lines of Code have never really been a good statistic on how long it took to write a piece of code. In addition, certain languages are more dense than others. For example this single statement turns a graph file into a list of NetworkX edges: `( edge(ed.split()[0], ed.split()[1], int(ed.split()[2])) for ed in (e.strip() for e in f.readlines() if e.strip() != "") if len(ed.split()) == 3 )`. It would however taken a lot more code in an arcance language like Java. Andrew Tanenbaum mentions in one his great classical books (quoting Fred Brooke's mythical man-moth I think), how IBM measured the performance of their programmers based on how many lines of code they wrote -- in assembly. Needless to say, the project (System/360) wasn't very successful.
 
 However, I still think the *lines of code* would be an interesting statistic, so I'm providing it below:
 
++----------------------+------------+-----------+
+| File name            | sloc only  | all lines |
++======================+============+===========+
+| MST.dis.py           |    319     |    421    |
++----------------------+------------+-----------+
+| MIS.dis.py           |    158     |    212    |
++----------------------+------------+-----------+
+| BFS.dis              |    110     |    147    |
++----------------------+------------+-----------+
+| ShortestPath.dis.py  |    43      |    60     |
++----------------------+------------+-----------+
+| InputGraph.dis.py    |    36      |    50     |
++----------------------+------------+-----------+
 
-
-The numbers were generated using `cloc`, a popular Perl utility for counting lines of code. There is some repition/shared code in each algorithm -- probabably around 100 lines in each.
-
-In Fred Brooke's mythical man-moth he mentions 
+Other files such as `Kruskal.py` that were not directly relevant to project have not been listed above.
 
 #### Note about References
 All references have been hyperlinked in-place using [Markdown's link syntax](http://daringfireball.net/projects/markdown/syntax#link).
