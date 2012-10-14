@@ -3,6 +3,6 @@
 import sys
 from distalgo.runtime import *
 
-sys.argv = [sys.argv[0], "MIS.dis"]
+sys.argv = [sys.argv[0], "MIS.dis"] + sys.argv[1:]
 
 libmain()
