@@ -2,7 +2,7 @@
 Straightforward distributed shortest path finder based on Dijkstra's sequential algorithm
 """
 
-from InputGraph import *
+from InputGraph import graph_source_target
 
 G, S, T = graph_source_target()
 
