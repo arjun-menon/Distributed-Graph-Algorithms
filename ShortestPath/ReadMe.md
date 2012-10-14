@@ -100,7 +100,7 @@ Here I used `graph-2` which has also been used to test both MST and MIS. Here is
 
 Here multiple runs have been made with non-default different start and end nodes.
 
-#### Run 3 (G to L)
+#### Run 1 (G to L)
 
 	[2012-10-14 04:30:48,914]runtime:INFO: Creating instances of P..
 	[2012-10-14 04:30:48,932]runtime:INFO: 13 instances of P created.
@@ -111,7 +111,7 @@ Here multiple runs have been made with non-default different start and end nodes
 	[2012-10-14 04:30:54,304]runtime:INFO: ***** Statistics *****
 	* Total procs: 13
 
-#### Run 4 (A to M)
+#### Run 2 (A to M)
 
 	[2012-10-14 05:10:16,912]runtime:INFO: Creating instances of P..
 	[2012-10-14 05:10:16,929]runtime:INFO: 13 instances of P created.
@@ -122,7 +122,7 @@ Here multiple runs have been made with non-default different start and end nodes
 	[2012-10-14 05:10:17,834]runtime:INFO: ***** Statistics *****
 	* Total procs: 13
 
-#### Run 5 (A to M)
+#### Run 3 (A to M)
 
 	[2012-10-14 05:10:18,816]runtime:INFO: Creating instances of P..
 	[2012-10-14 05:10:18,833]runtime:INFO: 13 instances of P created.
