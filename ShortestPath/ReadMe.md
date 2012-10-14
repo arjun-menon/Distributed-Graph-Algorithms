@@ -139,15 +139,15 @@ Here multiple runs have been made with non-default different start and end nodes
 
 #### Run 4 (B to K)
 
-[2012-10-14 12:21:21,161]runtime:INFO: Creating instances of P..
-[2012-10-14 12:21:21,179]runtime:INFO: 13 instances of P created.
-[2012-10-14 12:21:21,187]runtime:INFO: Starting procs...
-[2012-10-14 12:21:21,200]P(K):INFO: New shortest path of weight 67: B -> C -> I -> J -> K
-[2012-10-14 12:21:21,201]P(K):INFO: New shortest path of weight 63: B -> A -> F -> G -> H -> J -> K
-[2012-10-14 12:21:21,202]P(K):INFO: New shortest path of weight 59: B -> A -> F -> G -> E -> H -> J -> K
-[2012-10-14 12:21:21,203]P(K):INFO: New shortest path of weight 47: B -> A -> F -> E -> H -> J -> K
-^C[2012-10-14 12:21:23,943]runtime:INFO: Received keyboard interrupt.
-[2012-10-14 12:21:23,944]runtime:INFO: ***** Statistics *****
-* Total procs: 13
+	[2012-10-14 12:21:21,161]runtime:INFO: Creating instances of P..
+	[2012-10-14 12:21:21,179]runtime:INFO: 13 instances of P created.
+	[2012-10-14 12:21:21,187]runtime:INFO: Starting procs...
+	[2012-10-14 12:21:21,200]P(K):INFO: New shortest path of weight 67: B -> C -> I -> J -> K
+	[2012-10-14 12:21:21,201]P(K):INFO: New shortest path of weight 63: B -> A -> F -> G -> H -> J -> K
+	[2012-10-14 12:21:21,202]P(K):INFO: New shortest path of weight 59: B -> A -> F -> G -> E -> H -> J -> K
+	[2012-10-14 12:21:21,203]P(K):INFO: New shortest path of weight 47: B -> A -> F -> E -> H -> J -> K
+	^C[2012-10-14 12:21:23,943]runtime:INFO: Received keyboard interrupt.
+	[2012-10-14 12:21:23,944]runtime:INFO: ***** Statistics *****
+	* Total procs: 13
 
 ---
