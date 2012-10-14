@@ -22,6 +22,8 @@ However, I still think the *lines of code* would be an interesting statistic, so
 +======================+============+===========+
 | MST.dis.py           |    319     |    421    |
 +----------------------+------------+-----------+
+| tools.py             |    67      |    95     |
++----------------------+------------+-----------+
 | MIS.dis.py           |    158     |    212    |
 +----------------------+------------+-----------+
 | BFS.dis              |    110     |    147    |
@@ -30,8 +32,21 @@ However, I still think the *lines of code* would be an interesting statistic, so
 +----------------------+------------+-----------+
 | InputGraph.dis.py    |    36      |    50     |
 +----------------------+------------+-----------+
+| TOTAL   (proper)     |    733     |    985    |
++----------------------+------------+-----------+
+| Kruskal.py           |    69      |    93     |
++----------------------+------------+-----------+
+| mst_attempt_1.dis    |    204     |    276    |
++----------------------+------------+-----------+
+| mst_attempt_1.dis    |    186     |    247    |
++----------------------+------------+-----------+
+| TOTAL  (incl other)  |    1192    |    1601   |
++----------------------+------------+-----------+
 
-Other files such as `Kruskal.py` that were not directly relevant to project have not been listed above.
+Notes on the line count
+
+- Other files such as `run.py` and `sequential_messaging_test.dis` that were not directly relevant to project have not been listed above.
+- `tools.py` is used by MST for non-core functionalities. Two slightly different versions of `InputGraph.py` is used by BFS and Shortest Path to process the graph; the count is for the longer one.
 
 #### Note about References
 All references have been hyperlinked in-place using [Markdown's link syntax](http://daringfireball.net/projects/markdown/syntax#link).
