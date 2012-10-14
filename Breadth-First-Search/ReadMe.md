@@ -46,4 +46,68 @@ Testing & Caveats
 -----------------
 I’ve tested the BFS algorithm with varying tree sizes, varying number of processes and varying search targets. Sample test cases can be seen named `BFS_test_run_2.txt`, `BFS_test_run_2.txt`, e.t.c.
 
+
+#### Test Run with option -r 3 -e 100
+
+	Using 4 workers to search for the element 100 using BFS in a r-3 height-4 tree containing 121 nodes.
+	[2012-10-14 15:10:41,526]runtime:INFO: Creating instances of P..
+	[2012-10-14 15:10:41,532]runtime:INFO: 4 instances of P created.
+	[2012-10-14 15:10:41,538]runtime:INFO: Starting procs...
+	[2012-10-14 15:10:41,538]P(1):INFO: Empty queue; sending requests for work
+	[2012-10-14 15:10:41,538]P(2):INFO: Empty queue; sending requests for work
+	[2012-10-14 15:10:41,538]P(3):INFO: Empty queue; sending requests for work
+	[2012-10-14 15:10:41,538]P(0):INFO: Inspected 0
+	[2012-10-14 15:10:41,539]P(0):INFO: Inspected 1
+	[2012-10-14 15:10:41,540]P(0):INFO: Inspected 2
+	[2012-10-14 15:10:41,540]P(0):INFO: Inspected 3
+	[2012-10-14 15:10:41,541]P(0):INFO: Inspected 4
+	[2012-10-14 15:10:41,541]P(0):INFO: Inspected 5
+	[2012-10-14 15:10:41,542]P(0):INFO: Inspected 6
+	[2012-10-14 15:10:41,542]P(1):INFO: Received request for work from 2
+	[2012-10-14 15:10:41,542]P(1):INFO: Received request for work from 3
+	[2012-10-14 15:10:41,542]P(3):INFO: Received request for work from 1
+	[2012-10-14 15:10:41,542]P(2):INFO: Received request for work from 3
+	[2012-10-14 15:10:41,542]P(0):INFO: Inspected 8
+	[2012-10-14 15:10:41,542]P(2):INFO: Received request for work from 1
+	[2012-10-14 15:10:41,543]P(3):INFO: Received request for work from 2
+	[2012-10-14 15:10:41,543]P(0):INFO: Received request for work from 1
+	[2012-10-14 15:10:41,543]P(0):INFO: Giving work [9] to 1
+	[2012-10-14 15:10:41,544]P(0):INFO: Received request for work from 2
+	[2012-10-14 15:10:41,544]P(0):INFO: Giving work [7] to 2
+	[2012-10-14 15:10:41,544]P(1):INFO: Got work [9] from 0
+	[2012-10-14 15:10:41,544]P(0):INFO: Received request for work from 3
+	[2012-10-14 15:10:41,545]P(0):INFO: Giving work [10] to 3
+	[2012-10-14 15:10:41,545]P(1):INFO: Inspected 9
+	[2012-10-14 15:10:41,545]P(0):INFO: Inspected 11
+	[2012-10-14 15:10:41,545]P(2):INFO: Got work [7] from 0
+	[2012-10-14 15:10:41,545]P(0):INFO: Inspected 12
+	[2012-10-14 15:10:41,545]P(1):INFO: Inspected 28
+	[2012-10-14 15:10:41,545]P(0):INFO: Inspected 13
+	[2012-10-14 15:10:41,545]P(2):INFO: Inspected 7
+	[2012-10-14 15:10:41,546]P(0):INFO: Inspected 14
+	[2012-10-14 15:10:41,545]P(3):INFO: Got work [10] from 0
+	[2012-10-14 15:10:41,546]P(0):INFO: Inspected 15
+	[2012-10-14 15:10:41,546]P(1):INFO: Inspected 29
+	...
+	[2012-10-14 15:10:41,549]P(1):INFO: Inspected 92
+	[2012-10-14 15:10:41,549]P(3):INFO: Element 100 found. BFS Completed!!!
+	[2012-10-14 15:10:41,549]P(0):INFO: Inspected 45
+	[2012-10-14 15:10:41,549]P(0):INFO: Inspected 48
+	[2012-10-14 15:10:41,549]P(2):INFO: Inspected 72
+	[2012-10-14 15:10:41,549]P(1):INFO: Inspected 93
+	[2012-10-14 15:10:41,549]P(0):INFO: Inspected 46
+	[2012-10-14 15:10:41,549]P(0):INFO: Inspected 47
+	[2012-10-14 15:10:41,550]P(0):INFO: Inspected 49
+	[2012-10-14 15:10:41,550]P(0):INFO: Inspected 50
+	[2012-10-14 15:10:41,550]P(2):INFO: Inspected 70
+	[2012-10-14 15:10:41,550]P(1):INFO: Empty queue; sending requests for work
+	[2012-10-14 15:10:41,550]P(0):INFO: Received notice that 3 found elem 100. Terminating!
+	[2012-10-14 15:10:41,550]P(2):INFO: Inspected 71
+	[2012-10-14 15:10:41,550]P(2):INFO: Empty queue; sending requests for work
+	[2012-10-14 15:10:41,552]P(1):INFO: Received notice that 3 found elem 100. Terminating!
+	[2012-10-14 15:10:41,558]P(2):INFO: Received notice that 3 found elem 100. Terminating!
+	[2012-10-14 15:10:41,562]runtime:INFO: ***** Statistics *****
+	* Total procs: 4
+
+
 Overall, with sane values for these variables; the BFS search works fine and does what it’s supposed to do. However I’ve occasionally  run into a hiccup or two, when handling large tree sizes. This is because currently DistAlgo has a limit on how large the size of a message send between processes can be. The way the algorithm works; in response to a work request, it sends along with a node a list of all nodes it has visited so far. Currently as the tree size grows larger; one can see dropped packets in communication between nodes. Whereas an `r=4, height=4` tree has `341` nodes, an `r=4, height=5` tree has `1365` nodes -- the tree size grows exponentially with r and height increasing. With large tree sizes, more often than not we see dropped packets. The algorithm was not designed to tolerate packet loss, so in such circumstances the behavior of the algorithm is undefined.
