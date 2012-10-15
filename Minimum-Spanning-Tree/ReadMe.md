@@ -35,7 +35,7 @@ I found two papers online that describe GHS. One is the original from 1983, by G
 I've posted PDFs of both papers (found online) in this GitHub repo under the `papers` directory. Links to them are below:
 
 * The [Original paper by Gallager, Humblet and Spira](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/papers/GHS_original.pdf) from 1983.
-* The one [prepared by Guy Flysher and Amir Rubinshtein](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/papers/GHS_enhanced.pdf). (*I recommend this one*)
+* The enhanced version of the original [prepared by Guy Flysher and Amir Rubinshtein](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Minimum-Spanning-Tree/papers/GHS_enhanced.pdf). (*I recommend this one*)
 
 High-level Explanation of the GHS Algorithm
 -------------------------------------------
@@ -143,12 +143,8 @@ When `MST.dis` is run (by typing `python3 -m distalgo.runtime MST.dis` or using 
 	[2012-10-11 17:18:47,482]Node(H):INFO: Received Test(1, 1) from: E
 	[2012-10-11 17:18:47,482]Node(H):INFO: H is waking up!
 	...
-	...
-	...
 	[2012-10-11 17:18:47,529]Node(M):INFO: M merging with L
 	[2012-10-11 17:18:47,530]Node(L):INFO: L merging with M
-	....
-	....
 	....
 	[2012-10-11 17:18:47,537]Node(K):INFO: K has sent Test() to J
 	[2012-10-11 17:18:47,537]Node(J):INFO: Received Test(1, 20) from: K
