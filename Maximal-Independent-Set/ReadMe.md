@@ -30,7 +30,7 @@ Description of the Algorithm
 ----------------------------
 ### Design
 
-The design of my algorithm largely follows the fundamental idea underpinning the sequential algorithm. The sequential algorithm (taken from the [Luby's algorithm lecture notes](http://www.cc.gatech.edu/~vigoda/RandAlgs/MIS.pdf)) for finding MST is shown below:
+The design of my algorithm largely follows the fundamental idea underpinning the sequential algorithm. The sequential algorithm (taken from these [Luby's algorithm lecture notes](http://www.cc.gatech.edu/~vigoda/RandAlgs/MIS.pdf)) for finding MST is shown below:
 
 ![MIS Sequential](https://raw.github.com/arjungmenon/Distributed-Graph-Algorithms/master/Maximal-Independent-Set/MIS-sequential.png)
 
