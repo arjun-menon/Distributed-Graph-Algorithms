@@ -1,1 +1,0 @@
-../Maximal-Independent-Set/draw.py
