@@ -40,7 +40,7 @@ class P(DistProcess):
             inspected.update({inspect})
             output("Inspected "+str(inspect))
             
-            if search_for == inspect:
+            if search_for == graph.node[inspect]['value']: # inspect:
                 completed = True
                 output("Element %r found. BFS Completed!!!" % search_for)
                 
@@ -151,4 +151,3 @@ def main():
 
     startprocs(ps)
     for p in (ps): p.join()
-    
