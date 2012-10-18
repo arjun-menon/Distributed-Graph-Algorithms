@@ -109,7 +109,7 @@ def main():
     parser = argparse.ArgumentParser(description='Perform breadth-first search on a random graph in paralell using several workers.')
     parser.add_argument('-w', '--workers', nargs=1, type=int, default=[4], help='Number of workers to do the search. [Default 4]')
     parser.add_argument('-n', '--nodes', nargs=1, type=int, default=[6], help='The maximum number of nodes in the random graph.')
-    parser.add_argument('-e', '--edges', nargs=1, type=int, default=[10], help='The number of edges to in the random graph.')
+    parser.add_argument('-e', '--edges', nargs=1, type=int, default=[10], help='The number of edges to form in the random graph.')
     args = parser.parse_args()
     nprocs = args.workers[0]
     n = args.nodes[0]
