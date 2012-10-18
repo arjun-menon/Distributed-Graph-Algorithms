@@ -8,27 +8,30 @@ sys.path.append("..") # in order to import NetworkX
 import networkx as nx
 from collections import deque
 
-nprocs = 4 # default
-tree = nx.balanced_tree(4, 4)
-element_to_search_for = 300
+# nprocs = 4 # default
+# tree = nx.balanced_tree(4, 4)
+# element_to_search_for = 300
 
 procs = dict() # dict mapping process numbers to processes
 Pi = lambda p: int(str(p))
 
 class P(DistProcess):
     
-    def setup(ps):
+    def setup(ps, graph, element_to_search_for):
         other_procs = ps
+        graph = graph
+        element_to_search_for = element_to_search_for
+
         q = deque()
         inspected = set()
         
-        if Pi(self) == 0:
-            q.appendleft(0)
+        if Pi(self) == 1:
+            q.appendleft(1)
         
         completed = False
         unserviced = set()
 
-    def cs(search_for):
+    def search(search_for):
         # todo: what if search_for can't be found?
         --start
         if len(q) > 0:
@@ -48,10 +51,10 @@ class P(DistProcess):
             
             else:
                 '''Fill work queue with un-inspected child nodes'''
-                children = set( tree[inspect] ) - inspected
+                children = set( graph[inspect] ) - inspected
                 
                 for child in children:
-                    #tree.node[child]['parent'] = inspect
+                    #graph.node[child]['parent'] = inspect
                     q.appendleft(child)
         
         else:
@@ -67,7 +70,7 @@ class P(DistProcess):
             
             if ( len(unserviced) == len(other_procs) ):
                 completed = True
-                output("Unable to get work. Assuming element %d not in tree. Terminating... " % 
+                output("Unable to get work. Assuming element %d not in graph. Terminating... " % 
                        element_to_search_for)
                 return
         
@@ -108,29 +111,32 @@ class P(DistProcess):
 
     def main():
         while not completed:
-            cs(element_to_search_for)
+            search(element_to_search_for)
 
 def main():
-    global tree, element_to_search_for
-
     import argparse
-    parser = argparse.ArgumentParser(description='Perform breadth-first search in paralell using several workers.')
-    parser.add_argument('-w', '--workers', nargs=1, type=int, default=[4], help='Number of workrrs. [Default 4]')
-    parser.add_argument('-e', '--element', nargs=1, type=int, default=[300], help='The element to search for. [Default 300]')
-    parser.add_argument('-r', '--rfactor', nargs=1, type=int, default=[4], help='r factor in the NetworkX generated perfectly balanced r-tree of height h. [Default 4]')
-    parser.add_argument('-x', '--xheight', nargs=1, type=int, default=[4], help='Height of the Network generated perfectly balanced r-tree of height h. [Default 4]')
+    parser = argparse.ArgumentParser(description='Perform breadth-first search on a random graph in paralell using several workers.')
+    parser.add_argument('-w', '--workers', nargs=1, type=int, default=[4], help='Number of workers to do the search. [Default 4]')
+    parser.add_argument('-n', '--nodes', nargs=1, type=int, default=[6], help='The maximum number of nodes in the random graph.')
+    parser.add_argument('-e', '--edges', nargs=1, type=int, default=[10], help='The number of edges to in the random graph.')
     args = parser.parse_args()
-
     nprocs = args.workers[0]
-    element_to_search_for = args.element[0]
-    r = args.rfactor[0]
-    d = args.xheight[0]
+    n = args.nodes[0]
+    e = args.edges[0]
 
-    tree = nx.balanced_tree(r, d)
-    nx.freeze(tree)
+    from graph_gen import networkx_random_weighted_graph
+    graph = networkx_random_weighted_graph(n, e)
 
-    print("Using %d workers to search for the element %d using BFS in a r-%d height-%d tree containing %d nodes." % 
-        ( nprocs, element_to_search_for, r, d, len(tree.nodes())) )
+    print("The nodes in the graph and their randomly chosen attributes are: ")
+    for n in graph.nodes():
+        print(n, ' ---> ', graph.node[n]['value'])
+
+    element_to_search_for = int(input("Pick the attribute/value you would like to search for: "))
+    print()
+
+    #for n in graph.nodes()
+
+    #return
     
     # create n process
     use_channel("tcp")
@@ -141,8 +147,8 @@ def main():
     ps = set(ps.values())
 
     # setup the processes
-    for p in ps: setupprocs([p], [ps-{p}])
+    for p in ps: setupprocs([p], [ps-{p}, graph, element_to_search_for])
 
     startprocs(ps)
-
     for p in (ps): p.join()
+    
