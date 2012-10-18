@@ -40,7 +40,7 @@ However, I still think the *lines of code* would be an interesting statistic, so
 +----------------------+------------+-----------+
 | MIS.dis.py           |    158     |    212    |
 +----------------------+------------+-----------+
-| BFS.dis.py           |    110     |    147    |
+| BFS.dis.py           |    119     |    154    |
 +----------------------+------------+-----------+
 | ShortestPath.dis.py  |    43      |    60     |
 +----------------------+------------+-----------+
@@ -48,7 +48,7 @@ However, I still think the *lines of code* would be an interesting statistic, so
 +----------------------+------------+-----------+
 | tools.py             |    67      |    95     |
 +----------------------+------------+-----------+
-| TOTAL   (proper)     |    733     |    985    |
+| TOTAL   (proper)     |    742     |    992    |
 +----------------------+------------+-----------+
 | Kruskal.py           |    69      |    93     |
 +----------------------+------------+-----------+
@@ -56,7 +56,7 @@ However, I still think the *lines of code* would be an interesting statistic, so
 +----------------------+------------+-----------+
 | mst_attempt_1.dis    |    186     |    247    |
 +----------------------+------------+-----------+
-| TOTAL  (incl other)  |    1192    |    1601   |
+| TOTAL  (incl other)  |    1201    |    1608   |
 +----------------------+------------+-----------+
 
 Notes on the line count
