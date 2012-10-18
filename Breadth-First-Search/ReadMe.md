@@ -254,8 +254,9 @@ In this run, the value `39` was found by process number `0`.
 
 In this test run, we look out for the non-existent value `3545`. As each process is work-starved, it terminates itself. The result (shown above) means that a node with that value does not exist in the graph.
 
-### More Test Runs
-I have conducted more test runs of this algorithm with varying graph sizes, number of processes search targets. Due to the long size of the resulting output they have been stored in separate files. These test cases can be found in the files named `BFS_test_run_*.txt` in this directory. _Note:_ the command-line arguments for those test runs differ from the current style, because I had not used `argparse` when I first implemented the algorithm. However the defaults back then were the same as the ones now.
+### Longer Sample Test Run
+
+The file `test_run_10_100_200.txt` contains the output of running `./run.py -w 10 -n 100 -e 200`. It's much longer (and therefore more interesting) than the previous ones.
 
 ### Caveats
 
