@@ -13,7 +13,7 @@ Pi = lambda p: int(str(p))
 
 class P(DistProcess):
     
-    def setup(ps, graph, element_to_search_for):
+    def setup(ps, graph, element_to_search_for, starter):
         other_procs = ps
         graph = graph
         element_to_search_for = element_to_search_for
@@ -21,8 +21,9 @@ class P(DistProcess):
         q = deque()
         inspected = set()
         
-        if Pi(self) == 1:
-            q.appendleft(1)
+        if starter:
+            first_node = graph.nodes()[0]
+            q.appendleft(first_node)
         
         completed = False
         unserviced = set()
@@ -116,7 +117,16 @@ def main():
     e = args.edges[0]
 
     from graph_gen import networkx_random_weighted_graph
-    graph = networkx_random_weighted_graph(n, e)
+    graph = None
+
+    repeat = True
+    while repeat:
+        print("Creating a random graph...")
+        graph = networkx_random_weighted_graph(n, e)
+        if nx.is_connected(graph):
+            repeat = False
+        else:
+            print("Generated random graph was not a connected graph.")
 
     print("The nodes in the graph and their randomly chosen attributes are: ")
     for n in graph.nodes():
@@ -134,7 +144,10 @@ def main():
     ps = set(ps.values())
 
     # setup the processes
-    for p in ps: setupprocs([p], [ps-{p}, graph, element_to_search_for])
+    starter = True
+    for p in ps:
+        setupprocs([p], [ps-{p}, graph, element_to_search_for, starter])
+        starter = False
 
     startprocs(ps)
     for p in (ps): p.join()
