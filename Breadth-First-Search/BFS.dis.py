@@ -37,7 +37,7 @@ class P(DistProcess):
             
             if search_for == graph.node[inspect]['value']:
                 completed = True
-                output("Element %r found. BFS Completed!!!" % search_for)
+                output("Value %r found. BFS Completed!!!" % search_for)
                 
                 '''Send messages to all processes notifying them of the completion'''
                 send(Reply("completed"), other_procs)
@@ -64,7 +64,7 @@ class P(DistProcess):
             
             if ( len(unserviced) == len(other_procs) ):
                 completed = True
-                output("Unable to get work. Assuming element %d not in graph. Terminating... " % 
+                output("Unable to get work. Assuming value %d not in the graph. Terminating... " % 
                        element_to_search_for)
                 return
         
@@ -92,7 +92,7 @@ class P(DistProcess):
     def OnReply(m):
         if m == "completed":
             completed = True
-            output("Received notice that %r found elem %d. Terminating!" % 
+            output("Received notice that %r found value %d. Terminating!" % 
                    (_source, element_to_search_for))
         elif isinstance(m, tuple):
             item, _inspected = m
