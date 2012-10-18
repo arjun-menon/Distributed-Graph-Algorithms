@@ -29,9 +29,7 @@ A graph library known as `NetworkX <http://networkx.lanl.gov/>`_ was used in thi
 
 Code Length
 -----------
-Lines of Code have never really been a good statistic on how long it took to write a piece of code. In addition, certain languages are more dense than others. For example this segment of Python code extracts lines from a graph file under certain constraints: ``... for ed in (e.strip() for e in f.readlines() if e.strip() != "") if len(ed.split()) == 3``. It probably would however have taken several lines of code if written in Java. Also, `Andrew Tanenbaum <http://en.wikipedia.org/wiki/Andrew_S._Tanenbaum>`_ mentions in one his awesome books (quoting `Fred Brooke <http://en.wikipedia.org/wiki/Fred_Brooks>`_'s `mythical man-moth <http://en.wikipedia.org/wiki/The_Mythical_Man-Month>`_ I believe) how IBM measured the performance of their programmers based on how many lines of code they wrote -- in assembly. Needless to say, the project (`OS/360 <http://en.wikipedia.org/wiki/OS/360>`_) wasn't very successful.
-
-However, I still think the *lines of code* would be an interesting statistic, so here it is:
+This is measure and sum of the lines of code of files containing code that were written over the course of this project:
 
 +----------------------+------------+-----------+
 | File name            | sloc only  | all lines |
@@ -68,6 +66,10 @@ Notes on the line count
 - **TOTAL (proper)** is the line count for all the active project code. ``Kruskal.py`` and ``mst_attempt_*`` were experimental files written while developing MST and are no longer used.
 - Two slightly different versions of ``InputGraph.py`` is used by BFS and Shortest Path to process the graph; the count is for the longer one.
 - ``tools.py`` is used by MST for non-core functionalities (like building the graph, visualizing, etc.)
+
+Frivolous Musings
++++++++++++++++++
+Lines of Code have never really been a good statistic on how long it took to write a piece of code. In addition, certain languages are more dense than others. For example this segment of Python code extracts lines from a graph file under certain constraints: ``... for ed in (e.strip() for e in f.readlines() if e.strip() != "") if len(ed.split()) == 3``. It probably would however have taken several lines of code if written in Java. Also, `Andrew Tanenbaum <http://en.wikipedia.org/wiki/Andrew_S._Tanenbaum>`_ mentions in one his awesome books (quoting `Fred Brooke <http://en.wikipedia.org/wiki/Fred_Brooks>`_'s `mythical man-moth <http://en.wikipedia.org/wiki/The_Mythical_Man-Month>`_ I believe) how IBM measured the performance of their programmers based on how many lines of code they wrote -- in assembly. Needless to say, the project (`OS/360 <http://en.wikipedia.org/wiki/OS/360>`_) wasn't very successful.
 
 Other
 -----
