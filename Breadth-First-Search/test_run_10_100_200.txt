@@ -1,0 +1,652 @@
+arjun@arjun-desktop:~/dev/workspace/Distributed-Graph-Algorithms/Breadth-First-Search$ ./run.py -w 10 -n 100 -e 200
+The nodes in the graph and their randomly chosen attributes are: 
+1  --->  488
+2  --->  172
+3  --->  805
+4  --->  760
+5  --->  156
+6  --->  111
+7  --->  15
+8  --->  258
+9  --->  725
+10  --->  746
+11  --->  446
+12  --->  693
+13  --->  878
+14  --->  940
+15  --->  88
+16  --->  498
+17  --->  2
+18  --->  327
+19  --->  464
+20  --->  109
+21  --->  33
+22  --->  527
+23  --->  60
+24  --->  507
+25  --->  598
+26  --->  131
+27  --->  788
+28  --->  402
+29  --->  826
+30  --->  564
+31  --->  904
+32  --->  1
+33  --->  739
+34  --->  534
+35  --->  208
+36  --->  486
+37  --->  704
+38  --->  173
+39  --->  632
+40  --->  86
+42  --->  938
+43  --->  203
+44  --->  297
+45  --->  697
+46  --->  303
+47  --->  872
+48  --->  972
+49  --->  365
+50  --->  239
+51  --->  671
+52  --->  631
+53  --->  531
+54  --->  981
+55  --->  185
+56  --->  776
+57  --->  864
+58  --->  661
+59  --->  821
+60  --->  846
+61  --->  718
+62  --->  733
+63  --->  824
+64  --->  251
+65  --->  276
+66  --->  487
+67  --->  469
+68  --->  367
+69  --->  116
+70  --->  957
+71  --->  288
+72  --->  625
+73  --->  901
+74  --->  987
+75  --->  362
+76  --->  510
+77  --->  714
+78  --->  5
+79  --->  926
+80  --->  18
+81  --->  255
+82  --->  200
+83  --->  827
+84  --->  299
+85  --->  633
+86  --->  335
+87  --->  236
+88  --->  19
+89  --->  485
+90  --->  122
+91  --->  310
+92  --->  176
+93  --->  484
+94  --->  953
+95  --->  854
+96  --->  243
+97  --->  129
+98  --->  77
+99  --->  182
+100  --->  66
+Pick the attribute/value you would like to search for: 827
+
+[2012-10-18 06:34:20,316]runtime:INFO: Creating instances of P..
+[2012-10-18 06:34:20,332]runtime:INFO: 10 instances of P created.
+[2012-10-18 06:34:20,337]runtime:INFO: Starting procs...
+[2012-10-18 06:34:20,339]P(2):INFO: Empty queue; sending requests for work
+[2012-10-18 06:34:20,339]P(3):INFO: Empty queue; sending requests for work
+[2012-10-18 06:34:20,339]P(0):INFO: Empty queue; sending requests for work
+[2012-10-18 06:34:20,339]P(7):INFO: Empty queue; sending requests for work
+[2012-10-18 06:34:20,340]P(9):INFO: Empty queue; sending requests for work
+[2012-10-18 06:34:20,341]P(1):INFO: Inspected 1
+[2012-10-18 06:34:20,339]P(5):INFO: Empty queue; sending requests for work
+[2012-10-18 06:34:20,340]P(6):INFO: Empty queue; sending requests for work
+[2012-10-18 06:34:20,341]P(1):INFO: Inspected 2
+[2012-10-18 06:34:20,341]P(4):INFO: Empty queue; sending requests for work
+[2012-10-18 06:34:20,342]P(1):INFO: Inspected 38
+[2012-10-18 06:34:20,343]P(1):INFO: Received request for work from 2
+[2012-10-18 06:34:20,343]P(1):INFO: Giving work [14] to 2
+[2012-10-18 06:34:20,342]P(2):INFO: Received request for work from 3
+[2012-10-18 06:34:20,343]P(3):INFO: Received request for work from 2
+[2012-10-18 06:34:20,344]P(1):INFO: Received request for work from 0
+[2012-10-18 06:34:20,344]P(5):INFO: Received request for work from 2
+[2012-10-18 06:34:20,344]P(1):INFO: Giving work [49] to 0
+[2012-10-18 06:34:20,344]P(7):INFO: Received request for work from 3
+[2012-10-18 06:34:20,344]P(5):INFO: Received request for work from 3
+[2012-10-18 06:34:20,343]P(2):INFO: Received request for work from 7
+[2012-10-18 06:34:20,344]P(7):INFO: Received request for work from 2
+[2012-10-18 06:34:20,344]P(6):INFO: Received request for work from 2
+[2012-10-18 06:34:20,344]P(1):INFO: Received request for work from 3
+[2012-10-18 06:34:20,344]P(3):INFO: Received request for work from 0
+[2012-10-18 06:34:20,345]P(3):INFO: Received request for work from 9
+[2012-10-18 06:34:20,343]P(9):INFO: Received request for work from 3
+[2012-10-18 06:34:20,344]P(7):INFO: Received request for work from 0
+[2012-10-18 06:34:20,344]P(2):INFO: Received request for work from 9
+[2012-10-18 06:34:20,344]P(5):INFO: Received request for work from 0
+[2012-10-18 06:34:20,344]P(1):INFO: Giving work [42] to 3
+[2012-10-18 06:34:20,345]P(7):INFO: Received request for work from 9
+[2012-10-18 06:34:20,345]P(9):INFO: Received request for work from 2
+[2012-10-18 06:34:20,345]P(5):INFO: Received request for work from 9
+[2012-10-18 06:34:20,344]P(6):INFO: Received request for work from 3
+[2012-10-18 06:34:20,345]P(7):INFO: Received request for work from 5
+[2012-10-18 06:34:20,344]P(0):INFO: Received request for work from 2
+[2012-10-18 06:34:20,345]P(9):INFO: Received request for work from 0
+[2012-10-18 06:34:20,345]P(6):INFO: Received request for work from 0
+[2012-10-18 06:34:20,345]P(0):INFO: Received request for work from 3
+[2012-10-18 06:34:20,345]P(9):INFO: Received request for work from 5
+[2012-10-18 06:34:20,345]P(6):INFO: Received request for work from 7
+[2012-10-18 06:34:20,345]P(9):INFO: Received request for work from 7
+[2012-10-18 06:34:20,345]P(0):INFO: Received request for work from 9
+[2012-10-18 06:34:20,345]P(3):INFO: Received request for work from 6
+[2012-10-18 06:34:20,345]P(2):INFO: Received request for work from 0
+[2012-10-18 06:34:20,345]P(6):INFO: Received request for work from 9
+[2012-10-18 06:34:20,345]P(9):INFO: Received request for work from 6
+[2012-10-18 06:34:20,345]P(3):INFO: Received request for work from 5
+[2012-10-18 06:34:20,345]P(5):INFO: Received request for work from 7
+[2012-10-18 06:34:20,345]P(6):INFO: Received request for work from 5
+[2012-10-18 06:34:20,345]P(2):INFO: Received request for work from 6
+[2012-10-18 06:34:20,346]P(3):INFO: Received request for work from 7
+[2012-10-18 06:34:20,345]P(0):INFO: Received request for work from 7
+[2012-10-18 06:34:20,346]P(6):INFO: Received request for work from 4
+[2012-10-18 06:34:20,346]P(2):INFO: Received request for work from 5
+[2012-10-18 06:34:20,346]P(0):INFO: Received request for work from 5
+[2012-10-18 06:34:20,346]P(7):INFO: Received request for work from 6
+[2012-10-18 06:34:20,346]P(2):INFO: Got work [14] from 1
+[2012-10-18 06:34:20,346]P(5):INFO: Received request for work from 6
+[2012-10-18 06:34:20,346]P(8):INFO: Empty queue; sending requests for work
+[2012-10-18 06:34:20,346]P(2):INFO: Received request for work from 4
+[2012-10-18 06:34:20,346]P(3):INFO: Received request for work from 4
+[2012-10-18 06:34:20,346]P(0):INFO: Received request for work from 6
+[2012-10-18 06:34:20,346]P(7):INFO: Received request for work from 4
+[2012-10-18 06:34:20,346]P(2):INFO: Inspected 14
+[2012-10-18 06:34:20,346]P(5):INFO: Received request for work from 4
+[2012-10-18 06:34:20,346]P(0):INFO: Received request for work from 4
+[2012-10-18 06:34:20,346]P(2):INFO: Inspected 56
+[2012-10-18 06:34:20,346]P(3):INFO: Got work [42] from 1
+[2012-10-18 06:34:20,346]P(4):INFO: Received request for work from 0
+[2012-10-18 06:34:20,346]P(1):INFO: Received request for work from 9
+[2012-10-18 06:34:20,346]P(0):INFO: Got work [49] from 1
+[2012-10-18 06:34:20,346]P(1):INFO: Giving work [88] to 9
+[2012-10-18 06:34:20,346]P(4):INFO: Received request for work from 7
+[2012-10-18 06:34:20,346]P(3):INFO: Inspected 42
+[2012-10-18 06:34:20,346]P(2):INFO: Inspected 81
+[2012-10-18 06:34:20,347]P(3):INFO: Inspected 18
+[2012-10-18 06:34:20,347]P(0):INFO: Inspected 49
+[2012-10-18 06:34:20,347]P(4):INFO: Received request for work from 2
+[2012-10-18 06:34:20,347]P(2):INFO: Inspected 26
+[2012-10-18 06:34:20,347]P(3):INFO: Inspected 64
+[2012-10-18 06:34:20,347]P(0):INFO: Inspected 33
+[2012-10-18 06:34:20,347]P(1):INFO: Inspected 81
+[2012-10-18 06:34:20,347]P(9):INFO: Received request for work from 4
+[2012-10-18 06:34:20,347]P(4):INFO: Received request for work from 9
+[2012-10-18 06:34:20,347]P(3):INFO: Received request for work from 8
+[2012-10-18 06:34:20,347]P(2):INFO: Inspected 90
+[2012-10-18 06:34:20,347]P(0):INFO: Inspected 98
+[2012-10-18 06:34:20,347]P(1):INFO: Received request for work from 7
+[2012-10-18 06:34:20,347]P(4):INFO: Received request for work from 6
+[2012-10-18 06:34:20,347]P(9):INFO: Got work [88] from 1
+[2012-10-18 06:34:20,347]P(3):INFO: Giving work [49] to 8
+[2012-10-18 06:34:20,347]P(2):INFO: Inspected 49
+[2012-10-18 06:34:20,347]P(1):INFO: Giving work [26] to 7
+[2012-10-18 06:34:20,347]P(4):INFO: Received request for work from 3
+[2012-10-18 06:34:20,347]P(3):INFO: Inspected 76
+[2012-10-18 06:34:20,347]P(0):INFO: Inspected 13
+[2012-10-18 06:34:20,347]P(9):INFO: Inspected 88
+[2012-10-18 06:34:20,348]P(3):INFO: Inspected 94
+[2012-10-18 06:34:20,348]P(4):INFO: Received request for work from 5
+[2012-10-18 06:34:20,348]P(2):INFO: Received request for work from 8
+[2012-10-18 06:34:20,349]P(9):INFO: Received request for work from 8
+[2012-10-18 06:34:20,349]P(0):INFO: Received request for work from 8
+[2012-10-18 06:34:20,349]P(9):INFO: Giving work [65] to 8
+[2012-10-18 06:34:20,349]P(0):INFO: Giving work [14] to 8
+[2012-10-18 06:34:20,348]P(1):INFO: Received request for work from 5
+[2012-10-18 06:34:20,349]P(3):INFO: Inspected 17
+[2012-10-18 06:34:20,348]P(7):INFO: Got work [26] from 1
+[2012-10-18 06:34:20,349]P(3):INFO: Inspected 98
+[2012-10-18 06:34:20,349]P(1):INFO: Giving work [21] to 5
+[2012-10-18 06:34:20,349]P(9):INFO: Inspected 74
+[2012-10-18 06:34:20,349]P(0):INFO: Inspected 18
+[2012-10-18 06:34:20,348]P(6):INFO: Received request for work from 8
+[2012-10-18 06:34:20,349]P(3):INFO: Inspected 3
+[2012-10-18 06:34:20,348]P(5):INFO: Received request for work from 8
+[2012-10-18 06:34:20,349]P(0):INFO: Inspected 86
+[2012-10-18 06:34:20,349]P(3):INFO: Inspected 45
+[2012-10-18 06:34:20,349]P(0):INFO: Inspected 95
+[2012-10-18 06:34:20,350]P(3):INFO: Inspected 94
+[2012-10-18 06:34:20,350]P(9):INFO: Inspected 23
+[2012-10-18 06:34:20,350]P(0):INFO: Inspected 75
+[2012-10-18 06:34:20,350]P(3):INFO: Inspected 12
+[2012-10-18 06:34:20,350]P(5):INFO: Got work [21] from 1
+[2012-10-18 06:34:20,350]P(9):INFO: Inspected 61
+[2012-10-18 06:34:20,350]P(1):INFO: Received request for work from 6
+[2012-10-18 06:34:20,350]P(0):INFO: Inspected 59
+[2012-10-18 06:34:20,350]P(3):INFO: Inspected 34
+[2012-10-18 06:34:20,350]P(5):INFO: Inspected 21
+[2012-10-18 06:34:20,348]P(8):INFO: Received request for work from 6
+[2012-10-18 06:34:20,350]P(0):INFO: Inspected 28
+[2012-10-18 06:34:20,350]P(7):INFO: Received request for work from 8
+[2012-10-18 06:34:20,350]P(3):INFO: Inspected 58
+[2012-10-18 06:34:20,350]P(0):INFO: Inspected 69
+[2012-10-18 06:34:20,350]P(3):INFO: Inspected 100
+[2012-10-18 06:34:20,350]P(8):INFO: Received request for work from 4
+[2012-10-18 06:34:20,349]P(2):INFO: Giving work [16] to 8
+[2012-10-18 06:34:20,349]P(4):INFO: Received request for work from 8
+[2012-10-18 06:34:20,350]P(0):INFO: Inspected 13
+[2012-10-18 06:34:20,350]P(1):INFO: Giving work [93] to 6
+[2012-10-18 06:34:20,350]P(8):INFO: Received request for work from 0
+[2012-10-18 06:34:20,350]P(9):INFO: Inspected 69
+[2012-10-18 06:34:20,350]P(8):INFO: Received request for work from 9
+[2012-10-18 06:34:20,350]P(5):INFO: Empty queue; sending requests for work
+[2012-10-18 06:34:20,350]P(7):INFO: Inspected 26
+[2012-10-18 06:34:20,350]P(3):INFO: Inspected 82
+[2012-10-18 06:34:20,350]P(2):INFO: Inspected 43
+[2012-10-18 06:34:20,350]P(7):INFO: Inspected 48
+[2012-10-18 06:34:20,350]P(2):INFO: Inspected 93
+[2012-10-18 06:34:20,351]P(7):INFO: Inspected 91
+[2012-10-18 06:34:20,350]P(3):INFO: Inspected 59
+[2012-10-18 06:34:20,350]P(0):INFO: Inspected 64
+[2012-10-18 06:34:20,350]P(9):INFO: Inspected 31
+[2012-10-18 06:34:20,351]P(7):INFO: Inspected 14
+[2012-10-18 06:34:20,350]P(8):INFO: Received request for work from 2
+[2012-10-18 06:34:20,351]P(2):INFO: Received request for work from 5
+[2012-10-18 06:34:20,351]P(3):INFO: Received request for work from 5
+[2012-10-18 06:34:20,351]P(7):INFO: Inspected 9
+[2012-10-18 06:34:20,351]P(2):INFO: Giving work [85] to 5
+[2012-10-18 06:34:20,351]P(3):INFO: Giving work [51] to 5
+[2012-10-18 06:34:20,351]P(9):INFO: Inspected 100
+[2012-10-18 06:34:20,351]P(7):INFO: Inspected 13
+[2012-10-18 06:34:20,351]P(9):INFO: Inspected 85
+[2012-10-18 06:34:20,351]P(3):INFO: Inspected 73
+[2012-10-18 06:34:20,351]P(9):INFO: Inspected 70
+[2012-10-18 06:34:20,351]P(2):INFO: Inspected 93
+[2012-10-18 06:34:20,351]P(3):INFO: Inspected 49
+[2012-10-18 06:34:20,351]P(7):INFO: Received request for work from 5
+[2012-10-18 06:34:20,351]P(9):INFO: Inspected 8
+[2012-10-18 06:34:20,351]P(7):INFO: Giving work [15] to 5
+[2012-10-18 06:34:20,351]P(2):INFO: Inspected 48
+[2012-10-18 06:34:20,351]P(9):INFO: Inspected 29
+[2012-10-18 06:34:20,352]P(2):INFO: Inspected 91
+[2012-10-18 06:34:20,352]P(8):INFO: Received request for work from 5
+[2012-10-18 06:34:20,351]P(3):INFO: Inspected 65
+[2012-10-18 06:34:20,352]P(9):INFO: Inspected 32
+[2012-10-18 06:34:20,352]P(2):INFO: Inspected 48
+[2012-10-18 06:34:20,352]P(9):INFO: Inspected 33
+[2012-10-18 06:34:20,352]P(2):INFO: Inspected 73
+[2012-10-18 06:34:20,352]P(9):INFO: Inspected 36
+[2012-10-18 06:34:20,352]P(3):INFO: Inspected 12
+[2012-10-18 06:34:20,352]P(2):INFO: Inspected 33
+[2012-10-18 06:34:20,352]P(9):INFO: Inspected 30
+[2012-10-18 06:34:20,352]P(7):INFO: Inspected 16
+[2012-10-18 06:34:20,352]P(3):INFO: Inspected 34
+[2012-10-18 06:34:20,352]P(9):INFO: Inspected 89
+[2012-10-18 06:34:20,352]P(7):INFO: Inspected 90
+[2012-10-18 06:34:20,352]P(8):INFO: Received request for work from 7
+[2012-10-18 06:34:20,352]P(2):INFO: Inspected 98
+[2012-10-18 06:34:20,352]P(9):INFO: Inspected 35
+[2012-10-18 06:34:20,352]P(7):INFO: Inspected 30
+[2012-10-18 06:34:20,352]P(8):INFO: Received request for work from 3
+[2012-10-18 06:34:20,352]P(3):INFO: Inspected 58
+[2012-10-18 06:34:20,352]P(9):INFO: Inspected 39
+[2012-10-18 06:34:20,352]P(2):INFO: Inspected 13
+[2012-10-18 06:34:20,352]P(7):INFO: Inspected 31
+[2012-10-18 06:34:20,352]P(3):INFO: Inspected 100
+[2012-10-18 06:34:20,352]P(9):INFO: Inspected 75
+[2012-10-18 06:34:20,352]P(2):INFO: Inspected 18
+[2012-10-18 06:34:20,352]P(7):INFO: Inspected 58
+[2012-10-18 06:34:20,352]P(3):INFO: Inspected 82
+[2012-10-18 06:34:20,352]P(9):INFO: Inspected 12
+[2012-10-18 06:34:20,353]P(2):INFO: Inspected 86
+[2012-10-18 06:34:20,353]P(7):INFO: Inspected 19
+[2012-10-18 06:34:20,353]P(3):INFO: Inspected 11
+[2012-10-18 06:34:20,353]P(9):INFO: Inspected 48
+[2012-10-18 06:34:20,353]P(2):INFO: Inspected 95
+[2012-10-18 06:34:20,353]P(7):INFO: Inspected 84
+[2012-10-18 06:34:20,353]P(3):INFO: Inspected 28
+[2012-10-18 06:34:20,353]P(9):INFO: Inspected 22
+[2012-10-18 06:34:20,353]P(2):INFO: Inspected 95
+[2012-10-18 06:34:20,353]P(7):INFO: Inspected 22
+[2012-10-18 06:34:20,353]P(3):INFO: Inspected 31
+[2012-10-18 06:34:20,353]P(9):INFO: Inspected 25
+[2012-10-18 06:34:20,353]P(2):INFO: Inspected 67
+[2012-10-18 06:34:20,353]P(7):INFO: Inspected 56
+[2012-10-18 06:34:20,353]P(3):INFO: Inspected 59
+[2012-10-18 06:34:20,353]P(9):INFO: Inspected 97
+[2012-10-18 06:34:20,353]P(2):INFO: Inspected 92
+[2012-10-18 06:34:20,353]P(7):INFO: Inspected 49
+[2012-10-18 06:34:20,353]P(3):INFO: Inspected 100
+[2012-10-18 06:34:20,353]P(9):INFO: Inspected 34
+[2012-10-18 06:34:20,353]P(2):INFO: Inspected 47
+[2012-10-18 06:34:20,353]P(7):INFO: Inspected 90
+[2012-10-18 06:34:20,353]P(3):INFO: Inspected 93
+[2012-10-18 06:34:20,353]P(9):INFO: Inspected 39
+[2012-10-18 06:34:20,353]P(2):INFO: Inspected 34
+[2012-10-18 06:34:20,353]P(7):INFO: Inspected 13
+[2012-10-18 06:34:20,353]P(3):INFO: Inspected 87
+[2012-10-18 06:34:20,353]P(8):INFO: Got work [49] from 3
+[2012-10-18 06:34:20,353]P(2):INFO: Inspected 85
+[2012-10-18 06:34:20,354]P(7):INFO: Inspected 33
+[2012-10-18 06:34:20,354]P(3):INFO: Inspected 32
+[2012-10-18 06:34:20,354]P(2):INFO: Inspected 46
+[2012-10-18 06:34:20,354]P(7):INFO: Inspected 49
+[2012-10-18 06:34:20,353]P(9):INFO: Inspected 79
+[2012-10-18 06:34:20,354]P(3):INFO: Inspected 91
+[2012-10-18 06:34:20,354]P(2):INFO: Inspected 34
+[2012-10-18 06:34:20,354]P(7):INFO: Inspected 89
+[2012-10-18 06:34:20,354]P(3):INFO: Inspected 59
+[2012-10-18 06:34:20,354]P(8):INFO: Got work [14] from 0
+[2012-10-18 06:34:20,354]P(9):INFO: Inspected 50
+[2012-10-18 06:34:20,354]P(7):INFO: Inspected 32
+[2012-10-18 06:34:20,354]P(3):INFO: Inspected 70
+[2012-10-18 06:34:20,354]P(8):INFO: Got work [65] from 9
+[2012-10-18 06:34:20,354]P(7):INFO: Inspected 84
+[2012-10-18 06:34:20,354]P(9):INFO: Inspected 87
+[2012-10-18 06:34:20,354]P(2):INFO: Inspected 85
+[2012-10-18 06:34:20,354]P(8):INFO: Inspected 49
+[2012-10-18 06:34:20,354]P(3):INFO: Inspected 97
+[2012-10-18 06:34:20,354]P(7):INFO: Inspected 68
+[2012-10-18 06:34:20,354]P(2):INFO: Inspected 46
+[2012-10-18 06:34:20,354]P(8):INFO: Got work [16] from 2
+[2012-10-18 06:34:20,354]P(3):INFO: Inspected 39
+[2012-10-18 06:34:20,354]P(7):INFO: Inspected 56
+[2012-10-18 06:34:20,354]P(8):INFO: Inspected 14
+[2012-10-18 06:34:20,354]P(2):INFO: Inspected 9
+[2012-10-18 06:34:20,354]P(7):INFO: Inspected 73
+[2012-10-18 06:34:20,355]P(2):INFO: Inspected 13
+[2012-10-18 06:34:20,354]P(9):INFO: Inspected 94
+[2012-10-18 06:34:20,355]P(7):INFO: Inspected 4
+[2012-10-18 06:34:20,354]P(3):INFO: Inspected 23
+[2012-10-18 06:34:20,355]P(2):INFO: Inspected 15
+[2012-10-18 06:34:20,355]P(7):INFO: Inspected 69
+[2012-10-18 06:34:20,355]P(8):INFO: Inspected 65
+[2012-10-18 06:34:20,355]P(9):INFO: Inspected 56
+[2012-10-18 06:34:20,355]P(2):INFO: Inspected 16
+[2012-10-18 06:34:20,355]P(7):INFO: Inspected 7
+[2012-10-18 06:34:20,355]P(3):INFO: Inspected 79
+[2012-10-18 06:34:20,355]P(9):INFO: Inspected 32
+[2012-10-18 06:34:20,355]P(7):INFO: Inspected 75
+[2012-10-18 06:34:20,355]P(3):INFO: Inspected 50
+[2012-10-18 06:34:20,355]P(9):INFO: Inspected 10
+[2012-10-18 06:34:20,355]P(2):INFO: Inspected 30
+[2012-10-18 06:34:20,355]P(7):INFO: Inspected 51
+[2012-10-18 06:34:20,355]P(3):INFO: Inspected 87
+[2012-10-18 06:34:20,355]P(9):INFO: Inspected 93
+[2012-10-18 06:34:20,355]P(7):INFO: Inspected 60
+[2012-10-18 06:34:20,355]P(2):INFO: Inspected 31
+[2012-10-18 06:34:20,355]P(8):INFO: Inspected 86
+[2012-10-18 06:34:20,355]P(9):INFO: Inspected 66
+[2012-10-18 06:34:20,355]P(3):INFO: Inspected 25
+[2012-10-18 06:34:20,355]P(7):INFO: Inspected 5
+[2012-10-18 06:34:20,355]P(2):INFO: Inspected 58
+[2012-10-18 06:34:20,355]P(9):INFO: Inspected 35
+[2012-10-18 06:34:20,355]P(3):INFO: Inspected 53
+[2012-10-18 06:34:20,355]P(7):INFO: Inspected 35
+[2012-10-18 06:34:20,355]P(2):INFO: Inspected 19
+[2012-10-18 06:34:20,355]P(3):INFO: Inspected 33
+[2012-10-18 06:34:20,355]P(2):INFO: Inspected 84
+[2012-10-18 06:34:20,355]P(9):INFO: Inspected 5
+[2012-10-18 06:34:20,355]P(8):INFO: Inspected 14
+[2012-10-18 06:34:20,356]P(3):INFO: Inspected 53
+[2012-10-18 06:34:20,356]P(2):INFO: Inspected 22
+[2012-10-18 06:34:20,356]P(9):INFO: Inspected 24
+[2012-10-18 06:34:20,356]P(8):INFO: Inspected 95
+[2012-10-18 06:34:20,356]P(3):INFO: Inspected 54
+[2012-10-18 06:34:20,356]P(2):INFO: Inspected 9
+[2012-10-18 06:34:20,356]P(9):INFO: Inspected 25
+[2012-10-18 06:34:20,356]P(3):INFO: Inspected 90
+[2012-10-18 06:34:20,356]P(2):INFO: Inspected 13
+[2012-10-18 06:34:20,356]P(9):INFO: Inspected 58
+[2012-10-18 06:34:20,356]P(3):INFO: Inspected 33
+[2012-10-18 06:34:20,356]P(2):INFO: Inspected 15
+[2012-10-18 06:34:20,356]P(9):INFO: Inspected 40
+[2012-10-18 06:34:20,356]P(3):INFO: Inspected 86
+[2012-10-18 06:34:20,356]P(9):INFO: Inspected 32
+[2012-10-18 06:34:20,356]P(3):INFO: Inspected 13
+[2012-10-18 06:34:20,356]P(9):INFO: Inspected 92
+[2012-10-18 06:34:20,356]P(3):INFO: Inspected 14
+[2012-10-18 06:34:20,355]P(7):INFO: Inspected 39
+[2012-10-18 06:34:20,356]P(9):INFO: Inspected 80
+[2012-10-18 06:34:20,356]P(3):INFO: Inspected 95
+[2012-10-18 06:34:20,356]P(2):INFO: Inspected 16
+[2012-10-18 06:34:20,356]P(8):INFO: Inspected 16
+[2012-10-18 06:34:20,356]P(9):INFO: Inspected 16
+[2012-10-18 06:34:20,356]P(6):INFO: Received request for work from 5
+[2012-10-18 06:34:20,357]P(8):INFO: Received request for work from 5
+[2012-10-18 06:34:20,357]P(2):INFO: Inspected 30
+[2012-10-18 06:34:20,357]P(1):INFO: Inspected 14
+[2012-10-18 06:34:20,356]P(5):INFO: Got work [85] from 2
+[2012-10-18 06:34:20,357]P(6):INFO: Got work [93] from 1
+[2012-10-18 06:34:20,357]P(9):INFO: Received request for work from 5
+[2012-10-18 06:34:20,357]P(2):INFO: Inspected 31
+[2012-10-18 06:34:20,357]P(9):INFO: Giving work [58] to 5
+[2012-10-18 06:34:20,357]P(6):INFO: Inspected 93
+[2012-10-18 06:34:20,357]P(5):INFO: Got work [51] from 3
+[2012-10-18 06:34:20,357]P(2):INFO: Inspected 98
+[2012-10-18 06:34:20,357]P(5):INFO: Got work [15] from 7
+[2012-10-18 06:34:20,357]P(7):INFO: Inspected 74
+[2012-10-18 06:34:20,357]P(3):INFO: Inspected 88
+[2012-10-18 06:34:20,357]P(0):INFO: Inspected 73
+[2012-10-18 06:34:20,357]P(4):INFO: Received request for work from 5
+[2012-10-18 06:34:20,357]P(8):INFO: Giving work [52] to 5
+[2012-10-18 06:34:20,357]P(1):INFO: Received request for work from 4
+[2012-10-18 06:34:20,357]P(3):INFO: Inspected 52
+[2012-10-18 06:34:20,357]P(6):INFO: Inspected 56
+[2012-10-18 06:34:20,357]P(1):INFO: Giving work [56] to 4
+[2012-10-18 06:34:20,357]P(0):INFO: Received request for work from 5
+[2012-10-18 06:34:20,357]P(3):INFO: Inspected 11
+[2012-10-18 06:34:20,358]P(0):INFO: Giving work [48] to 5
+[2012-10-18 06:34:20,358]P(3):INFO: Inspected 28
+[2012-10-18 06:34:20,358]P(9):INFO: Inspected 86
+[2012-10-18 06:34:20,358]P(3):INFO: Inspected 31
+[2012-10-18 06:34:20,358]P(6):INFO: Inspected 34
+[2012-10-18 06:34:20,358]P(8):INFO: Inspected 45
+[2012-10-18 06:34:20,358]P(6):INFO: Inspected 85
+[2012-10-18 06:34:20,357]P(2):INFO: Inspected 75
+[2012-10-18 06:34:20,357]P(7):INFO: Inspected 75
+[2012-10-18 06:34:20,358]P(8):INFO: Inspected 32
+[2012-10-18 06:34:20,357]P(5):INFO: Inspected 85
+[2012-10-18 06:34:20,358]P(1):INFO: Inspected 49
+[2012-10-18 06:34:20,358]P(2):INFO: Inspected 59
+[2012-10-18 06:34:20,358]P(7):INFO: Inspected 12
+[2012-10-18 06:34:20,358]P(2):INFO: Inspected 28
+[2012-10-18 06:34:20,358]P(1):INFO: Received request for work from 8
+[2012-10-18 06:34:20,358]P(7):INFO: Inspected 22
+[2012-10-18 06:34:20,358]P(9):INFO: Inspected 49
+[2012-10-18 06:34:20,358]P(1):INFO: Giving work [26] to 8
+[2012-10-18 06:34:20,358]P(2):INFO: Inspected 69
+[2012-10-18 06:34:20,358]P(7):INFO: Inspected 25
+[2012-10-18 06:34:20,358]P(9):INFO: Inspected 75
+[2012-10-18 06:34:20,358]P(3):INFO: Inspected 93
+[2012-10-18 06:34:20,359]P(2):INFO: Inspected 13
+[2012-10-18 06:34:20,358]P(0):INFO: Inspected 9
+[2012-10-18 06:34:20,359]P(7):INFO: Inspected 32
+[2012-10-18 06:34:20,358]P(6):INFO: Inspected 46
+[2012-10-18 06:34:20,358]P(8):INFO: Inspected 39
+[2012-10-18 06:34:20,358]P(5):INFO: Got work [58] from 9
+[2012-10-18 06:34:20,359]P(0):INFO: Inspected 89
+[2012-10-18 06:34:20,359]P(3):INFO: Inspected 87
+[2012-10-18 06:34:20,359]P(1):INFO: Received request for work from 5
+[2012-10-18 06:34:20,359]P(9):INFO: Inspected 59
+[2012-10-18 06:34:20,359]P(3):INFO: Inspected 32
+[2012-10-18 06:34:20,359]P(7):INFO: Inspected 59
+[2012-10-18 06:34:20,359]P(5):INFO: Got work [52] from 8
+[2012-10-18 06:34:20,359]P(0):INFO: Inspected 64
+[2012-10-18 06:34:20,359]P(3):INFO: Inspected 91
+[2012-10-18 06:34:20,358]P(4):INFO: Got work [56] from 1
+[2012-10-18 06:34:20,359]P(5):INFO: Got work [48] from 0
+[2012-10-18 06:34:20,359]P(9):INFO: Inspected 28
+[2012-10-18 06:34:20,359]P(7):INFO: Inspected 70
+[2012-10-18 06:34:20,359]P(2):INFO: Inspected 64
+[2012-10-18 06:34:20,359]P(0):INFO: Inspected 42
+[2012-10-18 06:34:20,359]P(5):INFO: Inspected 51
+[2012-10-18 06:34:20,359]P(6):INFO: Inspected 16
+[2012-10-18 06:34:20,359]P(1):INFO: Giving work [90] to 5
+[2012-10-18 06:34:20,359]P(5):INFO: Inspected 15
+[2012-10-18 06:34:20,359]P(0):INFO: Inspected 76
+[2012-10-18 06:34:20,359]P(3):INFO: Inspected 70
+[2012-10-18 06:34:20,359]P(4):INFO: Inspected 56
+[2012-10-18 06:34:20,359]P(7):INFO: Inspected 94
+[2012-10-18 06:34:20,359]P(5):INFO: Inspected 32
+[2012-10-18 06:34:20,359]P(8):INFO: Inspected 43
+[2012-10-18 06:34:20,359]P(7):INFO: Inspected 72
+[2012-10-18 06:34:20,359]P(4):INFO: Inspected 16
+[2012-10-18 06:34:20,360]P(8):INFO: Inspected 92
+[2012-10-18 06:34:20,360]P(3):INFO: Inspected 97
+[2012-10-18 06:34:20,360]P(8):INFO: Got work [26] from 1
+[2012-10-18 06:34:20,359]P(9):INFO: Inspected 13
+[2012-10-18 06:34:20,359]P(2):INFO: Inspected 9
+[2012-10-18 06:34:20,360]P(3):INFO: Inspected 39
+[2012-10-18 06:34:20,359]P(0):INFO: Inspected 94
+[2012-10-18 06:34:20,360]P(8):INFO: Inspected 78
+[2012-10-18 06:34:20,360]P(3):INFO: Inspected 23
+[2012-10-18 06:34:20,360]P(9):INFO: Inspected 24
+[2012-10-18 06:34:20,360]P(2):INFO: Inspected 89
+[2012-10-18 06:34:20,360]P(8):INFO: Inspected 32
+[2012-10-18 06:34:20,360]P(0):INFO: Inspected 32
+[2012-10-18 06:34:20,360]P(9):INFO: Inspected 75
+[2012-10-18 06:34:20,360]P(2):INFO: Inspected 64
+[2012-10-18 06:34:20,360]P(8):INFO: Inspected 84
+[2012-10-18 06:34:20,360]P(0):INFO: Inspected 39
+[2012-10-18 06:34:20,360]P(9):INFO: Inspected 19
+[2012-10-18 06:34:20,360]P(2):INFO: Inspected 42
+[2012-10-18 06:34:20,360]P(6):INFO: Inspected 43
+[2012-10-18 06:34:20,360]P(8):INFO: Inspected 68
+[2012-10-18 06:34:20,360]P(0):INFO: Inspected 43
+[2012-10-18 06:34:20,360]P(2):INFO: Inspected 76
+[2012-10-18 06:34:20,360]P(7):INFO: Inspected 36
+[2012-10-18 06:34:20,360]P(4):INFO: Inspected 43
+[2012-10-18 06:34:20,360]P(5):INFO: Got work [90] from 1
+[2012-10-18 06:34:20,360]P(6):INFO: Inspected 85
+[2012-10-18 06:34:20,360]P(0):INFO: Inspected 92
+[2012-10-18 06:34:20,360]P(2):INFO: Inspected 94
+[2012-10-18 06:34:20,360]P(6):INFO: Inspected 14
+[2012-10-18 06:34:20,360]P(5):INFO: Inspected 10
+[2012-10-18 06:34:20,360]P(0):INFO: Inspected 78
+[2012-10-18 06:34:20,361]P(2):INFO: Inspected 32
+[2012-10-18 06:34:20,361]P(6):INFO: Inspected 59
+[2012-10-18 06:34:20,360]P(4):INFO: Inspected 93
+[2012-10-18 06:34:20,361]P(0):INFO: Inspected 31
+[2012-10-18 06:34:20,361]P(2):INFO: Inspected 39
+[2012-10-18 06:34:20,361]P(6):INFO: Inspected 100
+[2012-10-18 06:34:20,361]P(4):INFO: Inspected 85
+[2012-10-18 06:34:20,361]P(7):INFO: Inspected 37
+[2012-10-18 06:34:20,360]P(1):INFO: Inspected 33
+[2012-10-18 06:34:20,360]P(3):INFO: Inspected 79
+[2012-10-18 06:34:20,361]P(6):INFO: Inspected 94
+[2012-10-18 06:34:20,361]P(4):INFO: Inspected 32
+[2012-10-18 06:34:20,361]P(7):INFO: Inspected 47
+[2012-10-18 06:34:20,360]P(9):INFO: Inspected 4
+[2012-10-18 06:34:20,361]P(6):INFO: Inspected 87
+[2012-10-18 06:34:20,361]P(1):INFO: Inspected 98
+[2012-10-18 06:34:20,361]P(4):INFO: Inspected 84
+[2012-10-18 06:34:20,360]P(8):INFO: Inspected 48
+[2012-10-18 06:34:20,361]P(6):INFO: Inspected 32
+[2012-10-18 06:34:20,361]P(5):INFO: Inspected 23
+[2012-10-18 06:34:20,361]P(4):INFO: Inspected 68
+[2012-10-18 06:34:20,361]P(0):INFO: Inspected 36
+[2012-10-18 06:34:20,361]P(2):INFO: Inspected 92
+[2012-10-18 06:34:20,361]P(3):INFO: Inspected 50
+[2012-10-18 06:34:20,361]P(4):INFO: Inspected 48
+[2012-10-18 06:34:20,361]P(5):INFO: Inspected 58
+[2012-10-18 06:34:20,361]P(9):INFO: Inspected 5
+[2012-10-18 06:34:20,361]P(1):INFO: Inspected 13
+[2012-10-18 06:34:20,361]P(3):INFO: Inspected 87
+[2012-10-18 06:34:20,361]P(8):INFO: Inspected 80
+[2012-10-18 06:34:20,361]P(5):INFO: Inspected 52
+[2012-10-18 06:34:20,361]P(3):INFO: Inspected 25
+[2012-10-18 06:34:20,361]P(6):INFO: Inspected 10
+[2012-10-18 06:34:20,361]P(1):INFO: Inspected 18
+[2012-10-18 06:34:20,361]P(5):INFO: Inspected 48
+[2012-10-18 06:34:20,361]P(7):INFO: Inspected 72
+[2012-10-18 06:34:20,361]P(8):INFO: Inspected 58
+[2012-10-18 06:34:20,361]P(4):INFO: Inspected 95
+[2012-10-18 06:34:20,362]P(5):INFO: Inspected 52
+[2012-10-18 06:34:20,362]P(6):INFO: Inspected 23
+[2012-10-18 06:34:20,362]P(1):INFO: Inspected 86
+[2012-10-18 06:34:20,362]P(7):INFO: Inspected 99
+[2012-10-18 06:34:20,362]P(4):INFO: Inspected 67
+[2012-10-18 06:34:20,362]P(5):INFO: Inspected 90
+[2012-10-18 06:34:20,362]P(6):INFO: Inspected 37
+[2012-10-18 06:34:20,361]P(0):INFO: Inspected 53
+[2012-10-18 06:34:20,362]P(7):INFO: Inspected 52
+[2012-10-18 06:34:20,362]P(4):INFO: Inspected 92
+[2012-10-18 06:34:20,361]P(2):INFO: Inspected 78
+[2012-10-18 06:34:20,361]P(9):INFO: Inspected 7
+[2012-10-18 06:34:20,362]P(1):INFO: Inspected 95
+[2012-10-18 06:34:20,362]P(5):INFO: Inspected 99
+[2012-10-18 06:34:20,362]P(3):INFO: Inspected 53
+[2012-10-18 06:34:20,362]P(6):INFO: Inspected 32
+[2012-10-18 06:34:20,362]P(4):INFO: Inspected 47
+[2012-10-18 06:34:20,362]P(9):INFO: Inspected 75
+[2012-10-18 06:34:20,362]P(6):INFO: Inspected 84
+[2012-10-18 06:34:20,362]P(4):INFO: Inspected 34
+[2012-10-18 06:34:20,362]P(9):INFO: Inspected 48
+[2012-10-18 06:34:20,362]P(6):INFO: Inspected 68
+[2012-10-18 06:34:20,362]P(1):INFO: Inspected 75
+[2012-10-18 06:34:20,362]P(4):INFO: Inspected 85
+[2012-10-18 06:34:20,362]P(9):INFO: Inspected 51
+[2012-10-18 06:34:20,362]P(6):INFO: Inspected 48
+[2012-10-18 06:34:20,362]P(1):INFO: Inspected 59
+[2012-10-18 06:34:20,362]P(4):INFO: Inspected 46
+[2012-10-18 06:34:20,362]P(9):INFO: Inspected 60
+[2012-10-18 06:34:20,362]P(6):INFO: Inspected 95
+[2012-10-18 06:34:20,362]P(7):INFO: Inspected 54
+[2012-10-18 06:34:20,362]P(0):INFO: Inspected 30
+[2012-10-18 06:34:20,362]P(4):INFO: Inspected 32
+[2012-10-18 06:34:20,362]P(8):INFO: Inspected 69
+[2012-10-18 06:34:20,362]P(9):INFO: Inspected 27
+[2012-10-18 06:34:20,362]P(6):INFO: Inspected 67
+[2012-10-18 06:34:20,363]P(8):INFO: Inspected 85
+[2012-10-18 06:34:20,363]P(9):INFO: Inspected 92
+[2012-10-18 06:34:20,363]P(7):INFO: Inspected 89
+[2012-10-18 06:34:20,362]P(2):INFO: Inspected 92
+[2012-10-18 06:34:20,362]P(5):INFO: Inspected 83
+[2012-10-18 06:34:20,363]P(8):INFO: Inspected 29
+[2012-10-18 06:34:20,363]P(9):INFO: Inspected 13
+[2012-10-18 06:34:20,363]P(5):INFO: Value 827 found. BFS Completed!!!
+[2012-10-18 06:34:20,363]P(8):INFO: Inspected 60
+[2012-10-18 06:34:20,363]P(9):INFO: Inspected 22
+[2012-10-18 06:34:20,363]P(8):INFO: Inspected 100
+[2012-10-18 06:34:20,363]P(8):INFO: Inspected 31
+[2012-10-18 06:34:20,363]P(8):INFO: Inspected 67
+[2012-10-18 06:34:20,363]P(8):INFO: Inspected 92
+[2012-10-18 06:34:20,364]P(8):INFO: Inspected 47
+[2012-10-18 06:34:20,364]P(8):INFO: Inspected 99
+[2012-10-18 06:34:20,364]P(8):INFO: Inspected 37
+[2012-10-18 06:34:20,364]P(8):INFO: Inspected 7
+[2012-10-18 06:34:20,364]P(8):INFO: Inspected 53
+[2012-10-18 06:34:20,364]P(8):INFO: Inspected 89
+[2012-10-18 06:34:20,364]P(8):INFO: Inspected 29
+[2012-10-18 06:34:20,364]P(8):INFO: Inspected 26
+[2012-10-18 06:34:20,364]P(8):INFO: Inspected 40
+[2012-10-18 06:34:20,364]P(8):INFO: Inspected 35
+[2012-10-18 06:34:20,373]P(8):INFO: Received notice that 5 found value 827. Terminating!
+[2012-10-18 06:34:20,362]P(1):INFO: Inspected 28
+[2012-10-18 06:34:20,363]P(0):INFO: Inspected 7
+[2012-10-18 06:34:20,374]P(1):INFO: Received notice that 5 found value 827. Terminating!
+[2012-10-18 06:34:20,378]P(2):INFO: Received notice that 5 found value 827. Terminating!
+[2012-10-18 06:34:20,363]P(6):INFO: Inspected 92
+[2012-10-18 06:34:20,363]P(7):INFO: Inspected 10
+[2012-10-18 06:34:20,363]P(3):INFO: Inspected 40
+[2012-10-18 06:34:20,363]P(9):INFO: Inspected 7
+[2012-10-18 06:34:20,363]P(4):INFO: Received notice that 5 found value 827. Terminating!
+[2012-10-18 06:34:20,381]P(7):INFO: Received notice that 5 found value 827. Terminating!
+[2012-10-18 06:34:20,381]P(9):INFO: Received notice that 5 found value 827. Terminating!
+[2012-10-18 06:34:20,381]P(0):INFO: Received notice that 5 found value 827. Terminating!
+[2012-10-18 06:34:20,383]P(6):INFO: Received notice that 5 found value 827. Terminating!
+[2012-10-18 06:34:20,385]P(3):INFO: Received notice that 5 found value 827. Terminating!
+[2012-10-18 06:34:20,387]runtime:INFO: ***** Statistics *****
+* Total procs: 10
+
+[2012-10-18 06:34:20,388]runtime:INFO: Terminating...
+
