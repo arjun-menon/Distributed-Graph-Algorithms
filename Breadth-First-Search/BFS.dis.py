@@ -8,10 +8,6 @@ sys.path.append("..") # in order to import NetworkX
 import networkx as nx
 from collections import deque
 
-# nprocs = 4 # default
-# tree = nx.balanced_tree(4, 4)
-# element_to_search_for = 300
-
 procs = dict() # dict mapping process numbers to processes
 Pi = lambda p: int(str(p))
 
@@ -32,7 +28,6 @@ class P(DistProcess):
         unserviced = set()
 
     def search(search_for):
-        # todo: what if search_for can't be found?
         --start
         if len(q) > 0:
             '''Pop one node, check if it's what we're searching for'''
@@ -40,7 +35,7 @@ class P(DistProcess):
             inspected.update({inspect})
             output("Inspected "+str(inspect))
             
-            if search_for == graph.node[inspect]['value']: # inspect:
+            if search_for == graph.node[inspect]['value']:
                 completed = True
                 output("Element %r found. BFS Completed!!!" % search_for)
                 
@@ -54,7 +49,6 @@ class P(DistProcess):
                 children = set( graph[inspect] ) - inspected
                 
                 for child in children:
-                    #graph.node[child]['parent'] = inspect
                     q.appendleft(child)
         
         else:
@@ -94,8 +88,6 @@ class P(DistProcess):
             
         else:
             unserviced.update({Pi(_source)})
-            #unserviceable_requests += 1
-            #output("Could not service %r. Total waiting: %d" % (_source, unserviceable_requests))
 
     def OnReply(m):
         if m == "completed":
@@ -107,7 +99,6 @@ class P(DistProcess):
             output('Got work [' + repr(item) + "] from " + str(_source))
             inspected.update(_inspected)
             q.appendleft(item)
-            #unserviceable_requests = 0
 
     def main():
         while not completed:
@@ -133,10 +124,6 @@ def main():
 
     element_to_search_for = int(input("Pick the attribute/value you would like to search for: "))
     print()
-
-    #for n in graph.nodes()
-
-    #return
     
     # create n process
     use_channel("tcp")
