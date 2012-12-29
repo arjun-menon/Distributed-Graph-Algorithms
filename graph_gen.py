@@ -3,7 +3,7 @@
 '''
 Random graph generator
 
-It works by filling in a partial adjacency matrix of the preferred number of nodes, 
+It works by constructing a partial adjacency matrix of the preferred number of nodes, 
 then filling the adjacency matrix with random 0 or 1 values.
 '''
 import random
