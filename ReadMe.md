@@ -6,10 +6,10 @@ This repository contains the implementations of certain distributed graph algori
 
 The Distributed Graph Algorithms
 --------------------------------
-1. [Minimum Spanning Tree](https://github.com/arjungmenon/Distributed-Graph-Algorithms#1-distributed-minimum-spanning-tree) *(MST)*
-2. [Maximal Independent Set](https://github.com/arjungmenon/Distributed-Graph-Algorithms#2-distributed-maximal-independent-set) *(MIS)*
-3. [Shortest Path Problem](https://github.com/arjungmenon/Distributed-Graph-Algorithms#3-shortest-path) *(SP)*
-4. [Breadth First Search](https://github.com/arjungmenon/Distributed-Graph-Algorithms#4-distributed-breadth-first-search) *(BFS)*
+1. [Minimum Spanning Tree](https://github.com/arjungmenon/Distributed-Graph-Algorithms#distributed-minimum-spanning-tree) *(MST)*
+2. [Maximal Independent Set](https://github.com/arjungmenon/Distributed-Graph-Algorithms#distributed-maximal-independent-set) *(MIS)*
+3. [Shortest Path Problem](https://github.com/arjungmenon/Distributed-Graph-Algorithms#shortest-path) *(SP)*
+4. [Breadth First Search](https://github.com/arjungmenon/Distributed-Graph-Algorithms#distributed-breadth-first-search) *(BFS)*
 
 Each of the above algorithms have been documented with thorough description of their algorithms as well as with specific information about their implementations, limitations, etc. They can be found in relevant sections of this *ReadMe* as well as in the *ReadMe* containing the algorithms themselves.
 
